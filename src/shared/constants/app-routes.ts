@@ -1,4 +1,4 @@
-import type { Product } from 'types/products';
+import { ProductType } from "@/shared/types/products";
 
 export const appRoutes = {
   main: {
@@ -12,7 +12,7 @@ export const appRoutes = {
     },
     details: {
       mask: '/products/:id',
-      create: (id: Product['documentId']) => `/products/${id}`,
+      create: (id: ProductType['documentId']) => `/products/${id}`,
     },
   },
   categories: {
