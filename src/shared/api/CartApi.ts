@@ -1,11 +1,11 @@
-import { ProductInCartApi } from "@/shared/types/cart";
-import { isStrapiSuccessResponseCart, StrapiResponseCart } from "@/shared/types/strapi-api";
+import { ProductInCartApi } from "@model/cart";
+import { isStrapiSuccessResponseCart, StrapiResponseCart } from "@model/strapi-api";
 import { IClient } from "./types";
 import formateError from "./utils/formate-error";
 import { ProductType } from "../types/products";
 
 export type ProductChangeParams = {
-    product: ProductType,
+    product: ProductType['id'],
     quantity?: number,
 }
 
@@ -21,7 +21,7 @@ export default class CartApi {
         this.client = client;
     }
 
-    getCart = async (signal: AbortSignal) => {
+    getCart = async (signal?: AbortSignal) => {
         try {
             const response = await this.client.get<StrapiResponseCart<ProductInCartApi[]>>(
                 this.path.list,
@@ -37,7 +37,7 @@ export default class CartApi {
         }
     }
 
-    addProduct = async ({ product, quantity = 1 }: ProductChangeParams, signal: AbortSignal) => {
+    addProduct = async ({ product, quantity = 1 }: ProductChangeParams, signal?: AbortSignal) => {
         try {
             const response = await this.client.post<StrapiResponseCart<ProductInCartApi>>(
                 this.path.add,
@@ -55,7 +55,7 @@ export default class CartApi {
         }
     }
     
-    removeProduct = async ({ product, quantity = 1 }: ProductChangeParams, signal: AbortSignal) => {
+    removeProduct = async ({ product, quantity = 1 }: ProductChangeParams, signal?: AbortSignal) => {
         try {
             const response = await this.client.post<StrapiResponseCart<ProductInCartApi>>(
                 this.path.remove,

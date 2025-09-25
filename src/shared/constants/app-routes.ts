@@ -1,4 +1,4 @@
-import { ProductType } from "@/shared/types/products";
+import { ProductType } from "@model/products";
 
 export const appRoutes = {
   main: {

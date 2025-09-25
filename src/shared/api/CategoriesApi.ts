@@ -1,5 +1,5 @@
-import { ProductCategoryApiType } from "@/shared/types/products";
-import { isStrapiSuccessResponseProducts, StrapiResponseProducts } from "@/shared/types/strapi-api";
+import { ProductCategoryApiType } from "@model/products";
+import { isStrapiSuccessResponseProducts, StrapiResponseProducts } from "@model/strapi-api";
 import { IClient } from "./types";
 import formateError from "./utils/formate-error";
 

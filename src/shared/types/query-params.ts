@@ -1,4 +1,4 @@
-import { SortType } from "@/shared/constants/product-sort";
+import { SortType } from "@constants/product-sort";
 
 export type QueryParams = Partial<{
   page: number;
