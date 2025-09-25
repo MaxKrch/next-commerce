@@ -1,4 +1,4 @@
-import { QueryParams } from "@/shared/types/query-params"
+import { QueryParams } from "@model/query-params"
 import { InternalAxiosRequestConfig } from "axios";
 
 export type RequestOptions = {

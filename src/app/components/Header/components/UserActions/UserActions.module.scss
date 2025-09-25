@@ -1,0 +1,12 @@
+$actions-width: 70px;
+
+.actions {
+    width: $actions-width;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.action:hover {
+    color: $brand-hover
+}

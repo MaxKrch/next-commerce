@@ -1,11 +1,11 @@
-import { ProductApiType, ProductType } from "../types/products";
-import { QueryParams } from "@/shared/types/query-params";
-import { isStrapiSuccessResponseProducts, StrapiResponseProducts } from "../types/strapi-api";
+import { ProductApiType, ProductType } from "@model/products";
+import { QueryParams } from "@model/query-params";
+import { isStrapiSuccessResponseProducts, StrapiResponseProducts } from "@model/strapi-api";
 import { IClient } from "./types";
 import { buildQueryString } from "./utils/build-query-string";
 import formateError from "./utils/formate-error";
 
-export default class ProductApi {
+export default class ProductsApi {
     private client: IClient;
     private populate = ['images', 'productCategory']
      
@@ -28,7 +28,7 @@ export default class ProductApi {
       return `/products/${id}?${queryString}`;
     }
     
-    getProductList = async (params: QueryParams, signal?: AbortSignal): Promise<StrapiResponseProducts<ProductApiType[]> | Error> => {
+    getProductList = async (params: QueryParams, signal?: AbortSignal) => {
         try {
             const response = await this.client.get<StrapiResponseProducts<ProductApiType[]>>(
                 this.createGetProductListURL(params),
@@ -44,7 +44,7 @@ export default class ProductApi {
         }
     }
 
-    getProductDetails = async (id: ProductType['documentId'], signal?: AbortSignal): Promise<StrapiResponseProducts<ProductApiType> | Error> => {
+    getProductDetails = async (id: ProductType['documentId'], signal?: AbortSignal) => {
         try {
             const response = await this.client.get<StrapiResponseProducts<ProductApiType>>(
                 this.createGetProductDetailsURL(id),

@@ -1,0 +1,26 @@
+$header-height: 75px;
+$header-bg: #fff;
+
+@mixin header-bottom {
+    border-bottom: 2px solid #f3f3f3;
+}
+
+$header-bottom-color: #f3f3f3;
+
+.header {
+    width: 100%;
+    height: $header-height;
+    background: $header-bg;
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    @include header-bottom();
+}
+
+.content-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    @include content-container();
+}

@@ -1,5 +1,5 @@
 import qs from 'qs';
-import { QueryParams } from '@/shared/types/query-params';
+import { QueryParams } from '@model/query-params';
 
 type buildQueryStringArgs = QueryParams & {
   populate?: string[] | string | object;
