@@ -1,7 +1,8 @@
-import React from "react";
+import 'client-only'
+import { Context, useContext } from "react";
 
 type UseStrictContextParams<T> = {
-  context: React.Context<T | null>;
+  context:  Context<T | null>;
   message?: string;
 };
 
@@ -9,7 +10,7 @@ export const useStrictContext = <T>({
   context,
   message = "useStrictContext missing provider",
 }: UseStrictContextParams<T>): T => {
-  const value = React.useContext(context);
+  const value = useContext(context);
 
   if (value === null) {
     throw new Error(message);

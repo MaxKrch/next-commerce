@@ -33,7 +33,7 @@ export default class CartApi {
             }
             return response;
         } catch (err) {
-            return formateError(err);
+            throw formateError(err);
         }
     }
 
@@ -51,7 +51,7 @@ export default class CartApi {
 
             return response;
         } catch (err) {
-            return formateError(err);
+            throw formateError(err);
         }
     }
     
@@ -69,7 +69,7 @@ export default class CartApi {
 
             return response;
         } catch (err) {
-            return formateError(err);
+            throw formateError(err);
         }
     }
 }

@@ -6,7 +6,7 @@ type buildQueryStringArgs = QueryParams & {
 };
 
 export function buildQueryString(params: buildQueryStringArgs) {
-  const { page = 1, count = 25, query, categories, populate } = params;
+  const { page = 1, count = 15, query, categories, populate } = params;
 
   const strapiQuery: Record<string, unknown> = {
     pagination: {

@@ -1,0 +1,8 @@
+@use '@style/variables' as *;
+@use '@style/mixins' as *;
+
+.app {
+    background-color: $primary-bg;
+    width: 100%;
+    min-height: 100vh;
+}

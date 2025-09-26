@@ -1,10 +1,8 @@
+@use '@style/variables' as *;
+@use '@style/mixins' as *;
+
 $header-height: 75px;
 $header-bg: #fff;
-
-@mixin header-bottom {
-    border-bottom: 2px solid #f3f3f3;
-}
-
 $header-bottom-color: #f3f3f3;
 
 .header {
@@ -14,13 +12,14 @@ $header-bottom-color: #f3f3f3;
     position: sticky;
     top: 0;
     z-index: 3;
-    @include header-bottom();
+    border-bottom: 2px solid $header-bottom-color;
+    
+    &__content {
+        @include content-container();
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+    }
 }
 
-.content-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-    @include content-container();
-}

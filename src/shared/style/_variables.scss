@@ -11,7 +11,6 @@ $brand-hover: #86aaa7;
 $brand-disabled: #d9d9d9;
 
 // Основные размеры
-$title-size: 44px;
 $space-xxxl: 32px;
 $space-xxl: 24px;
 $space-xl: 20px;
@@ -22,23 +21,30 @@ $space-xs: 12px;
 $space-xxs: 10px;
 $space-xxxs: 8px;
 
+// Цвета шрифта 
+$text-primary: #000;
+$text-secondary: #afadb5;
+$text-accent: #518581;
+
+// Тени
+$shadow-light: 0 2px 5px 0 rgba(200, 200, 200, 0.25);
+$shadow-normal: 0 4px 10px 0 rgba(0, 0, 0, 0.25);
+$shadow-bold: 0 4px 10px 0 rgba(0, 0, 0, 0.75);
+
+// Остальное
+$primary-bg: #fafafa;
+
+$preview-card-min-width: 300px;
+$preview-card-max-width: 600px;
+
+
+
 // Переменные для section title
 $section-title-base: 28px;
 $section-title-mobile: 30px;
 $section-title-tablet: 32px;
 $section-title-laptop-up: 34px;
 
-// Цвета шрифта 
-$text-primary: #000;
-$text-secondary: #afadb5;
-$text-accent: #518581;
-
-// Общие цвета элементов
-$primary-bg: #fafafa;
-
-$shadow-light: 0 2px 5px 0 rgba(200, 200, 200, 0.25);
-$shadow-normal: 0 4px 10px 0 rgba(0, 0, 0, 0.25);
-$shadow-bold: 0 4px 10px 0 rgba(0, 0, 0, 0.75);
 
 // Переменные keyframe Pulse 
 $pulse-primary-color: #f1f1f1;
@@ -57,35 +63,6 @@ $control-field-width: 300px;
 $border-radius-primary: 4px;
 $border-radius-secondary: 2px;
 
-// Переменные Button 
-$button-title-base: 12px;
-$button-title-mobile: 14px;
-$button-title-tablet: 16px;
-$button-title-laptop-up: 18px;
-
-$button-primary-text: #fff;
-$button-primary-text-hover: #fff;
-$button-primary-text-disabled: #fff;
-$button-primary-text-active: #fff;
-
-$button-primary-bg: $brand;
-$button-primary-bg-hover: $brand-hover;
-$button-primary-bg-disabled: $brand-disabled;
-$button-primary-bg-active: $brand-active;
-
-$button-secondary-text: $brand;
-$button-secondary-text-hover: $brand-hover;
-$button-secondary-text-disabled: $brand-disabled;
-$button-secondary-text-active: $brand-active;
-
-$button-secondary-bg: #fff;
-$button-secondary-bg-hover: #fefefe;
-$button-secondary-bg-disabled: #eeeeee;
-$button-secondary-bg-active: #efefef;
-
-$button-height: $control-field-heihgt;
-$button-padding-x: $space-m;
-$button-padding-y: $space-xl;
 
 // Переменные Input 
 $input-text: $text-primary;
@@ -120,17 +97,7 @@ $checkbox-check-color-disabled: $brand-disabled;
 
 $checkbox-size: $control-field-heihgt;
 
-// Переменные Card  
-$preview-card-bg: #fff;
-$preview-card-image-bg: #d9d9d9;
-$preview-card-min-width: 300px;
-$preview-card-max-width: 600px;
-$preview-card-height: 100%;
-$preview-card-shadow: $shadow-normal;
 
-$full-card-min-width: 400px;
-$full-card-max-width: 600px;
-$full-card-actions-space: 48px;
 
 // Переменные Dropdown 
 $dropdown-width: $control-field-width;

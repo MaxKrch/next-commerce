@@ -2,7 +2,6 @@ import { QueryParams } from "@model/query-params";
 import { action, computed, makeObservable, observable } from "mobx";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import qs from "qs";
-import { URLSearchParams } from "url";
 
 type PrivateFields = 
     | '_categories'
@@ -107,7 +106,6 @@ export default class QueryParamsStore {
         }
         return qs.stringify(paramsObj, { arrayFormat: "repeat" });
     }
-
     
     private _setQueryParams(params: QueryParams): void {
         if(params.categories) {
@@ -139,7 +137,7 @@ export default class QueryParamsStore {
         }
     }
     
-     setFromSearchParams(searchParams: ReadonlyURLSearchParams | string) {
+    setFromSearchParams(searchParams: ReadonlyURLSearchParams | string) {
         const queryString = typeof searchParams === "string"
             ? searchParams
             : searchParams.toString();

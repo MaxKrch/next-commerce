@@ -1,3 +1,6 @@
+@use '@style/variables' as *;
+@use '@style/mixins' as *;
+
 $active-link-color: $brand;
 $link-hover-color: $brand-hover;
 $base-width: 340px;
@@ -12,33 +15,35 @@ $base-width: 340px;
     align-items: center;
     height: 100%;
     flex-basis: $base-width;
-}
 
-.link {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    @include link-bottom();
+    &-item {
+        &__link {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            @include link-bottom();
 
-    &:hover:not(.active) {
-        color: $link-hover-color;
-        border-bottom-color: $link-hover-color;
-    }
+            &:hover:not(.active) {
+                color: $link-hover-color;
+                border-bottom-color: $link-hover-color;
+            }
 
-    &-text {
-        font-size: $space-s;
-
-        @include mobile-only() {
-            font-size: $space-m;
+            &_active {
+                color: $active-link-color;
+                pointer-events: none;        
+            }
         }
 
-        @include tablet-up() {
-            font-size: $space-l;
+        &__name{
+            font-size: $space-s;
+
+            @include mobile-only() {
+                font-size: $space-m;
+            }
+
+            @include tablet-up() {
+                font-size: $space-l;
+            }
         }
     }
-}
-
-.active {
-    color: $active-link-color;
-    pointer-events: none;
 }

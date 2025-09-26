@@ -1,8 +1,8 @@
-import { RootStoreProvider } from './root-store-context';
-import { QueryParamsStoreProvider } from './query-params-store-provider';
 import React, { PropsWithChildren } from 'react';
+import { RootStoreProvider } from './RootStoreContext';
+import { QueryParamsStoreProvider } from './QueryParamsStoreProvider';
 
-const Provider: React.FC<PropsWithChildren> = ({children}) => {
+const Provoders: React.FC<PropsWithChildren> = ({children}) => {
     return(
         <RootStoreProvider>
             <QueryParamsStoreProvider>
@@ -12,4 +12,4 @@ const Provider: React.FC<PropsWithChildren> = ({children}) => {
     )
 }
 
-export default Provider;
+export default Provoders;

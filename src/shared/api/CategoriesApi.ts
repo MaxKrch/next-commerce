@@ -28,7 +28,7 @@ export default class CategoriesApi {
             return response;
 
         } catch (err) {
-            return formateError(err);
+            throw formateError(err);
         }
     }
 }

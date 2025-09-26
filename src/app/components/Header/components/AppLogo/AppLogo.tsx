@@ -1,17 +1,17 @@
-import { appRoutes } from 'constants/app-routes';
 
-import cn from 'clsx';
-import AppNameIcon from 'components/icons/AppNameIcon';
-import LogoIcon from 'components/icons/LogoIcon';
-import { Link } from 'react-router-dom';
-
+import Link from 'next/link';
 import style from './AppLogo.module.scss';
+import { appRoutes } from '@constants/app-routes';
+import clsx from 'clsx';
+import React from 'react';
+import LogoIcon from '@components/icons/LogoIcon';
+import AppNameIcon from '@components/icons/AppNameIcon';
 
-const AppLogo = () => {
+const AppLogo: React.FC = () => {
   return (
-    <Link to={appRoutes.main.create()} className={cn(style['logo'])}>
+    <Link href={appRoutes.main.create()} className={clsx(style['logo'])}>
       <LogoIcon />
-      <AppNameIcon className={cn(style['name'])} />
+      <AppNameIcon className={clsx(style['logo__name'])} />
     </Link>
   );
 };

@@ -1,27 +1,29 @@
-import AppMenu from 'constants/app-menu';
+"use client"
 
 import clsx from 'clsx';
-import Text from 'components/Text';
 import { memo } from 'react';
-import { NavLink } from 'react-router-dom';
-
 import style from './MainMenu.module.scss';
+import { usePathname } from 'next/navigation';
+import AppMenu from '@constants/app-menu';
+import Link from 'next/link';
+import Text from '@components/Text';
 
 const MainMenu = () => {
-  const classes = ({ isActive }: { isActive: boolean }) =>
-    clsx({
-      [style.link]: true,
-      [style.active]: isActive,
-    });
+  const path = usePathname()
 
   return (
     <nav className={clsx(style['menu'])}>
       {AppMenu.map((item) => (
-        <NavLink key={item.path} to={item.path} className={classes} end>
-          <Text weight="bold" className={clsx(style['link-text'])}>
+        <Link 
+          key={item.path} 
+          href={item.path} 
+          className={clsx(
+            style['menu-item__link'], path === item.path && style['menu-item__link_active'])}
+        >
+          <Text weight="bold" className={clsx(style['menu-item__name'])}>
             {item.title}
           </Text>
-        </NavLink>
+        </Link>
       ))}
     </nav>
   );

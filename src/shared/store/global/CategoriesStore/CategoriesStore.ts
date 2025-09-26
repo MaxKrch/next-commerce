@@ -1,5 +1,5 @@
 import { Collection } from "@model/collections";
-import { ProductCategoryType } from "@model/products";
+import { ProductCategoryApiType, ProductCategoryType } from "@model/products";
 import getInitialCollection from "@store/utils/get-initial-collection";
 import { META_STATUS, MetaStatus } from "@constants/meta-status";
 import { action, computed, makeObservable, observable, runInAction } from "mobx";
@@ -7,27 +7,51 @@ import CategoriesApi from "@api/CategoriesApi";
 import { linearizeCollection } from "@store/utils/linearize-collection";
 import { normalizeCollection } from "@store/utils/normalize-collection";
 import { normalizeCategoriesList } from "@store/utils/normalize-categories";
+import { MetaResponse } from "@model/strapi-api";
 
 export type ICategoriesStore = {
   getCategoryById: (id: ProductCategoryType['id']) => ProductCategoryType | undefined;
 };
 
-type PrivateFields = '_list' | '_status';
+export type CategoriesInitData = {
+    success: true,
+    categories: ProductCategoryApiType[],
+    meta: MetaResponse<ProductCategoryApiType[]>
+} | {
+    success: false,
+    error: string,
+}
+
+type PrivateFields = 
+  | '_list' 
+  | '_status' 
+  | '_meta' 
+  | '_error'
+  | '_setCategories';
 
 export default class CategoriesStore implements ICategoriesStore {
   private _api: CategoriesApi;
   private _list: Collection<ProductCategoryType['id'], ProductCategoryType> = getInitialCollection();
   private _status: MetaStatus = META_STATUS.IDLE;
-  private abortCtrl: AbortController | null = null;
+  private _meta: MetaResponse<CategoriesApi[]> | null = null;
+  private _abortCtrl: AbortController | null = null;
+  private _error: string | null = null;
 
   constructor(api: CategoriesApi) {
     makeObservable<CategoriesStore, PrivateFields>(this, {
       _list: observable,
       _status: observable,
+      _error: observable,
+      _meta: observable,
 
       list: computed,
       status: computed,
-      fetchCategories: action,
+      error: computed,
+      pagination: computed,
+
+      setInitData: action.bound,
+      fetchCategories: action.bound,
+      _setCategories: action,
     });
     this._api = api;
   }
@@ -40,35 +64,17 @@ export default class CategoriesStore implements ICategoriesStore {
     return this._status;
   }
 
-  getCategoryById(id: ProductCategoryType['id']): ProductCategoryType | undefined {
-    return this._list.entities[id];
+  get error(): string | null {
+    return this._error;
   }
 
-  abort(): void {
-    if (this.abortCtrl) {
-      this.abortCtrl.abort();
-      this.abortCtrl = null;
-    }
+  get pagination(): MetaResponse<ProductCategoryType[]>['pagination'] | undefined {
+    return this._meta?.pagination;
   }
 
-  async fetchCategories(): Promise<void> {
-    this.abort();
-    this.abortCtrl = new AbortController();
-
-    runInAction(() => {
-      this._status = META_STATUS.PENDING;
-      this._list = getInitialCollection();
-    });
-
-    try {
-      const response = await this._api.getCategories(this.abortCtrl.signal);
-
-      if (response instanceof Error) {
-        throw response;
-      }
-
+  private _setCategories(categories: ProductCategoryApiType[]): void {
       const normalized = normalizeCollection(
-        normalizeCategoriesList(response.data),
+        normalizeCategoriesList(categories),
         (element) => element.id
       );
 
@@ -76,6 +82,51 @@ export default class CategoriesStore implements ICategoriesStore {
         this._list = normalized;
         this._status = META_STATUS.SUCCESS;
       });
+  }
+
+  setInitData(init: CategoriesInitData): void {
+    if(!init.success) {
+      this._error = init.error;
+      this._status = META_STATUS.ERROR;
+      
+      return;
+    }
+
+    this._status = META_STATUS.SUCCESS;
+    this._meta
+    this._setCategories(init.categories)
+  }
+
+  getCategoryById(id: ProductCategoryType['id']): ProductCategoryType | undefined {
+    return this._list.entities[id];
+  }
+
+  abort(): void {
+    if (this._abortCtrl) {
+      this._abortCtrl.abort();
+      this._abortCtrl = null;
+    }
+  }
+
+  async fetchCategories(): Promise<void> {
+    this.abort();
+    this._abortCtrl = new AbortController();
+
+    runInAction(() => {
+      this._status = META_STATUS.PENDING;
+      this._meta = null;
+      this._list = getInitialCollection();
+    });
+
+    try {
+      const response = await this._api.getCategories(this._abortCtrl.signal);
+      
+      runInAction(() => {     
+        this._setCategories(response.data);
+        this._meta = response.meta;
+        this._status = META_STATUS.SUCCESS; 
+      });
+
     } catch (err) {
       runInAction(() => {
         if (err instanceof Error && err.name === 'AbortError') {

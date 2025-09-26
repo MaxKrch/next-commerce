@@ -40,7 +40,7 @@ export default class ProductsApi {
             }
             return response;
         } catch (err) {
-            return formateError(err);
+            throw formateError(err);
         }
     }
 
@@ -57,7 +57,7 @@ export default class ProductsApi {
 
             return response;
         } catch (err) {
-            return formateError(err);
+            throw formateError(err);
         }
     }
 }

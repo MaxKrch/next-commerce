@@ -1,8 +1,7 @@
 "use client"
 
-import { useRouter } from "next/router";
 import QueryParamsStore from "./QueryParamsStore";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { reaction } from "mobx";
 

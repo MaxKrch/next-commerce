@@ -14,18 +14,21 @@ type PrivateFields =
   | '_status'
   | '_setProducts'
   | '_addToCartItem'
-  | '_removeFromCartItem';
+  | '_removeFromCartItem'
+  | '_error';
 
 export default class CartStore {
   private _api: CartApi;
   private _products: Collection<ProductType['id'], ProductInCart> = getInitialCollection();
   private _abortCtrl: AbortController | null = null;
   private _status: MetaStatus = META_STATUS.IDLE;
+  private _error: string | null = null;
 
   constructor(api: CartApi) {
     makeObservable<CartStore, PrivateFields>(this, {
       _products: observable,
       _status: observable,
+      _error: observable,
 
       products: computed,
       inStockProducts: computed,
@@ -33,6 +36,7 @@ export default class CartStore {
       totalPrice: computed,
       totalItemsToOrder: computed,
       status: computed,
+      error: computed,
 
       _addToCartItem: action,
       _removeFromCartItem: action,
@@ -73,27 +77,32 @@ export default class CartStore {
     return this._status;
   }
 
+  get error(): string | null {
+    return this._error
+  }
+
   async addToCart(product: ProductType): Promise<void> {
     this._addToCartItem(product);
+    this._error = null;
 
     try {
       const response = await this._api.addProduct({ product: product.id });
-      if (response instanceof Error) {
-        throw response;
-      }
-    } catch {
+
+    } catch(err) {
+      this._error = err instanceof Error ? err.message : "UnknownError"
       this._removeFromCartItem(product);
     }
   }
 
   async removeFromCart(product: ProductType): Promise<void> {
     this._removeFromCartItem(product);
+    this._error = null;
+
     try {
       const response = await this._api.removeProduct({ product: product.id });
-      if (response instanceof Error) {
-        throw response;
-      }
-    } catch {
+
+    } catch (err) {
+      this._error = err instanceof Error ? err.message : "UnknownError"
       this._addToCartItem(product);
     }
   }
@@ -154,12 +163,9 @@ export default class CartStore {
     try {
       const response = await this._api.getCart(this._abortCtrl.signal);
 
-      if (response instanceof Error) {
-        throw response;
-      }
-
       runInAction(() => {
         this._abortCtrl = null;
+        this._error = null;
         this._setProducts(response);
         this._status = META_STATUS.SUCCESS;
       });
@@ -170,6 +176,7 @@ export default class CartStore {
 
       runInAction(() => {
         this._abortCtrl = null;
+        this._error = err instanceof Error ? err.message : "UnknownError" 
         this._products = getInitialCollection();
         this._status = META_STATUS.ERROR;
       });

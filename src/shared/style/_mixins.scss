@@ -71,22 +71,6 @@
 }
 
 @mixin base-adaptive-font-size {
-    font-size: $space-xs;
-
-    @include mobile-only() {
-        font-size: $space-m;
-    }
-
-    @include tablet-only() {
-        font-size: $space-l;
-    }
-
-    @include laptop-up() {
-        font-size: $space-xxl;
-    }
-}
-
-@mixin base-adaptive-font-size {
     font-size: $space-s;
 
     @include mobile-only() {
@@ -115,21 +99,5 @@
 
     @include laptop-up() {
         font-size: $section-title-laptop-up;
-    }
-}
-
-@mixin button-adaptive-font-size {
-    font-size: $button-title-base;
-
-    @include mobile-only() {
-        font-size: $button-title-mobile;
-    }
-
-    @include tablet-only() {
-        font-size: $button-title-tablet;
-    }
-
-    @include laptop-up() {
-        font-size: $button-title-laptop-up;
     }
 }

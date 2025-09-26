@@ -1,0 +1,19 @@
+@use '@style/variables' as *;
+@use '@style/mixins' as *;
+
+$margin-top: 48px;
+
+.product-list {
+    @include content-container();
+    margin-top: $margin-top;
+    
+    &-title {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        &__name {
+            @include section-title-font-size();
+        }
+    }
+}

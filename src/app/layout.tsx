@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Roboto } from 'next/font/google';
 import "@style/main.scss";
-import Provider from "./providers";
-
+import Providers from "./providers";
+import Header from "./components/Header";
+import clsx from "clsx";
+import style from './app.module.scss'
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -11,8 +13,8 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "Next-commerсe - милион бесполезных товаров для вас",
-  description: "Ваши деньги - наша прибыль!",
+  title: "Next-commerсe",
+  description: "Тысячи уникальных товаров с доставкой от 1 дня",
 };
 
 export default function RootLayout({
@@ -26,9 +28,12 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.svg" />
       </head>
       <body>
-        <Provider>
-          {children}
-        </Provider>
+        <div className={clsx(style['app'])}>
+          <Providers>
+            <Header />
+            {children}
+          </Providers>
+        </div>
       </body>
     </html>
   );
