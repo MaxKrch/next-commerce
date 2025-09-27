@@ -15,5 +15,9 @@ $margin-top: 48px;
         &__name {
             @include section-title-font-size();
         }
+
+        &__count {
+            padding-top: 0.4rem;
+        }
     }
 }

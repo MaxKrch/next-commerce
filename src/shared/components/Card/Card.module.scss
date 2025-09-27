@@ -6,8 +6,6 @@ $preview-card-image-bg: #d9d9d9;
 $preview-card-height: 100%;
 $preview-card-shadow: $shadow-normal;
 
-$full-card-min-width: 400px;
-$full-card-max-width: 600px;
 $full-card-actions-space: 48px;
 
 $base-gap: 0.5em;
@@ -48,8 +46,8 @@ $base-line-height: 150%;
 
 
 .preview {
-    min-width: $preview-card-min-width;
-    max-width: $preview-card-max-width;
+    min-width: $card-min-width;
+    max-width: $card-max-width;
     height: $preview-card-height;
     padding-bottom: calc($base-gap * 2);
     background: $preview-card-bg;
@@ -75,7 +73,7 @@ $base-line-height: 150%;
     }
 
     &__caption-slot {
-        font-size: 0.7em;
+        font-size: 0.9em;
     }
 
     &__footer {

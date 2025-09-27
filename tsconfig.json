@@ -20,6 +20,7 @@
     ],
     "baseUrl": ".",
     "paths": {
+      "@providers/*": ["src/app/providers/*"],
       "@api/*": ["src/shared/api/*"],
       "@components/*": ["src/shared/components/*"],
       "@constants/*": ["src/shared/constants/*"],

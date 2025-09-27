@@ -13,11 +13,16 @@ $max-width: 650px;
 
     @include tablet-up {
         padding: 25px 0;
-        gap: $space-xxxl;
     }
 
     @include laptop-up {
         padding: 50px 0;
+    }
+
+    &__title {
+        @include tablet-up() {
+            margin-bottom: $space-xxl;
+        }
     }
     
     &__content {

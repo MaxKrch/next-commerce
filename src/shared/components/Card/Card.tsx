@@ -1,8 +1,5 @@
 import clsx from 'clsx';
-
-import { observer } from 'mobx-react-lite';
 import React, { memo, useCallback } from 'react';
-
 import style from './Card.module.scss';
 import ImageGalery from './components/ImageGalery';
 import { ProductType } from '@model/products';
@@ -96,4 +93,4 @@ const Card: React.FC<CardProps> = ({
   );
 };
 
-export default memo(observer(Card));
+export default memo(Card);

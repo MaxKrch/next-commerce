@@ -8,7 +8,7 @@ $text-bg-color: rgb(125 125 125 / 0.25);
     position: relative;
     display: flex;
     flex-direction: column;
-    min-width: $preview-card-min-width;
+    min-width: $card-min-width;
 
     &::before {
         position: absolute;

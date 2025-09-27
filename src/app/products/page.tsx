@@ -2,23 +2,26 @@ import { QueryParams } from "@model/query-params";
 import { ProductsStoreProvider } from "../providers/ProductsStoreProvider";
 import ProductsApi from "@api/ProductsApi";
 import Client from "@api/client";
-import { ProductApiType } from "@model/products";
+
 import { isStrapiSuccessResponseProducts, MetaResponse, StrapiResponseProducts } from "@model/strapi-api";
-import { ProductInitData } from "@store/local/ProductsStore/ProductsStore";
+import { ProductsInitData } from "@store/local/ProductsStore/ProductsStore";
 import SectionHeader from "@components/SectionHeader";
 import ProductList from "./components/ProductList";
 import qs from "qs";
 import ProductPagination from "./components/ProductPagination";
+import ProductSearch from "./components/ProductSearch";
 
 export const textdata = {
   title: "Товары",
-  description: `Мы отобрали для вас самые горячие новинки.
-  Если хотите найти что-то конкретное - просто нанчните вводить название`
+  description: [
+    'Мы собрали для вас самые горячие новинки сезона',
+    'Если ищите что-то конкретное - просто нанчните вводить название'
+  ]
 }   
 
 export const metadata = {
   title: "Список товаров",
-  description: "Товары нашего магазина",
+  description: "Каталог самых горячих новинок сезона - тысячи товаров для вас",
 }
 
 type ProductsPageProps = {
@@ -26,16 +29,13 @@ type ProductsPageProps = {
 }
 
 export default async function ProductsPage ({searchParams}: ProductsPageProps) {
-    let initData: ProductInitData; 
+    let initData: ProductsInitData; 
 
     const params = await searchParams;
     const productsApi = new ProductsApi(new Client);
     const queryString = qs.stringify(params, { arrayFormat: 'repeat' });
     try {
-        const response = await productsApi.getProductList({
-            ...params,
-            count: 9
-        })
+        const response = await productsApi.getProductList(params, {})
         
         if(!isStrapiSuccessResponseProducts(response)) {
             throw response;
@@ -60,7 +60,7 @@ export default async function ProductsPage ({searchParams}: ProductsPageProps) {
         <div>
             <ProductsStoreProvider>
                 <SectionHeader title={textdata.title} content={textdata.description} />
-                {/* <ProductSearch /> */}
+                <ProductSearch />
                 <ProductList initData={initData}/>
                 <ProductPagination />
             </ProductsStoreProvider>

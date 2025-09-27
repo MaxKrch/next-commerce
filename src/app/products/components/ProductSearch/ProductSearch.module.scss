@@ -1,3 +1,6 @@
+@use '@style/variables' as *;
+@use '@style/mixins' as *;
+
 $cross-size: 24px;
 $cross-margin: calc(($control-field-heihgt - $cross-size) / 2);
 $filter-cross-right: 32px;
@@ -77,7 +80,7 @@ $input-right-padding: calc($cross-size + 2 * $cross-margin);
         flex-shrink: 0;
 
         @include tablet-up() {
-            padding: $button-padding-y $button-padding-x;
+            padding: $space-xs $space-xl;
             width: auto;
         }
 

@@ -3,7 +3,7 @@
 import Button from "@components/Button";
 import { ProductType } from "@model/products";
 import React, { useCallback } from "react";
-import { useRootStore } from "src/app/providers/RootStoreContext";
+import { useRootStore } from "@providers/RootStoreContext";
 
 const DefaultCardActionSlot: React.FC<{ product: ProductType }> = ({ product }) => {
   const { cartStore } = useRootStore();

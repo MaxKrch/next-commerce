@@ -1,0 +1,23 @@
+@use '@style/variables' as *;
+@use '@style/mixins' as *;
+
+.product-card {
+    @include content-container();
+
+    margin-top: 0.8rem;
+}
+
+.content-slot {
+    font-size: 1.5em;
+}
+
+.action-slot {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    gap: 1em;
+
+    @include mobile-up() {
+        justify-content: start;
+    }
+}

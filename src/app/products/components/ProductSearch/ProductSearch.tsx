@@ -1,46 +1,42 @@
-import { META_STATUS } from 'constants/meta-status';
+"use client"
 
 import { clsx } from 'clsx';
-import Button from 'components/Button';
-import Input from 'components/Input';
-import MultiDropdown from 'components/MultiDropdown';
-import CrossIcon from 'components/icons/CrossIcon';
-import SearchIcon from 'components/icons/SearchIcon';
-import useRootStore from 'context/root-store/useRootStore';
-import useQueryParams from 'hooks/useQueryParams';
-import useSearchStore from 'hooks/useSearchStore';
 import { observer } from 'mobx-react-lite';
 import { useCallback, useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
-
 import style from './ProductSearch.module.scss';
+import CrossIcon from '@components/icons/CrossIcon';
+import Button from '@components/Button';
+import Input from '@components/Input';
+import useSearchStore from '@store/local/SearchStore/useSearchStore';
+import { META_STATUS } from '@constants/meta-status';
+import SearchIcon from '@components/icons/SearchIcon';
+import MultiDropdown from '@components/MultiDropdown';
+import { useProductsStore } from '@providers/ProductsStoreProvider';
+import { useRootStore } from '@providers/RootStoreContext';
 
 const ProductSearch = () => {
-  const { setQueryParams } = useQueryParams();
-  const searchCleared = useRef(false);
-  const location = useLocation();
-  const { categoriesStore } = useRootStore();
-  const searchStore = useSearchStore({ handleChange: setQueryParams });
+  const { categoriesStore, queryParamsStore } = useRootStore();
+  const searchStore = useSearchStore();
+  const prodactsStore = useProductsStore()
 
   const handleCrossInputClick = useCallback(() => {
-    searchStore.handleInput('');
+    searchStore.changeInput('');
   }, [searchStore]);
 
   const handleCrossFilterClick = useCallback(() => {
-    searchStore.handleSelectCategories([]);
+    searchStore.selectCategories([]);
   }, [searchStore]);
 
-  useEffect(() => {
-    if (location.search !== '') {
-      searchCleared.current = false;
-      return;
-    }
+  const handleSearchClick = useCallback(() => {
+    const params = queryParamsStore.queryObject;
+    prodactsStore.fetchProducts(params)
+  }, [queryParamsStore.queryString, prodactsStore])
 
-    if (!searchCleared.current) {
-      searchStore.resetValues();
-      searchCleared.current = true;
+  useEffect(() => {
+    if(categoriesStore.status === META_STATUS.IDLE) {
+      categoriesStore.fetchCategories()
     }
-  }, [location.search, searchStore]);
+  }, [categoriesStore])
 
   return (
     <div className={clsx(style['search'])}>
@@ -48,7 +44,7 @@ const ProductSearch = () => {
         <div className={clsx(style['query-input'])}>
           <Input
             value={searchStore.inputValue}
-            onChange={searchStore.handleInput}
+            onChange={searchStore.changeInput}
             placeholder={'Что будем искать?'}
             className={clsx(style['query-input-element'])}
             name="searchInput"
@@ -62,7 +58,7 @@ const ProductSearch = () => {
         </div>
 
         <Button
-          onClick={searchStore.handleSearch}
+          onClick={handleSearchClick}
           disabled={false}
           className={clsx(style['query-button'])}
           name="searchButton"
@@ -74,19 +70,19 @@ const ProductSearch = () => {
       <div className={clsx(style['filter'])}>
         {categoriesStore.status === META_STATUS.SUCCESS ? (
           <MultiDropdown
-            options={searchStore.options}
-            value={searchStore.value}
-            onChange={searchStore.handleSelectCategories}
-            getTitle={() => searchStore.title}
+            options={searchStore.categoriesOptions}
+            value={searchStore.categoriesValue}
+            onChange={searchStore.selectCategories}
+            getTitle={() => searchStore.titleCategoriesValue}
             className={clsx(style['filter-dropdown'])}
           />
         ) : (
           <div className={clsx(style['filter'], style['filter-skeleton'])} />
         )}
 
-        {searchStore.value.length > 0 && (
-          <CrossIcon onClick={handleCrossFilterClick} className={clsx(style['filter-cross'])} />
-        )}
+        {searchStore.categoriesValue.length > 0 && (
+          <CrossIcon onClick={() => {handleCrossFilterClick()}} className={clsx(style['filter-cross'])} />
+        )} 
       </div>
     </div>
   );

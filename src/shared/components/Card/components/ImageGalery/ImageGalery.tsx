@@ -4,13 +4,14 @@ import { observer } from 'mobx-react-lite';
 import style from './ImageGalery.module.scss';
 import { ProductType } from '@model/products';
 import Image from 'next/image';
+import React from 'react';
 
 export type ImageGaleryProps = {
   images: ProductType['images'];
   sizes: string
 };
 
-const ImageGalery = ({ images, sizes }: ImageGaleryProps) => {
+const ImageGalery: React.FC<ImageGaleryProps> = ({ images, sizes }) => {
   return (
     <Image
       className={clsx(style['card__image'])}
@@ -18,6 +19,7 @@ const ImageGalery = ({ images, sizes }: ImageGaleryProps) => {
       alt={images[0]?.alternativeText ?? 'Card Image'}
       fill
       sizes={sizes}
+      priority
     />
   );
 };

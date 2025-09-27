@@ -1,20 +1,20 @@
 import { ProductCategoryApiType } from "@model/products";
 import { isStrapiSuccessResponseProducts, StrapiResponseProducts } from "@model/strapi-api";
-import { IClient } from "./types";
+import { IClient, RequestOptions } from "./types";
 import formateError from "./utils/formate-error";
 
 export default class CategoriesApi {
     private client: IClient;
     private populate = ['image'];
     private path = {
-        list: '/categories'
+        list: '/product-categories'
     }
     
     constructor(client: IClient) {
         this.client = client;
     }
 
-    getCategories = async (signal?: AbortSignal) => {
+    getCategories = async ({ signal, next }: RequestOptions) => {
         try {
             const response = await this.client.get<StrapiResponseProducts<ProductCategoryApiType[]>>(
                 this.path.list,

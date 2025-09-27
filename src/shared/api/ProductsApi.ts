@@ -1,7 +1,7 @@
 import { ProductApiType, ProductType } from "@model/products";
 import { QueryParams } from "@model/query-params";
 import { isStrapiSuccessResponseProducts, StrapiResponseProducts } from "@model/strapi-api";
-import { IClient } from "./types";
+import { IClient, RequestOptions } from "./types";
 import { buildQueryString } from "./utils/build-query-string";
 import formateError from "./utils/formate-error";
 
@@ -28,11 +28,11 @@ export default class ProductsApi {
       return `/products/${id}?${queryString}`;
     }
     
-    getProductList = async (params: QueryParams, signal?: AbortSignal) => {
+    getProductList = async (params: QueryParams, { signal, next }: RequestOptions) => {
         try {
             const response = await this.client.get<StrapiResponseProducts<ProductApiType[]>>(
                 this.createGetProductListURL(params),
-                { signal }
+                { signal, next }
             );
 
             if (!isStrapiSuccessResponseProducts(response)) {
@@ -44,11 +44,11 @@ export default class ProductsApi {
         }
     }
 
-    getProductDetails = async (id: ProductType['documentId'], signal?: AbortSignal) => {
+    getProductDetails = async (id: ProductType['documentId'], { signal, next }: RequestOptions) => {
         try {
             const response = await this.client.get<StrapiResponseProducts<ProductApiType>>(
                 this.createGetProductDetailsURL(id),
-                { signal }
+                { signal, next }
             );
 
             if (!isStrapiSuccessResponseProducts(response)) {

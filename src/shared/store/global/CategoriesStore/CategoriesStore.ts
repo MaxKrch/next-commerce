@@ -23,7 +23,6 @@ export type CategoriesInitData = {
 }
 
 type PrivateFields = 
-  | '_list' 
   | '_status' 
   | '_meta' 
   | '_error'
@@ -31,11 +30,11 @@ type PrivateFields =
 
 export default class CategoriesStore implements ICategoriesStore {
   private _api: CategoriesApi;
-  private _list: Collection<ProductCategoryType['id'], ProductCategoryType> = getInitialCollection();
   private _status: MetaStatus = META_STATUS.IDLE;
   private _meta: MetaResponse<CategoriesApi[]> | null = null;
   private _abortCtrl: AbortController | null = null;
   private _error: string | null = null;
+  _list: Collection<ProductCategoryType['id'], ProductCategoryType> = getInitialCollection();
 
   constructor(api: CategoriesApi) {
     makeObservable<CategoriesStore, PrivateFields>(this, {
@@ -119,7 +118,7 @@ export default class CategoriesStore implements ICategoriesStore {
     });
 
     try {
-      const response = await this._api.getCategories(this._abortCtrl.signal);
+      const response = await this._api.getCategories({ signal: this._abortCtrl.signal });
       
       runInAction(() => {     
         this._setCategories(response.data);

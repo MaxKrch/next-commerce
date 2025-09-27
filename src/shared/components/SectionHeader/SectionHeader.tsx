@@ -6,7 +6,7 @@ import Text from '@components/Text';
 
 export type SectionHeaderProps = {
   title: string;
-  content: string;
+  content: string[];
   className?: string;
 };
 
@@ -26,12 +26,15 @@ const SectionHeader: FC<SectionHeaderProps> = ({
       >
         {title}
       </Text>
-      <Text 
-        color="secondary" 
-        view="p-20" 
-        className={clsx(style['section-header__content'])}>
-        {content}
-      </Text>
+      {content.map(item => (
+        <Text
+          key={item} 
+          color="secondary" 
+          view="p-20" 
+          className={clsx(style['section-header__content'])}
+        >
+        {item}
+      </Text>))}
     </div>
   );
 };

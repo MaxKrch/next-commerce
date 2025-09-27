@@ -2,13 +2,13 @@
 
 import useLocalStore from "@store/hooks/useLocalStore"
 import ProductsStore from "@store/local/ProductsStore/ProductsStore"
-import React, { createContext, PropsWithChildren, useRef } from "react"
+import React, { createContext, PropsWithChildren } from "react"
 import { useRootStore } from "./RootStoreContext"
 import { useStrictContext } from "@hooks/useSctrictContext"
 
 const ProductsContext = createContext<ProductsStore | null>(null)
 
-export const ProductsStoreInnerProvider: React.FC<PropsWithChildren> = ({children}) => {
+const ProductsStoreInnerProvider: React.FC<PropsWithChildren> = ({children}) => {
     const rootStore = useRootStore()
     const store = useLocalStore(() => new ProductsStore({
         rootStore

@@ -1,4 +1,5 @@
 import { QueryParams } from "@model/query-params";
+import { console } from "inspector";
 import { action, computed, makeObservable, observable } from "mobx";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import qs from "qs";
@@ -109,13 +110,21 @@ export default class QueryParamsStore {
     
     private _setQueryParams(params: QueryParams): void {
         if(params.categories) {
-            this._categories = params.categories.length > 1
-                ? params.categories
-                : undefined;
+            if(Array.isArray(params.categories)) {
+                this._categories = params.categories.length > 0
+                    ? params.categories.map(Number)
+                    : undefined
+
+            } else {
+                const categoryNumber = Number(params.categories)
+                this._categories = !Number.isNaN(categoryNumber)
+                    ? [categoryNumber]
+                    : undefined;   
+            }
         }
 
-        if(params.query) {
-            this._query = params.query.length > 1
+        if(params.query !== undefined && params.query !== null) {
+            this._query = params.query.length > 0
                 ? params.query
                 : undefined;
         }

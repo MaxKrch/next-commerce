@@ -19,7 +19,7 @@ type PrivateFields =
     | '_requestId' 
     | '_setProducts';
 
-export type ProductInitData = {
+export type ProductsInitData = {
     success: true,
     products: ProductApiType[],
     query: string,
@@ -110,7 +110,7 @@ export default class ProductsStore implements ILocalStore {
     );
   }
 
-  setInitData = (init: ProductInitData): void => {
+  setInitData = (init: ProductsInitData): void => {
     if(!init.success) {
         this._status = META_STATUS.ERROR;
         this._error = init.error;
@@ -124,6 +124,10 @@ export default class ProductsStore implements ILocalStore {
 
   getProductbyId(id: ProductType['id']): ProductType | undefined {
     return this._products.entities[id];
+  }
+
+  findProductByDocumentId(documentId: ProductType['documentId']): ProductType | undefined {
+    return this.products.find(item => item.documentId === documentId)
   }
 
   resetProductList(): void {
@@ -149,8 +153,7 @@ export default class ProductsStore implements ILocalStore {
 
     try {
       const response = await this._rootStore.api.products.getProductList(
-        params,
-        this._abortCtrl.signal,
+        params, {signal: this._abortCtrl.signal }
       );
 
       runInAction(() => {
