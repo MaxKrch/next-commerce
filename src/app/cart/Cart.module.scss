@@ -1,0 +1,17 @@
+@use '@style/variables' as *;
+@use '@style/mixins' as *;
+
+.cart {
+    @include content-container();
+    @include base-adaptive-font-size();
+    margin-top: $space-xxl;
+    padding-bottom: $space-xxl;
+    display: flex;
+    flex-direction: column;
+    gap: $space-xxl;
+}
+
+.action-slot {
+    display: flex;
+    gap: $space-s;
+}

@@ -14,7 +14,7 @@ const roboto = Roboto({
 
 export const metadata: Metadata = {
   title: "Next-commerсe",
-  description: "Тысячи уникальных товаров с доставкой от 1 дня",
+  description: "Тысячи уникальных товаров c доставкой сегодня",
 };
 
 export default function RootLayout({

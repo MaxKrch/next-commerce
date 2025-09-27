@@ -9,8 +9,9 @@ import { ProductsStoreProvider } from "@providers/ProductsStoreProvider";
 import StepBack from "./components/StepBack";
 import ProductCard from "./components/ProductCard";
 import RelatedProducts from "./components/RelatedProducts";
+import { Metadata } from "next";
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
     const productApi = new ProductsApi(new Client())
     const { id } = await params;
     try {
@@ -22,10 +23,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
         return {
             title: response.data.title,
             description: response.data.description,
-            openGraph: {
-                images: [response.data.images],
-            },
-        }
+         }
 
     } catch {
         return {

@@ -8,10 +8,31 @@ $actions-width: 70px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
+   
+    &__icon {
+        &:hover {
+            color: $brand-hover
+        }
+    }
 
-.action {
-    &:hover {
-        color: $brand-hover
+    &-cart {
+        position: relative;
+
+        &__count {
+            position: absolute;
+            top: -9px;
+            right: -9px;
+            width: 18px;
+            height: 18px;
+            color: #fff;
+            pointer-events: none;
+            background-color: $brand;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0.5;
+
+        }
     }
 }

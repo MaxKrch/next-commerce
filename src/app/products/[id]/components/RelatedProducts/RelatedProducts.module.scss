@@ -7,7 +7,6 @@
     &__container {
         @include content-container();
         margin-top: 48px;
-        padding-bottom: 48px;
     }
 
     &__title {
@@ -18,6 +17,7 @@
     ul {
         display: flex;
         overflow: auto;
+        padding-bottom: 48px;
 
         @include tablet-up() {
             display: grid;

@@ -26,29 +26,27 @@ $text-primary: #000;
 $text-secondary: #afadb5;
 $text-accent: #518581;
 
+// Отсальные цвета
+$primary-bg: #f1f1f1;
+
 // Тени
 $shadow-light: 0 2px 5px 0 rgba(200, 200, 200, 0.25);
 $shadow-normal: 0 4px 10px 0 rgba(0, 0, 0, 0.25);
 $shadow-bold: 0 4px 10px 0 rgba(0, 0, 0, 0.75);
 
-// Остальное
-$primary-bg: #f1f1f1;
-$card-min-width: 300px;
-$card-max-width: 600px;
-
-
-
-// Переменные для section title
+// Общие размеры элементов
 $section-title-base: 28px;
 $section-title-mobile: 30px;
 $section-title-tablet: 32px;
 $section-title-laptop-up: 34px;
 
-// Общие размеры элементов
 $page-container-min-width: 320px;
 $page-container-max-width: 1240px;
 $page-container-width: 100%;
 $page-container-padding-x: $space-xxs;
+
+$card-min-width: 300px;
+$card-max-width: 600px;
 
 $control-field-heihgt: 42px;
 $control-field-width: 300px;
@@ -56,23 +54,4 @@ $control-field-width: 300px;
 $border-radius-primary: 4px;
 $border-radius-secondary: 2px;
 
-
-// Переменные Checkbox 
-$checkbox-bg: #fff;
-$checkbox-bg-hover: #fff;
-$checkbox-bg-disabled: rgba(255, 255, 255, 0.5);
-
-$checkbox-border-color: #fff;
-$checkbox-border-color-hover: $brand;
-$checkbox-border-color-disabled: rgba(255, 255, 255, 0);
-
-$checkbox-check-color: $brand;
-$checkbox-check-color-hover: $brand;
-$checkbox-check-color-disabled: $brand-disabled;
-
-$checkbox-size: $control-field-heihgt;
-
-
-// Переменные Loader 
-$loader-default-color: $brand;
 

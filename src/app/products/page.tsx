@@ -10,8 +10,9 @@ import ProductList from "./components/ProductList";
 import qs from "qs";
 import ProductPagination from "./components/ProductPagination";
 import ProductSearch from "./components/ProductSearch";
+import { Metadata } from "next";
 
-export const textdata = {
+export const sectionText = {
   title: "Товары",
   description: [
     'Мы собрали для вас самые горячие новинки сезона',
@@ -19,9 +20,9 @@ export const textdata = {
   ]
 }   
 
-export const metadata = {
-  title: "Список товаров",
-  description: "Каталог самых горячих новинок сезона - тысячи товаров для вас",
+export const metadata: Metadata = {
+  title: "Каталок товаров",
+  description: "Самые горячие новинки сезона - тысячи товаров специально для вас",
 }
 
 type ProductsPageProps = {
@@ -59,7 +60,7 @@ export default async function ProductsPage ({searchParams}: ProductsPageProps) {
     return (
         <div>
             <ProductsStoreProvider>
-                <SectionHeader title={textdata.title} content={textdata.description} />
+                <SectionHeader title={sectionText.title} content={sectionText.description} />
                 <ProductSearch />
                 <ProductList initData={initData}/>
                 <ProductPagination />

@@ -1,0 +1,56 @@
+@use '@style/variables' as *;
+@use '@style/mixins' as *;
+
+.instock {
+    background-color: #fff;
+    box-shadow: $shadow-normal;
+    border-radius: $border-radius-primary;
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: $space-xl;
+        padding: $space-s;
+    }
+
+    &__card {
+        border-bottom: 1px solid $brand;
+    }
+}
+
+.content-slot {
+    display: flex;
+    gap: $space-s;
+
+    &__title {
+        font-size: 1em;
+        color: $brand;
+    }
+
+    &__value {
+        font-size: 1.5em;
+    }
+}
+
+
+.list {
+    background-color: #fff;
+    box-shadow: $shadow-normal;
+    border-radius: $border-radius-primary;
+    display: flex;
+    flex-direction: column;
+    gap: $space-l;
+    display: flex;
+    flex-direction: column;
+    gap: $space-xl;
+    padding: $space-s;
+}
+
+.title {
+    padding: $space-xl;
+}
+
+.card {
+    border-bottom: 1px solid $brand;
+    opacity: 0.75;
+}
