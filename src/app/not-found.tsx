@@ -38,11 +38,11 @@ export default function NotFoundPage () {
                 </Text>
             </main>
             <footer className={clsx(style['error__footer'])}>
-                <Button className={clsx(style['error__button'])}>
-                    <Link href={appRoutes.products.list.create()}>
-                        Да, хочу!   
-                    </Link> 
-                </Button>
+                <Link href={appRoutes.products.list.create()}>
+                    <Button className={clsx(style['error__button'])}>
+                        Да, хочу! 
+                    </Button>  
+                </Link> 
             </footer>            
         </article>
     )
