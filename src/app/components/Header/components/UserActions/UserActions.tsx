@@ -22,7 +22,7 @@ const UserActions = () => {
 
   return (
     <div className={clsx(style['actions'])}>
-      <div className={clsx(style['actions-cart'])}>
+      <div className={clsx(style['actions-cart'], style['actions__item'])}>
         <Link href={appRoutes.cart.create()}>
           <BagIcon className={clsx(style['actions__icon'])} />
         </Link>
@@ -32,7 +32,7 @@ const UserActions = () => {
           </Text>
         }
       </div>
-      <Link href={appRoutes.cart.create()}>
+      <Link href={appRoutes.cart.create()} className={clsx(style['actions__item'])}>
         <UserIcon className={clsx(style['actions__icon'])} />
       </Link>
     </div>

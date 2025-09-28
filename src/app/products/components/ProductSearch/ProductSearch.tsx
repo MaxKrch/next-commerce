@@ -39,6 +39,7 @@ const ProductSearch = () => {
     }
   }, [categoriesStore])
 
+
   return (
     <div className={clsx(style['search'])}>
       <div className={clsx(style['query'])}>

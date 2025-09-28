@@ -153,7 +153,7 @@ $base-line-height: 150%;
     gap: $base-gap;
     grid-template-areas:
         'image main'
-        'image content'
+        'image price'
         'action action';
 
     @include tablet-up() {
@@ -182,7 +182,7 @@ $base-line-height: 150%;
     }
 
     &__footer {
-        display: footer;
+        display: contents;
         padding: $base-gap;
 
         @include tablet-up() {
@@ -193,8 +193,8 @@ $base-line-height: 150%;
         }
     }
 
-    &__content-clot {
-        grid-area: content;
+    &__price-slot {
+        grid-area: price;
 
     }
 

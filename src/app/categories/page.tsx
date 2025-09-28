@@ -43,7 +43,7 @@ export default async function CategoriesPage () {
             error: err instanceof Error ? err.message : "UnknownError"
         }
     }
-    console.log(initData)
+
     return (
         <div>
             <SectionHeader title={sectionText.title} content={sectionText.description} />

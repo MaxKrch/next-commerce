@@ -1,10 +1,13 @@
 @use '@style/variables' as *;
 @use '@style/mixins' as *;
 
-$action-padding: 12px;
+$action-padding: 8px;
 $action-icon-size: 24px;
 $action-sizes: calc(2 * $action-padding + $action-icon-size);
 $actions-width: calc(2 * $action-sizes);
+$actions-tablet-up-gap: $space-l;
+$actions-tablet-up-width: calc($actions-width + $actions-tablet-up-gap);
+
 
 
 .actions {
@@ -12,7 +15,16 @@ $actions-width: calc(2 * $action-sizes);
     display: flex;
     align-items: center;
     justify-content: space-between;
-   
+
+    @include tablet-up() {
+        gap: $actions-tablet-up-gap;
+        width: $actions-tablet-up-width;
+    }
+
+    &__item {
+        flex-shrink: 0;
+    }
+    
     &__icon {
         padding: $action-padding;
         height: $action-sizes;
