@@ -5,12 +5,12 @@
     @include base-adaptive-font-size();
     width: 100%;
     background-color: #fff;
+    overflow: hidden;
 
     &:hover {
         box-shadow: $shadow-normal;
         transition: box-shadow 0.3s;
         border-radius: $border-radius-primary;
-        overflow: hidden;
     }
     
     &__image {

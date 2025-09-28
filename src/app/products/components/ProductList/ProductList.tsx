@@ -85,8 +85,8 @@ const ProductList: React.FC<ProductListprops> = ({initData}) => {
     case notFoundProducts: {
       content = (
         <div className={clsx(style['product-list__not-found'])}>
-          <Text view='title'>
-            Под ваше описание ничего не найдено
+          <Text view='title' className={clsx(style['product-list-title__name'])}>
+            Ничего не найдено
           </Text>
           <Text view='p-20'>
             Поробуйте изменить запрос 
