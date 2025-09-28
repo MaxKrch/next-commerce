@@ -6,16 +6,22 @@ import style from './Loader.module.scss';
 export type LoaderProps = {
   size?: 's' | 'm' | 'l';
   className?: string;
+  color?: 'primary' | 'secondary'
 };
 
 const sizeClasses = {
-  s: style['size-s'],
-  m: style['size-m'],
-  l: style['size-l'],
+  s: style['loader-size_s'],
+  m: style['loader-size_m'],
+  l: style['loader-size_l'],
 } as const;
 
-const Loader: React.FC<LoaderProps> = ({ size = 'l', className }) => {
-  const classes = clsx(style['loader'], sizeClasses[size], className);
+const colorClasse = {
+  primary: style['loader-color_primary'],
+  secondary: style['loader-color_secondary'],
+} as const
+
+const Loader: React.FC<LoaderProps> = ({ size = 'l', color = 'primary', className }) => {
+  const classes = clsx(style['loader'], sizeClasses[size], style[color], className);
 
   return (
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className={classes}>

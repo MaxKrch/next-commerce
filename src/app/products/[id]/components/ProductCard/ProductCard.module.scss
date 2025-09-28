@@ -20,4 +20,8 @@
     @include mobile-up() {
         justify-content: start;
     }
+
+    &__button {
+        min-width: $button-min-width;
+    }
 }

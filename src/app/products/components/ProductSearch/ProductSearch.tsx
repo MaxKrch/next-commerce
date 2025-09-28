@@ -13,11 +13,12 @@ import SearchIcon from '@components/icons/SearchIcon';
 import MultiDropdown from '@components/MultiDropdown';
 import { useProductsStore } from '@providers/ProductsStoreProvider';
 import { useRootStore } from '@providers/RootStoreContext';
+import Loader from '@components/Loader';
 
 const ProductSearch = () => {
   const { categoriesStore, queryParamsStore } = useRootStore();
   const searchStore = useSearchStore();
-  const prodactsStore = useProductsStore()
+  const productsStore = useProductsStore()
 
   const handleCrossInputClick = useCallback(() => {
     searchStore.changeInput('');
@@ -29,8 +30,8 @@ const ProductSearch = () => {
 
   const handleSearchClick = useCallback(() => {
     const params = queryParamsStore.queryObject;
-    prodactsStore.fetchProducts(params)
-  }, [queryParamsStore.queryString, prodactsStore])
+    productsStore.fetchProducts(params)
+  }, [queryParamsStore.queryString, productsStore])
 
   useEffect(() => {
     if(categoriesStore.status === META_STATUS.IDLE) {
@@ -59,12 +60,15 @@ const ProductSearch = () => {
 
         <Button
           onClick={handleSearchClick}
-          disabled={false}
+          disabled={productsStore.status === META_STATUS.PENDING}
           className={clsx(style['query-button'])}
           name="searchButton"
         >
-          <SearchIcon className={clsx(style['query-button-icon'])} />
-          {<div className={clsx(style['query-button-text'])}>Найти</div>}
+          {productsStore.status === META_STATUS.PENDING 
+            ? <Loader size='s' className={clsx(style['query-button__icon'])}/>
+            : <SearchIcon className={clsx(style['query-button__icon'])} />
+          }
+          {<div className={clsx(style['query-button__text'])}>Найти</div>}
         </Button>
       </div>
       <div className={clsx(style['filter'])}>

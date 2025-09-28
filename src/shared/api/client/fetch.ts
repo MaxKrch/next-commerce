@@ -33,10 +33,11 @@ export default class FetchClient implements IClient {
             const response = await fetch(this.createFullUrl(url), {
                 headers: {...this.headers, ...headers},
                 signal,
-                next
+                next,
             })
+
             if(!response.ok) {
-                throw new Error('FetchError')
+                throw new Error(response.statusText)
             }
             const data = response.json() as T;
             return data ;
@@ -52,11 +53,11 @@ export default class FetchClient implements IClient {
                 headers: {...this.headers, ...headers},
                 body: JSON.stringify(body),
                 signal,
-                next
+                next,
             })
 
             if(!response.ok) {
-                throw new Error('FetchError')
+                throw new Error(response.statusText)
             }
             const data = await response.json() as T;
             return data;

@@ -29,11 +29,10 @@ const Card: React.FC<CardProps> = ({
   const { images, description, title } = product;
   const href = appRoutes.products.details.create(product.documentId);
   const imageSizes = getCardImageSizes(display);
-  const imgWrapperClasses = clsx(style['card__image-wrapper'], style[`${display}__image-wrapper`])
 
   return (
     <article className={clsx(style['card'], style[display], className)}>
-      <div className={imgWrapperClasses}>      
+      <div className={clsx(style['card__image-wrapper'], style[`${display}__image-wrapper`])}>      
         {display === 'full' ? (
           <ImageGalery images={images} sizes={imageSizes} />
         ) : (

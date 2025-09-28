@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     const productApi = new ProductsApi(new Client())
     const { id } = await params;
     try {
-        const response = await productApi.getProductDetails(id, {next: { revalidate: 120 }});
+        const response = await productApi.getProductDetails(id, {next: { revalidate: 60 }});
         if(!isStrapiSuccessResponseProducts(response)) {
             throw response;
         }

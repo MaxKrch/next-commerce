@@ -34,6 +34,7 @@ export default class CategoriesStore implements ICategoriesStore {
   private _meta: MetaResponse<CategoriesApi[]> | null = null;
   private _abortCtrl: AbortController | null = null;
   private _error: string | null = null;
+  private _isInitialized = false;
   _list: Collection<ProductCategoryType['id'], ProductCategoryType> = getInitialCollection();
 
   constructor(api: CategoriesApi) {
@@ -84,6 +85,12 @@ export default class CategoriesStore implements ICategoriesStore {
   }
 
   setInitData(init: CategoriesInitData): void {
+    if(this._isInitialized) {
+      return;
+    } 
+
+    this._isInitialized = true;
+
     if(!init.success) {
       this._error = init.error;
       this._status = META_STATUS.ERROR;
@@ -94,6 +101,10 @@ export default class CategoriesStore implements ICategoriesStore {
     this._status = META_STATUS.SUCCESS;
     this._meta
     this._setCategories(init.categories)
+  }
+
+  setCategories(categories: ProductCategoryApiType[]): void {
+    this._setCategories(categories)
   }
 
   getCategoryById(id: ProductCategoryType['id']): ProductCategoryType | undefined {

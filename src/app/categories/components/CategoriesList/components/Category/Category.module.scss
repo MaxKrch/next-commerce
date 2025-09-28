@@ -1,0 +1,40 @@
+@use '@style/variables' as *;
+@use '@style/mixins' as *;
+
+.category {
+    @include base-adaptive-font-size();
+    width: 100%;
+    background-color: #fff;
+
+    &:hover {
+        box-shadow: $shadow-normal;
+        transition: box-shadow 0.3s;
+        border-radius: $border-radius-primary;
+        overflow: hidden;
+    }
+    
+    &__image {
+        object-fit: cover;
+        object-position: center;
+        width: 100%;
+
+        &-wrapper {
+            position: relative;
+            aspect-ratio: 1 / 1;
+        }
+    }
+    
+    &__link {
+        cursor: pointer;
+    }
+    
+    &__description {
+        min-height: 150px;
+        text-align: center;
+        color: $brand;
+        font-size: 2em;
+        padding-top: $space-xxl;
+    }
+}
+
+             

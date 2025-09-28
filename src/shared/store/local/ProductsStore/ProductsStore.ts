@@ -38,6 +38,7 @@ export default class ProductsStore implements ILocalStore {
   private _abortCtrl: AbortController | null = null;
   private _rootStore: RootStore;
   private _error: string | null = null;
+  private _isInitialized = false;
   reactions: IReactionDisposer[]
 
   constructor({
@@ -111,6 +112,12 @@ export default class ProductsStore implements ILocalStore {
   }
 
   setInitData = (init: ProductsInitData): void => {
+    if(this._isInitialized) {
+      return;
+    } 
+
+    this._isInitialized = true;
+
     if(!init.success) {
         this._status = META_STATUS.ERROR;
         this._error = init.error;

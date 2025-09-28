@@ -12,10 +12,10 @@ export type ProductInCart = {
   quantity: number;
 };
 
-export type AwaitingSynchProduct = Record<
-  ProductType['id'],
-  {
+export type AwaitingSynchProduct = {
+  [key: number]: {
     lastSynchQuantity: number;
     debounce: ReturnType<typeof setTimeout> | null;
+    abortCtrl: AbortController | null;
   }
->;
+};

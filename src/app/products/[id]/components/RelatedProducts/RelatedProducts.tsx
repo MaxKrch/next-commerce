@@ -74,6 +74,8 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({ initData }) => {
   const isFailedRequest = productsStore.status === META_STATUS.ERROR 
     || (productsStore.status === META_STATUS.SUCCESS && productDetailsStore.product?.documentId !== prevProduct.current)
 
+  const notFoundProducts = productsStore.status === META_STATUS.SUCCESS && productsStore.products.length === 0
+
   const showRelatedProducts = productsStore.status === META_STATUS.SUCCESS 
     && productDetailsStore.status === META_STATUS.SUCCESS 
     && productDetailsStore.product?.documentId === prevProduct.current
@@ -84,9 +86,18 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({ initData }) => {
     case isFailedRequest: {
       content = (
         <NetworkError
-            ContentSlot={DefaultNetworkErrorContentSlot}
-            ActionSlot={() => <DefaultNetworkErrorActionSlot action={refetch} />}
-          />
+          ContentSlot={DefaultNetworkErrorContentSlot}
+          ActionSlot={() => <DefaultNetworkErrorActionSlot action={refetch} />}
+        />
+      )
+      break;
+    }
+
+    case notFoundProducts: {
+      content = (
+        <Text>
+          Похожие товары не найдены, похоже - это что-то уникальное
+        </Text>
       )
       break;
     }

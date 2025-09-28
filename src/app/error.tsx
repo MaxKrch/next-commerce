@@ -1,9 +1,60 @@
 "use client"
 
-export default function Error () {
+import clsx from "clsx";
+import style from './app.module.scss'
+import Text from "@components/Text";
+import Image from "next/image";
+import Button from "@components/Button";
+import { Metadata } from "next";
+import Link from "next/link";
+import { appRoutes } from "@constants/app-routes";
+
+export const metadata: Metadata = {
+  title: "Страница ошибки",
+}
+
+export default function ErrorPage ({ reset }: { reset: () => void }) {
     return(
-        <div>
-            err
-        </div>
+        <article className={clsx(style['error'])}>
+            <header className={clsx(style['error__header'])}>
+                <Text view="title">
+                    Что-то пошло не так...
+                </Text> 
+            </header>
+            <main className={clsx(style['error__body'])}>
+                <div className={clsx(style['error__image-container'])}>
+                    <Image
+                        src='/error.png'
+                        priority
+                        sizes="(max-width: 768px) 100vw, 768px" 
+                        fill
+                        alt='notFound'
+                        className={clsx(style['error__image'])}
+                    />
+                </div>
+                <Text className={clsx(style['error__description'])}>
+                    Совесм скоро найдем виновнкиа и все исправим! 
+                </Text>
+                <Text className={clsx(style['error__description'])}>
+                    Хотите попробовать снова или перейди на главную страницу?
+                </Text>
+            </main>
+            <footer className={clsx(style['error__footer'])}>
+                <Button
+                    onClick={reset} 
+                    className={clsx(style['error__button'])}
+                >
+                    Попробовать снова   
+                </Button>
+                <Button 
+                    priority="secondary" 
+                    className={clsx(style['error__button'])}
+                >
+                    <Link href={appRoutes.main.create()}>
+                        На главную
+                    </Link>
+                </Button>
+            </footer>            
+        </article>
     )
 }

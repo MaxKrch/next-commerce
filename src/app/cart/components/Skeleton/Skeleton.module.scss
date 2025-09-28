@@ -4,12 +4,24 @@
 $bg-color: rgb(255 255 255 / 0.5);
 $text-bg-color: rgb(125 125 125 / 0.25);
 
-.list {
+.skeleton {
     @include base-adaptive-font-size();
+    padding: 0.5em;
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 1.5em;
-    padding: 0.5em;
+
+    @include tablet-up() {
+        flex-direction: row;
+    }
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    width: 100%;
 
     &-card {
         display: flex;
@@ -33,7 +45,7 @@ $text-bg-color: rgb(125 125 125 / 0.25);
             @include pulse-gradient()
         }
 
-        &-img {
+        &__img {
             width: 100%;
             aspect-ratio: 1/1;
             flex-shrink: 0;
@@ -45,7 +57,7 @@ $text-bg-color: rgb(125 125 125 / 0.25);
             }
         }
 
-        &-content {
+        &__content {
             flex-basis: 100%;
             background-color: $bg-color;
             position: relative;
@@ -54,32 +66,36 @@ $text-bg-color: rgb(125 125 125 / 0.25);
             flex-direction: column;
             gap: $space-xxl;
             padding: 1.5em;
+        }
 
-            &-title {
-                height: 1.2em;
-                width: 90%;
-                background-color: $text-bg-color;
-            }
+        &__title {
+            height: 1.2em;
+            width: 90%;
+            background-color: $text-bg-color;
+        }
 
-            &-description {
-                height: 3em;
-                width: 75%;
-                background-color: $text-bg-color;
-            }
+        &__description {
+            height: 3em;
+            width: 75%;
+            background-color: $text-bg-color;
+        }
 
 
-            &-button {
-                width: 50%;
-                height: 2em;
-                background-color: $text-bg-color;
-            }
+        &__button {
+            width: 50%;
+            height: 2em;
+            background-color: $text-bg-color;
         }
     }
 }
 
 .summary {
+    position: sticky;
+    top: 110px;
+    height: min-content;
     border-radius: $border-radius-primary;
-    position: relative;
+    overflow: hidden;
+    min-width: 300px;;;
 
     &::before {
         content: '';
@@ -88,10 +104,10 @@ $text-bg-color: rgb(125 125 125 / 0.25);
         left: 0;
         width: 100%;
         height: 100%;
-        @include pulse-gradient()
+        @include pulse-gradient();
     }
 
-    &-body {
+    &__body {
         display: flex;
         flex-direction: column;
         gap: 1rem;
@@ -102,29 +118,29 @@ $text-bg-color: rgb(125 125 125 / 0.25);
         z-index: 1;
         width: 100%;
         height: 100%;
+    }
 
-        &-title {
-            min-width: 150px;
-            max-width: 550px;
-            width: 50%;
-            height: 2em;
-            background-color: $text-bg-color;
-        }
+    &__title {
+        min-width: 150px;
+        max-width: 550px;
+        width: 50%;
+        height: 2em;
+        background-color: $text-bg-color;
+    }
 
-        &-content {
-            min-width: 200px;
-            max-width: 700px;
-            width: 100%;
-            height: 1.5em;
-            background-color: $text-bg-color;
-        }
+    &__content {
+        min-width: 200px;
+        max-width: 700px;
+        width: 100%;
+        height: 1.5em;
+        background-color: $text-bg-color;
+    }
 
-        &-button {
-            min-width: 250px;
-            max-width: 550px;
-            width: 100%;
-            height: 2em;
-            background-color: $text-bg-color;
-        }
+    &__button {
+        min-width: 250px;
+        max-width: 550px;
+        width: 100%;
+        height: 2em;
+        background-color: $text-bg-color;
     }
 }

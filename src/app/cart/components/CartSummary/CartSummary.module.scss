@@ -1,7 +1,7 @@
 @use '@style/variables' as *;
 @use '@style/mixins' as *;
 
-.container {
+.summary {
     display: flex;
     flex-direction: column;
     gap: $space-xxxl;
@@ -9,22 +9,25 @@
     border-radius: $border-radius-primary;
     box-shadow: $shadow-normal;
     padding: $space-l;
-}
-
-.title {
-    border-bottom: 3px solid $brand;
-    padding: $space-xs;
-}
+    position: sticky;
+    top: 100px;
 
 
-.total {
-    box-shadow: inset $shadow-light;
-    display: flex;
-    background-color: $primary-bg;
-    padding: $space-xs;
-    border-radius: $border-radius-primary;
+    &__title {
+        border-bottom: 3px solid $brand;
+        padding: $space-xs;
+    }
 
-    &-title {
-        flex-basis: 200px;
+
+    &__total {
+        box-shadow: inset $shadow-light;
+        display: flex;
+        background-color: $primary-bg;
+        padding: $space-xs;
+        border-radius: $border-radius-primary;
+
+        &-title {
+            flex-basis: 200px;
+        }
     }
 }

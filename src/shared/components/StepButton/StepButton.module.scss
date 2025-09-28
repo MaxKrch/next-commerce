@@ -1,13 +1,12 @@
 @use '@style/variables' as *;
 @use '@style/mixins' as *;
 
-$button-height: 48px;
 
 .button {
     display: flex;
     align-items: center;
     gap: $space-xs;
-    height: $button-height;
+    height: $control-field-heihgt;
     color: $text-primary;
     border-bottom: 2px solid transparent;
 

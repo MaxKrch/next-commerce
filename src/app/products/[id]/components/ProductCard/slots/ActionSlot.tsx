@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { appRoutes } from '@constants/app-routes';
 import Button from '@components/Button';
 import { useRootStore } from '@providers/RootStoreContext';
+import DefaultCardActionSlot from '@components/Card/slots/DefaultCardActionSlot';
 
 const ActionSlot: React.FC<{ product: ProductType }> = ({ product }) => {
   const { cartStore } = useRootStore();
@@ -28,10 +29,8 @@ const ActionSlot: React.FC<{ product: ProductType }> = ({ product }) => {
 
   return (
     <div className={clsx(style['action-slot'])}>
-      <Button onClick={() => handlePrimaryBtn(product)}>Купить</Button>
-      <Button priority="secondary" onClick={() => handleSecondBtn(product)}>
-        В корзину
-      </Button>
+      <Button className={clsx(style['action-slot__button'])} onClick={() => handlePrimaryBtn(product)}>Купить</Button>
+      <DefaultCardActionSlot priority='secondary' product={product}/>
     </div>
   );
 };

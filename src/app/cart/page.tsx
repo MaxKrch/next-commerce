@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 import type React from 'react';
 import style from './Cart.module.scss';
 import CartSummary from './components/CartSummary';
-import InStockProducts from './components/CartProducts';
+import CartProducts from './components/CartProducts';
 import Skeleton from './components/Skeleton';
 import { useRootStore } from '@providers/RootStoreContext';
 import { META_STATUS } from '@constants/meta-status';
@@ -38,9 +38,8 @@ const CartPage: React.FC = () => {
       )}
       {cartStore.status === META_STATUS.SUCCESS && (
         <>
-          <InStockProducts />
-          {/* <OutOfStock /> */}
-          {/* <CartSummary />  */}
+          <CartProducts className={clsx(style['cart-products'])} />
+          <CartSummary className={clsx(style['cart-summary'])}/> 
         </>
       )}
     </div>

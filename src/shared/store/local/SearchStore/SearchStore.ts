@@ -94,6 +94,7 @@ export default class SearchStore implements ILocalStore {
   }
 
   private _setInitData(): void {
+   
     this._inputValue = this._rootStore.queryParamsStore.query ?? '';
     this._selectedCategories = this._rootStore.queryParamsStore.categories ?? []
   }

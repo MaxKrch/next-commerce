@@ -1,5 +1,4 @@
 import { QueryParams } from "@model/query-params";
-import { console } from "inspector";
 import { action, computed, makeObservable, observable } from "mobx";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import qs from "qs";

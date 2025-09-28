@@ -6,3 +6,59 @@
     width: 100%;
     min-height: 100vh;
 }
+
+ .error {
+    @include content-container();
+    @include base-adaptive-font-size();
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-l;
+    padding: $space-l;
+    
+    &__header {
+        font-size: 1.5em;
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: $space-xs; 
+
+    }
+    
+    &__image {
+        object-fit: cover;
+        
+        &-container {
+            aspect-ratio: 3 / 2;
+            position: relative;
+            max-width: 768px;
+            width: 100%;
+        }
+    }
+
+    &__footer {
+        display: flex;
+        padding: $space-l;
+        gap: $space-s;
+    }
+}
+
+.loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(255 255 255 / 0.25);
+
+    &__icon {
+        color: $brand;
+    }
+}

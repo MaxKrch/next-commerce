@@ -33,10 +33,15 @@ export default async function ProductsPage ({searchParams}: ProductsPageProps) {
     let initData: ProductsInitData; 
 
     const params = await searchParams;
+    const categories = params.categories;
+    if(categories && !Array.isArray(categories)) {
+        params.categories = [categories]
+    }
     const productsApi = new ProductsApi(new Client);
     const queryString = qs.stringify(params, { arrayFormat: 'repeat' });
+  
     try {
-        const response = await productsApi.getProductList(params, {})
+        const response = await productsApi.getProductList(params, { next: { cache: "no-store" }})
         
         if(!isStrapiSuccessResponseProducts(response)) {
             throw response;

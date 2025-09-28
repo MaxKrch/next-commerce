@@ -1,5 +1,5 @@
 import { clsx } from 'clsx';
-import React, { memo,  type ReactNode } from 'react';
+import React from 'react';
 import style from './CardList.module.scss';
 import Card, { CardProps } from '@components/Card/Card';
 import { ProductType } from '@model/products';
@@ -37,4 +37,4 @@ const CardList: React.FC<CardListProps> = ({
   );
 };
 
-export default memo(CardList);
+export default CardList;

@@ -19,7 +19,7 @@ $logo-width-withaout-name: 42px;
 .name {
     width: 0;
     overflow: hidden;
-
+    
     @include tablet-up() {
         width: auto;
     }

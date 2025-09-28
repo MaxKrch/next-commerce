@@ -27,7 +27,7 @@ const UserActions = () => {
           <BagIcon className={clsx(style['actions__icon'])} />
         </Link>
         {cartStore.totalItemsToOrder > 0 &&
-          <Text weight='bold' view='p-14' className={clsx(style['actions-cart__count'])}>
+          <Text weight='bold' className={clsx(style['actions-cart__count'])}>
             {cartStore.totalItemsToOrder}
           </Text>
         }

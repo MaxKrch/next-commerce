@@ -31,8 +31,10 @@ $base-line-height: 150%;
         }
 
         &-link {
-            display: inline-block;
+            display: block;
+            height: 100%;
             width: 100%;
+            position: relative;
         }
     }
 
@@ -42,6 +44,8 @@ $base-line-height: 150%;
         gap: $base-gap;
         padding: $base-gap;
     }
+
+
 }
 
 
@@ -52,6 +56,7 @@ $base-line-height: 150%;
     padding-bottom: calc($base-gap * 2);
     background: $preview-card-bg;
     border-radius: $border-radius-primary;
+    overflow: hidden;
 
     &:hover {
         box-shadow: $shadow-normal;
@@ -79,7 +84,7 @@ $base-line-height: 150%;
     &__footer {
         display: flex;
         justify-content: space-between;
-        vertical-align: center;
+        align-items: center;
         margin-top: calc($base-gap * 3);
         padding: 0 $base-gap;
     }
@@ -157,17 +162,19 @@ $base-line-height: 150%;
             'image footer';
     }
 
-    &__img {
-        width: 100px;
-        grid-area: image;
+    &__image {
+        &-wrapper {
+            width: 100px;
+            grid-area: image;
 
-        @include mobile-only() {
-            width: 150px;
-        }
+            @include mobile-only() {
+                width: 150px;
+            }
 
-        @include tablet-up() {
-            width: 250px;
-        }
+            @include tablet-up() {
+                width: 250px;
+            }   
+        }        
     }
 
     &__main {
@@ -175,7 +182,7 @@ $base-line-height: 150%;
     }
 
     &__footer {
-        display: contents;
+        display: footer;
         padding: $base-gap;
 
         @include tablet-up() {
@@ -195,5 +202,12 @@ $base-line-height: 150%;
         grid-area: action;
 
     }
+}
 
+.action-slot__button {
+    min-width: $button-min-width;
+}
+
+.price-slot {
+    font-size: 1.5em;
 }
