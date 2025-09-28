@@ -4,7 +4,6 @@ import Pagination from '@components/Pagination';
 import normalizeCurrentPage from '@components/Pagination/utils/normalize-current-page';
 import { useProductsStore } from '@providers/ProductsStoreProvider';
 import { useRootStore } from '@providers/RootStoreContext';
-import QueryParamsStore from '@store/global/QueryParams';
 import { observer } from 'mobx-react-lite';
 import type React from 'react';
 import { useCallback, useEffect, useMemo } from 'react';

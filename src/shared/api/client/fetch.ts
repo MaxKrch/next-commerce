@@ -46,7 +46,7 @@ export default class FetchClient implements IClient {
         }
     }
 
-    post = async <T = unknown, P  extends object = {}>(url: string, body: P, options: RequestOptions): Promise<T> => {
+    post = async <T = unknown, P  extends object = object>(url: string, body: P, options: RequestOptions): Promise<T> => {
         try {
             const { headers, signal, next } = options;
             const response = await fetch(this.createFullUrl(url), {

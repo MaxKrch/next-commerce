@@ -8,10 +8,11 @@ import { reaction } from "mobx";
 const useQueryParamsSync = (store: QueryParamsStore) => {
     const router = useRouter();
     const searchParams = useSearchParams();
+    const queryString = searchParams.toString()
 
     useEffect(() => {
         store.setFromSearchParams(searchParams)
-    }, [searchParams.toString(), store]);
+    }, [searchParams, queryString, store]);
 
     useEffect(() => {
         const dispose = reaction(
@@ -27,7 +28,7 @@ const useQueryParamsSync = (store: QueryParamsStore) => {
             { fireImmediately: false }
         )
         return () => dispose()
-    }, [searchParams.toString(), store, router])
+    }, [queryString, searchParams, store, router])
 }
 
 export default useQueryParamsSync

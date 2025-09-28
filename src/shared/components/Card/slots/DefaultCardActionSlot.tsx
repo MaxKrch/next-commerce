@@ -2,7 +2,7 @@
 
 import Button from "@components/Button";
 import { ProductType } from "@model/products";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import { useRootStore } from "@providers/RootStoreContext";
 import { observer } from "mobx-react-lite";
 import Counter from "@components/Counter";
@@ -28,11 +28,11 @@ const DefaultCardActionSlot: React.FC<DefaultCardActionSlot> = ({ product, prior
 
   const handleAddProduct = useCallback(() => {
       cartStore.addToCart(product);
-  }, [cartStore])
+  }, [cartStore, product])
 
   const handleRemoveProduct = useCallback(() => {
       cartStore.removeFromCart(product)
-  }, [cartStore])
+  }, [cartStore, product])
 
   return (
     <div className={clsx(style['action-slot'])}>

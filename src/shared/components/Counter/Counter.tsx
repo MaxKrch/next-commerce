@@ -7,7 +7,6 @@ import clsx from 'clsx'
 
 export type CounterProps = {
     count: number,
-    step?: number, 
     className?: string,
     priority?: 'primary' | 'secondary',
     onInc: () => void,
@@ -20,7 +19,6 @@ const Counter: React.FC<CounterProps> = ({
     onDec,
     priority,
     className,
-    step = 1
 }) => {
     return(
         <div className={clsx(style['counter'], className)}>

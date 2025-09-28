@@ -2,7 +2,7 @@
 
 import { clsx } from 'clsx';
 import { observer } from 'mobx-react-lite';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect } from 'react';
 import style from './ProductSearch.module.scss';
 import CrossIcon from '@components/icons/CrossIcon';
 import Button from '@components/Button';
@@ -31,7 +31,7 @@ const ProductSearch = () => {
   const handleSearchClick = useCallback(() => {
     const params = queryParamsStore.queryObject;
     productsStore.fetchProducts(params)
-  }, [queryParamsStore.queryString, productsStore])
+  }, [queryParamsStore.queryObject, productsStore])
 
   useEffect(() => {
     if(categoriesStore.status === META_STATUS.IDLE) {

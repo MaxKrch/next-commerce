@@ -99,7 +99,7 @@ export default class CategoriesStore implements ICategoriesStore {
     }
 
     this._status = META_STATUS.SUCCESS;
-    this._meta
+    this._meta = init.meta;
     this._setCategories(init.categories)
   }
 

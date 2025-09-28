@@ -3,7 +3,7 @@ import { ProductsStoreProvider } from "../providers/ProductsStoreProvider";
 import ProductsApi from "@api/ProductsApi";
 import Client from "@api/client";
 
-import { isStrapiSuccessResponseProducts, MetaResponse, StrapiResponseProducts } from "@model/strapi-api";
+import { isStrapiSuccessResponseProducts } from "@model/strapi-api";
 import { ProductsInitData } from "@store/local/ProductsStore/ProductsStore";
 import SectionHeader from "@components/SectionHeader";
 import ProductList from "./components/ProductList";

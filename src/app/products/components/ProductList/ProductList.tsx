@@ -59,7 +59,7 @@ const ProductList: React.FC<ProductListprops> = ({initData}) => {
     prevQueryString.current = nextQueryString;
 
     productsStore.fetchProducts(queryParamsStore.queryObject, id);
-  }, [queryParamsStore.queryString, productsStore]);
+  }, [queryParamsStore.queryObject, queryParamsStore.queryString, productsStore]);
 
   if(productsStore.error === 'NotFound' || productsStore.error === 'Not Found') {
     notFound()

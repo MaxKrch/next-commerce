@@ -22,7 +22,7 @@ const CartPage: React.FC = () => {
           cartStore.fetchCart();
           debouncer.current = setTimeout(() => debouncer.current === null, 60 * 1000)
         }
-    }, [cartStore.status])
+    }, [cartStore, cartStore.status])
     
 
   return (

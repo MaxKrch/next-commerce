@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { memo, useCallback } from 'react';
+import React, { memo } from 'react';
 import style from './Card.module.scss';
 import ImageGalery from './components/ImageGalery';
 import { ProductType } from '@model/products';

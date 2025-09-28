@@ -24,7 +24,7 @@ export default class CategoriesApi {
         try {
             const response = await this.client.get<StrapiResponseProducts<ProductCategoryApiType[]>>(
                 this._createGetCategoriesURL(),
-                { signal }
+                { signal, next }
             );
 
             if (!isStrapiSuccessResponseProducts(response)) {

@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, isCancel, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios';
+import axios, { AxiosInstance, isCancel, type AxiosResponse } from 'axios';
 import { AuthRequestConfig, RequestOptions } from '../types';
 
 export default class AxiosClient {
@@ -45,11 +45,13 @@ export default class AxiosClient {
   }
 
   get = async <T = unknown>(url: string, options?: RequestOptions): Promise<T> => {
-    const { next, ...clearedOptions } = options ?? {};
+    const { next: _next, ...clearedOptions } = options ?? {};
+    void _next
     return this.instance.get(url, clearedOptions);
   };
   post = async <T = unknown>(url: string, data?: unknown, options?: RequestOptions): Promise<T> => {
-    const { next, ...clearedOptions } = options ?? {};
+    const { next: _next, ...clearedOptions } = options ?? {};
+    void _next
     return this.instance.post(url, data, clearedOptions);
   };
 };

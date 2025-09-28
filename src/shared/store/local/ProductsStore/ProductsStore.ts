@@ -2,14 +2,14 @@ import { META_STATUS, MetaStatus } from "@constants/meta-status";
 import { Collection } from "@model/collections";
 import { ProductApiType, ProductType } from "@model/products";
 import { QueryParams } from "@model/query-params";
-import { isStrapiSuccessResponseProducts, MetaResponse, StrapiResponseProducts } from "@model/strapi-api";
+import { MetaResponse } from "@model/strapi-api";
 import { ILocalStore } from "@store/hooks/useLocalStore";
 import RootStore from "@store/RootStore/RootStore";
 import getInitialCollection from "@store/utils/get-initial-collection";
 import { linearizeCollection } from "@store/utils/linearize-collection";
 import { normalizeCollection } from "@store/utils/normalize-collection";
 import { normalizeProductList } from "@store/utils/normalize-products";
-import { action, computed, IReactionDisposer, makeObservable, observable, reaction, runInAction } from "mobx";
+import { action, computed, IReactionDisposer, makeObservable, observable, runInAction } from "mobx";
 
 type PrivateFields = 
     | '_products' 

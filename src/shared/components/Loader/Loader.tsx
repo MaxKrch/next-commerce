@@ -15,13 +15,13 @@ const sizeClasses = {
   l: style['loader-size_l'],
 } as const;
 
-const colorClasse = {
+const colorClasses = {
   primary: style['loader-color_primary'],
   secondary: style['loader-color_secondary'],
 } as const
 
 const Loader: React.FC<LoaderProps> = ({ size = 'l', color = 'primary', className }) => {
-  const classes = clsx(style['loader'], sizeClasses[size], style[color], className);
+  const classes = clsx(style['loader'], sizeClasses[size], colorClasses[color], className);
 
   return (
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className={classes}>

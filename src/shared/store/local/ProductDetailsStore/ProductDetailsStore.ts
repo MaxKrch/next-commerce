@@ -3,7 +3,7 @@ import { ProductApiType, ProductType } from '@model/products';
 import { ILocalStore } from '@store/hooks/useLocalStore';
 import RootStore from '@store/RootStore/RootStore';
 import { normalizeProductItem } from '@store/utils/normalize-products';
-import { action, computed, IReactionDisposer, makeObservable, observable, reaction, runInAction } from 'mobx';
+import { action, computed, IReactionDisposer, makeObservable, observable, runInAction } from 'mobx';
 
 type PrivateFields = 
   | '_product' 

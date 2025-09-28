@@ -12,13 +12,6 @@ const ActionSlot: React.FC<{ product: ProductType }> = ({ product }) => {
   const { cartStore } = useRootStore();
   const router = useRouter()
 
-  const handleSecondBtn = useCallback(
-    (product: ProductType) => {
-      cartStore.addToCart(product);
-    },
-    [cartStore]
-  );
-
   const handlePrimaryBtn = useCallback(
     (product: ProductType) => {
       cartStore.addToCart(product);

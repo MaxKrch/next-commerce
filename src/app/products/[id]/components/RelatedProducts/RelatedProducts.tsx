@@ -38,7 +38,7 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({ initData }) => {
         categories: [currentProduct.productCategory.id],
       })
     }
-  }, [productDetailsStore.status, productDetailsStore.product]);
+  }, [productsStore, productDetailsStore.product]);
   
   useEffect(() => {
     if(!initApplied.current && initData && productsStore.status === META_STATUS.IDLE) {
@@ -69,7 +69,7 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({ initData }) => {
         categories: productCategory
       })
     }
-  }, [productDetailsStore.status]);
+  }, [productId, productsStore, productDetailsStore, productDetailsStore.status]);
 
   const isFailedRequest = productsStore.status === META_STATUS.ERROR 
     || (productsStore.status === META_STATUS.SUCCESS && productDetailsStore.product?.documentId !== prevProduct.current)

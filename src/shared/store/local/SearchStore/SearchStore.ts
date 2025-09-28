@@ -1,5 +1,4 @@
 import { META_STATUS } from '@constants/meta-status';
-import { Collection } from '@model/collections';
 import { Option } from '@model/option-dropdown';
 import { ProductCategoryType } from '@model/products';
 import { QueryParams } from '@model/query-params';

@@ -3,9 +3,6 @@ import style from './CategoriesList.module.scss';
 import { CategoriesInitData } from '@store/global/CategoriesStore/CategoriesStore';
 import InitCategoriesStore from '../InitCategoriesStore';
 import clsx from 'clsx';
-import NetworkError from '@components/NetworkError';
-import DefaultNetworkErrorContentSlot from '@components/NetworkError/slots/DefaultNetworkErrorContentSlot';
-import DefaultNetworkErrorActionSlot from '@components/NetworkError/slots/DefaultNetworkErrorActionSlot';
 import { normalizeCategoriesList } from '@store/utils/normalize-categories';
 import Category from './components/Category';
 

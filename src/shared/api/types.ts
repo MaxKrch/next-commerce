@@ -1,4 +1,3 @@
-import { QueryParams } from "@model/query-params"
 import { InternalAxiosRequestConfig } from "axios";
 
 export type RequestOptions = {
@@ -18,6 +17,6 @@ export type AuthRequestConfig = {
 
 export interface IClient {
   get<T = unknown>(url: string, options?: RequestOptions): Promise<T>;
-  post<T = unknown, P extends object = {}>(url: string, data: P, options?: RequestOptions): Promise<T>;
+  post<T = unknown, P extends object = object>(url: string, data: P, options?: RequestOptions): Promise<T>;
 }
 

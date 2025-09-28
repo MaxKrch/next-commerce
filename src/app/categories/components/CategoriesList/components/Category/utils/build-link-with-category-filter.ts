@@ -1,5 +1,4 @@
 import { ProductCategoryType } from "@model/products";
-import Category from "../Category";
 import { appRoutes } from "@constants/app-routes";
 
 const buildLinkWithCategoryFilter = (id: ProductCategoryType['id']): string => {
