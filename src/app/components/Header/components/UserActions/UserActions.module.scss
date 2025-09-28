@@ -1,0 +1,46 @@
+@use '@style/variables' as *;
+@use '@style/mixins' as *;
+
+$action-padding: 12px;
+$action-icon-size: 24px;
+$action-sizes: calc(2 * $action-padding + $action-icon-size);
+$actions-width: calc(2 * $action-sizes);
+
+
+.actions {
+    width: $actions-width;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+   
+    &__icon {
+        padding: $action-padding;
+        height: $action-sizes;
+        width: $action-sizes;
+        &:hover {
+            color: $brand-hover
+        }
+    }
+
+    &-cart {
+        position: relative;
+
+        &__count {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 20px;
+            height: 20px;
+            color: #fff;
+            pointer-events: none;
+            background-color: $brand;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0.5;
+            font-size: 0.75em;
+
+        }
+    }
+}

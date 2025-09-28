@@ -1,0 +1,58 @@
+@use '@style/variables' as *;
+@use '@style/mixins' as *;
+
+$checkbox-bg: #fff;
+$checkbox-bg-hover: #fff;
+$checkbox-bg-disabled: rgba(255, 255, 255, 0.5);
+
+$checkbox-border-color: #fff;
+$checkbox-border-color-hover: $brand;
+$checkbox-border-color-disabled: rgba(255, 255, 255, 0);
+
+$checkbox-check-color: $brand;
+$checkbox-check-color-hover: $brand;
+$checkbox-check-color-disabled: $brand-disabled;
+
+$checkbox-size: $control-field-heihgt;
+
+.checkbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: $checkbox-size;
+    width: $checkbox-size;
+    background: $checkbox-bg;
+    border: 1px solid $checkbox-border-color;
+    border-radius: $border-radius-secondary;
+    cursor: pointer;
+    
+    &_icon {
+        flex-shrink: 0;
+        color: $checkbox-check-color;
+    }
+
+    &:not(.disabled):hover {
+        border-color: $checkbox-border-color-hover;
+    }
+    
+    &_disabled {
+        background-color: $checkbox-bg-disabled;
+        border-color: $checkbox-border-color-disabled;
+
+        .checkbox__icon {
+            color: $checkbox-check-color-disabled;
+        }
+    }
+}
+
+
+
+
+.input {
+    position: fixed;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+}
