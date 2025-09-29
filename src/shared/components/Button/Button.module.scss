@@ -29,7 +29,7 @@ $button-secondary-bg-active: #efefef;
 
 $button-height: $control-field-heihgt;
 $button-padding-x: $space-s;
-$button-padding-y: $space-l;
+$button-padding-y: $space-s;
 
 .button {
     font-size: $button-title-base;
@@ -52,7 +52,7 @@ $button-padding-y: $space-l;
     align-items: center;
     border: 1px solid transparent;
     border-radius: $border-radius-secondary;
-    padding: $button-padding-x $button-padding-y;
+    padding: $button-padding-y $button-padding-x;
     height: $button-height;
     white-space: nowrap;
     cursor: pointer;

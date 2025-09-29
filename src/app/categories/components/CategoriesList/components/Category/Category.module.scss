@@ -6,11 +6,11 @@
     width: 100%;
     background-color: #fff;
     overflow: hidden;
+    border-radius: $border-radius-primary;
 
     &:hover {
         box-shadow: $shadow-normal;
         transition: box-shadow 0.3s;
-        border-radius: $border-radius-primary;
     }
     
     &__image {

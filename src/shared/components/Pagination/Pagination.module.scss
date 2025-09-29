@@ -3,7 +3,7 @@
 
 $pagination-color: #151411;
 $item-width: 38px;
-$item-height: 42px;
+$item-height: 40px;
 
 .pagination {
     display: flex;
@@ -24,7 +24,7 @@ $item-height: 42px;
         color: $pagination-color;
         cursor: pointer;
         order: 4;
-        transition: background-color 300;
+        transition: background-color 0.3s;
 
         &_current {
             background: $brand;
@@ -61,7 +61,7 @@ $item-height: 42px;
 
         &:hover:not(.pagination__page_current, .pagination__page_disabled) {
             background: $brand-hover;
-            transition: background-color 300;
+            transition: background-color 0.3s;
         }
     }
 
