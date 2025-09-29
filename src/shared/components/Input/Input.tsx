@@ -15,7 +15,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       <div className={clsx(style['input-container'], className)}>
         <input
           {...rest}
-          className={clsx(style['input'], afterSlot && style['inpit_with-icon'])}
+          className={clsx(style['input'], afterSlot && style['input_with-icon'])}
           ref={ref}
           type="text"
           value={value}

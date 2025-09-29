@@ -70,7 +70,7 @@ $input-icon-width: $space-xl;
     }
     
     &_with-icon {
-        padding-right: #{$input-icon-width + $space-xxs + $space-xs};
+        padding-right: calc($input-icon-width + $space-xxs + $space-xs);
     }
 }
 

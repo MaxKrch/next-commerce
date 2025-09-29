@@ -25,7 +25,7 @@ useEffect(() => {
                     return;
                 }
                 const href = newQuery ? `?${newQuery}` : '/';
-                router.replace(href)
+                router.replace(href, {scroll: false})
             },
             { fireImmediately: false }
         )

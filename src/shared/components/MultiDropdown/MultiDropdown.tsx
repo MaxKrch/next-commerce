@@ -58,7 +58,8 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
     }
   }, [disabled, isShowDropdown]);
 
-  const handleOptionClick = useCallback((id: string) => {
+  const handleOptionClick = useCallback((event: React.MouseEvent<HTMLLIElement>) => {
+    const id = event.currentTarget.dataset.id;
     const isSelected = value.findIndex(item => item.key === id) > -1;
 
     if (isSelected) {
@@ -119,7 +120,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
             .map((option) => (
               <li
                 data-id={option.key}
-                onClick={() => handleOptionClick(option.key)}
+                onClick={handleOptionClick}
                 key={option.key}
                 className={clsx(
                   style['dropdown__option'],
