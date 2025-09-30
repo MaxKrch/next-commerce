@@ -4,7 +4,6 @@ import CardList from '@components/CardList';
 import { observer } from 'mobx-react-lite';
 import React, { ReactNode, useCallback, useEffect, useRef } from 'react';
 import style from './ProductList.module.scss';
-import { ProductsInitData } from '@store/local/ProductsStore/ProductsStore';
 import { useProductsStore } from '@providers/ProductsStoreProvider';
 import { META_STATUS } from '@constants/meta-status';
 import { notFound } from 'next/navigation';

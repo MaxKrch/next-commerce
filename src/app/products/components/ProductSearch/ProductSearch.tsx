@@ -20,7 +20,7 @@ const ProductSearch = () => {
   const [mounted, setMounted] = useState(false)
   useEffect(() => {
     setMounted(true)
-  }, [])
+  }, []);
   
   const searchStore = useSearchStore();
   const productsStore = useProductsStore()
