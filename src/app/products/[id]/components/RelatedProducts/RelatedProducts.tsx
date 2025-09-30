@@ -6,7 +6,6 @@ import React, { ReactNode, useCallback, useEffect, useRef } from 'react';
 import { useProductsStore } from '@providers/ProductsStoreProvider';
 import { useProductDetailsStore } from '@providers/ProductDetailsStoreProvider';
 import { useParams } from 'next/navigation';
-import { ProductsInitData } from '@store/local/ProductsStore/ProductsStore';
 import { META_STATUS } from '@constants/meta-status';
 import Text from '@components/Text';
 import CardList from '@components/CardList';
@@ -18,14 +17,9 @@ import DefaultCardCaptionSlot from '@components/Card/slots/DefaultCardCaptionSlo
 import DefaultCardPriceSlot from '@components/Card/slots/DefaultCardPriceSlot';
 import DefaultCardActionSlot from '@components/Card/slots/DefaultCardActionSlot';
 
-export type RelatedProductsProps = {
-  initData: ProductsInitData
-}
-
-const RelatedProducts: React.FC<RelatedProductsProps> = ({ initData }) => {
+const RelatedProducts: React.FC = () => {
   const productDetailsStore = useProductDetailsStore();
   const productsStore = useProductsStore();
-  const initApplied = useRef(false);
   const isFirstRender = useRef(true);
   const prevProduct = useRef<string | null>(null);
   const { id: productId } = useParams();
@@ -40,13 +34,6 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({ initData }) => {
     }
   }, [productsStore, productDetailsStore.product]);
   
-  useEffect(() => {
-    if(!initApplied.current && initData && productsStore.status === META_STATUS.IDLE) {
-      productsStore.setInitData(initData);
-      prevProduct.current = initData.query;
-      initApplied.current = true;
-    }      
-  }, [productsStore, initData])
   
   useEffect(() => {   
     if(isFirstRender.current) {

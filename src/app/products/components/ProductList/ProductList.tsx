@@ -21,7 +21,6 @@ import { useRootStore } from '@providers/RootStoreContext';
 
 
 const ProductList: React.FC = () => {
-  const initApplied = useRef(false);
   const isFirstRender = useRef(true);
   const prevQueryString = useRef<string | null>(null);
   const requestId = useRef<string | null>(null);

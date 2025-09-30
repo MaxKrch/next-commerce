@@ -84,7 +84,7 @@ const ProductSearch = () => {
         ) : (
           <div className={clsx(style['filter'], style['filter-skeleton'])} />
         )}
-        {searchStore.selectCategories.length > 0 &&
+        {searchStore.selectedCategories.length > 0 &&
           <CrossIcon onClick={() => {handleCrossFilterClick()}} className={clsx(style['filter-cross'])} />
         }
       </div>

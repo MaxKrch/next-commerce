@@ -15,14 +15,8 @@ import DefaultNetworkErrorContentSlot from '@components/NetworkError/slots/Defau
 import DefaultNetworkErrorActionSlot from '@components/NetworkError/slots/DefaultNetworkErrorActionSlot';
 import Card, { CardSkeleton } from '@components/Card';
 
-export type ProductCardProps = {
-  initData: ProductDetailsInitData
-
-};
-
-const ProductCard: React.FC<ProductCardProps> = ({ initData }) => {
+const ProductCard: React.FC = () => {
   const productDetailsStore = useProductDetailsStore()
-  const initApplied = useRef(false);
   const isFirstRender = useRef(true);
   const prevProduct = useRef<string | null>(null);
   const { id: productId } = useParams()
@@ -32,15 +26,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ initData }) => {
       productDetailsStore.fetchProduct(productId);
     }
   }, [productDetailsStore, productId]);
-
-  useEffect(() => {
-     if(!initApplied.current && initData && productDetailsStore.status === META_STATUS.IDLE) {
-      productDetailsStore.setInitData(initData);
-      prevProduct.current = initData.id;
-      initApplied.current = true;
-    }      
-  }, [productDetailsStore, initData])
-
 
   useEffect(() => {   
     if(isFirstRender.current) {
