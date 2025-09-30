@@ -64,10 +64,10 @@ export default async function ProductsPage ({searchParams}: ProductsPageProps) {
     
     return (
         <div>
-            <ProductsStoreProvider>
+            <ProductsStoreProvider initData={initData}>
                 <SectionHeader title={sectionText.title} content={sectionText.description} />
                 <ProductSearch />
-                <ProductList initData={initData}/>
+                <ProductList />
                 <ProductPagination />
             </ProductsStoreProvider>
         </div>

@@ -19,10 +19,8 @@ import DefaultCardActionSlot from '@components/Card/slots/DefaultCardActionSlot'
 import { useRootStore } from '@providers/RootStoreContext';
 
 
-export type ProductListprops = {
-  initData: ProductsInitData
-}
-const ProductList: React.FC<ProductListprops> = ({initData}) => {
+
+const ProductList: React.FC = () => {
   const initApplied = useRef(false);
   const isFirstRender = useRef(true);
   const prevQueryString = useRef<string | null>(null);
@@ -32,16 +30,6 @@ const ProductList: React.FC<ProductListprops> = ({initData}) => {
   const refetch = useCallback(() => {
     productsStore.fetchProducts(queryParamsStore.queryObject);
   }, [productsStore, queryParamsStore]);
-
-  useEffect(() => {
-     if(!initApplied.current && initData && productsStore.status === META_STATUS.IDLE) {
-      productsStore.setInitData(initData);
-      prevQueryString.current = initData.query;
-      initApplied.current = true;
-    }
-      
-  }, [productsStore, initData])
-
 
   useEffect(() => {
     if(isFirstRender.current) {

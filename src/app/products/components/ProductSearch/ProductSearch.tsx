@@ -51,12 +51,12 @@ const ProductSearch = () => {
             className={clsx(style['query-input-element'])}
             name="searchInput"
           />
-          
+          {searchStore.inputValue.length > 0 &&
             <CrossIcon
               onClick={handleCrossInputClick}
               className={clsx(style['query-input-cross'])}
             />
-         
+          }
         </div>
 
         <Button
@@ -84,9 +84,9 @@ const ProductSearch = () => {
         ) : (
           <div className={clsx(style['filter'], style['filter-skeleton'])} />
         )}
-       
+        {searchStore.selectCategories.length > 0 &&
           <CrossIcon onClick={() => {handleCrossFilterClick()}} className={clsx(style['filter-cross'])} />
-    
+        }
       </div>
     </div>
   );

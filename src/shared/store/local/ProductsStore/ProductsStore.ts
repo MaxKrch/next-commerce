@@ -30,6 +30,11 @@ export type ProductsInitData = {
     error: string,
 }
 
+export type ProductsStoreArgs = {
+  rootStore: RootStore,
+  initData: ProductsInitData
+}
+
 export default class ProductsStore implements ILocalStore {
   private _products: Collection<ProductType['id'], ProductType> = getInitialCollection();
   private _meta: MetaResponse<ProductType[]> | null = null;
@@ -41,11 +46,7 @@ export default class ProductsStore implements ILocalStore {
   private _isInitialized = false;
   reactions: IReactionDisposer[]
 
-  constructor({
-    rootStore
-  }: {
-    rootStore: RootStore 
-  }) {
+  constructor({ rootStore, initData }: ProductsStoreArgs) {
     makeObservable<ProductsStore, PrivateFields>(this, {
       _products: observable,
       _status: observable,
@@ -62,13 +63,14 @@ export default class ProductsStore implements ILocalStore {
 
       fetchProducts: action.bound,
       resetProductList: action.bound,
-      setInitData: action.bound,
+      _setInitData: action,
       _setProducts: action,
     });
 
     this._rootStore = rootStore;
     this.reactions = [];
     this.initReactions();
+    this._setInitData(initData)
   }
 
   initReactions(): void {
@@ -111,7 +113,7 @@ export default class ProductsStore implements ILocalStore {
     );
   }
 
-  setInitData = (init: ProductsInitData): void => {
+  _setInitData = (init: ProductsInitData): void => {
     if(this._isInitialized) {
       return;
     } 
