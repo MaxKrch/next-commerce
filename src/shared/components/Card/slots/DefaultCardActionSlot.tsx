@@ -18,7 +18,6 @@ const DefaultCardActionSlot: React.FC<DefaultCardActionSlot> = ({ product, prior
   const { cartStore } = useRootStore();
   const productFromCart = cartStore.getProductById(product.id)  
   const count =  productFromCart?.quantity ?? 0
- 
   const handleClick = useCallback(
     (product: ProductType) => {
       cartStore.addToCart(product);

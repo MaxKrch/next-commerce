@@ -21,7 +21,6 @@ const RelatedProducts: React.FC = () => {
   const productDetailsStore = useProductDetailsStore();
   const productsStore = useProductsStore();
   const isFirstRender = useRef(true);
-  const prevProduct = useRef<string | null>(null);
   const { id: productId } = useParams();
 
   const refetch = useCallback(() => {
@@ -58,14 +57,11 @@ const RelatedProducts: React.FC = () => {
     }
   }, [productId, productsStore, productDetailsStore, productDetailsStore.status]);
 
-  const isFailedRequest = productsStore.status === META_STATUS.ERROR 
-    || (productsStore.status === META_STATUS.SUCCESS && productDetailsStore.product?.documentId !== prevProduct.current)
+  const isFailedRequest = productsStore.status === META_STATUS.ERROR
 
   const notFoundProducts = productsStore.status === META_STATUS.SUCCESS && productsStore.products.length === 0
 
-  const showRelatedProducts = productsStore.status === META_STATUS.SUCCESS 
-    && productDetailsStore.status === META_STATUS.SUCCESS 
-    && productDetailsStore.product?.documentId === prevProduct.current
+  const showRelatedProducts = productsStore.status === META_STATUS.SUCCESS && productDetailsStore.status === META_STATUS.SUCCESS 
     
 
   let content: ReactNode

@@ -1,10 +1,10 @@
 import CartApi from "@api/CartApi";
-import { AwaitingSynchProduct, ProductInCart, ProductInCartApi } from "@model/cart";
+import { AwaitingItem, ProductInCart, ProductInCartApi } from "@model/cart";
 import { Collection } from "@model/collections";
 import { ProductType } from "@model/products";
 import getInitialCollection from "@store/utils/get-initial-collection";
 import { META_STATUS, MetaStatus } from "@constants/meta-status";
-import { action, computed, makeObservable, observable, remove, runInAction } from "mobx";
+import { action, computed, makeObservable, observable, ObservableMap, remove, runInAction } from "mobx";
 import { linearizeCollection } from "@store/utils/linearize-collection";
 import { normalizeCollection } from "@store/utils/normalize-collection";
 import { normalizeProductInCartList } from "@store/utils/normalize-products-in-cart";
@@ -15,7 +15,8 @@ type PrivateFields =
   | '_setProducts'
   | '_addToCartItem'
   | '_removeFromCartItem'
-  | '_error';
+  | '_error'
+  | '_awaitingList';
 
 export default class CartStore {
   private _api: CartApi;
@@ -23,13 +24,14 @@ export default class CartStore {
   private _abortCtrl: AbortController | null = null;
   private _status: MetaStatus = META_STATUS.IDLE;
   private _error: string | null = null;
-  private _awaitingList: AwaitingSynchProduct = {};
+  private _awaitingList: ObservableMap<ProductType['id'], AwaitingItem> = observable.map();
 
   constructor(api: CartApi) {
     makeObservable<CartStore, PrivateFields>(this, {
       _products: observable,
       _status: observable,
       _error: observable,
+      _awaitingList: observable,
 
       products: computed,
       inStockProducts: computed,
@@ -85,18 +87,16 @@ export default class CartStore {
   private _createDebounceTimer(product: ProductType): void {
     const { id } = product;
 
-    if(!this._awaitingList[id]) {
-      this._awaitingList = {
-        ...this._awaitingList,
-        [id]: {
-          lastSynchQuantity: 0,
-          debounce: null,
-          abortCtrl: null,
-        }
-      } 
+    if(!this._awaitingList.get(id)) {
+      this._awaitingList.set(id,{ 
+        lastSynchQuantity: 0,
+        debounce: null,
+        abortCtrl: null,
+      })
     }
 
-    const targetAwaitingProduct = this._awaitingList[id]
+    const targetAwaitingProduct = this._awaitingList.get(id);
+    if (!targetAwaitingProduct) return;
 
     if(targetAwaitingProduct.debounce) {
       clearTimeout(targetAwaitingProduct.debounce)
@@ -168,7 +168,7 @@ export default class CartStore {
 
   private _synchWithServer = async (product: ProductType): Promise<void> => {
     const { id } = product;
-    const targetAwaitingProduct = this._awaitingList[id];
+    const targetAwaitingProduct = this._awaitingList.get(id);
     const targetProductInCart = this._products.entities[id];
 
     if(!targetAwaitingProduct) {
@@ -215,11 +215,21 @@ export default class CartStore {
     this._products.entities = {...this._products.entities, [id]: { quantity, product }}
   }
 
-  private _setProducts(products: ProductInCartApi[]): void {
+  private _setProducts(productsObj: ProductInCartApi[]): void {
     this._products = normalizeCollection(
-      normalizeProductInCartList(products),
+      normalizeProductInCartList(productsObj),
       (element) => element.product.id
     );
+
+    runInAction(() => {
+      productsObj.forEach(item => {
+         this._awaitingList.set(item.product.id, {
+          lastSynchQuantity: item.quantity,
+          debounce: null,
+          abortCtrl: null,
+        });
+      });
+    });
   }
 
   async fetchCart(): Promise<void> {

@@ -18,7 +18,7 @@ const ProductDetailsStoreInnerProvider: React.FC<ProductDetailsProviderProps> = 
         rootStore,
         initData,
     }));
-
+    
     return(
         <ProductDetailsContext.Provider value={store}>
             {children}
