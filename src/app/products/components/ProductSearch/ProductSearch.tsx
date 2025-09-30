@@ -77,7 +77,9 @@ const ProductSearch = () => {
         </Button>
       </div>
       <div className={clsx(style['filter'])}>
-        {categoriesStore.status === META_STATUS.SUCCESS ? (
+        {categoriesStore.status === META_STATUS.IDLE ? (
+          <div className={clsx(style['filter'], style['filter-skeleton'])} />
+        ) : (
           <MultiDropdown
             options={searchStore.categoriesOptions}
             value={searchStore.categoriesValue}
@@ -85,8 +87,6 @@ const ProductSearch = () => {
             getTitle={() => searchStore.titleCategoriesValue}
             className={clsx(style['filter-dropdown'])}
           />
-        ) : (
-          <div className={clsx(style['filter'], style['filter-skeleton'])} />
         )}
         {mounted && searchStore.selectedCategories.length > 0 &&
           <CrossIcon onClick={() => {handleCrossFilterClick()}} className={clsx(style['filter-cross'])} />
