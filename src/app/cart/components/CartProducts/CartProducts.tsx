@@ -1,14 +1,13 @@
 import clsx from 'clsx';
 import { observer } from 'mobx-react-lite';
 import type React from 'react';
-
-import InStockActionSlot from '../slots/InStockActionSlot';
-
 import style from './CartProducts.module.scss';
 import { useRootStore } from '@providers/RootStoreContext';
 import Card from '@components/Card';
 import Text from '@components/Text';
-import ClearActionSlot from '../slots/ClearActionSlot';
+import ClearProductsButton from './components/ClearProductsButton/ClearProductsButton';
+import DefaultCardActionSlot from '@components/Card/slots/DefaultCardActionSlot';
+import DefaultCardPriceSlot from '@components/Card/slots/DefaultCardPriceSlot';
 
 const InStockProducts: React.FC<{className?: string}> = ({ className }) => {
   const { cartStore } = useRootStore();
@@ -27,13 +26,13 @@ const InStockProducts: React.FC<{className?: string}> = ({ className }) => {
                   className={clsx(style['cart-products__card'])}
                   product={item.product}
                   display="cart"
-                  PriceSlot={() => (
-                    <div className={clsx(style['content-slot'])}>
-                      <Text className={clsx(style['content-slot__title'])}>Цена:</Text>
-                      <Text className={clsx(style['content-slot__value'])}>${item.product.price}</Text>
-                    </div>
-                  )}
-                  ActionSlot={() => <InStockActionSlot product={item.product} />}
+                  PriceSlot={DefaultCardPriceSlot}
+                  ActionSlot={() => (
+                    <>
+                      <ClearProductsButton product={item.product}/>
+                      <DefaultCardActionSlot product={item.product}/> 
+                    </>
+                )}
                 />
               </li>
             ))}
@@ -52,7 +51,7 @@ const InStockProducts: React.FC<{className?: string}> = ({ className }) => {
                   className={clsx(style['cart-products__card'])}
                   product={item.product}
                   display="cart"
-                  ActionSlot={() => <ClearActionSlot product={item.product} />}
+                  ActionSlot={() => <ClearProductsButton product={item.product} />}
                 />
               </li>
             ))}

@@ -37,6 +37,7 @@ export default class CartStore {
       inStockProducts: computed,
       outOfStockProducts: computed,
       totalPrice: computed,
+      totalDiscountedrPrice: computed,
       totalItemsToOrder: computed,
       status: computed,
       error: computed,
@@ -74,6 +75,15 @@ export default class CartStore {
     return this.inStockProducts.reduce((total, item) => {
       return total + item.quantity * item.product.price;
     }, 0);
+  }
+ 
+  get totalDiscountedrPrice(): number {
+    const totalPrice = this.inStockProducts.reduce((total, item) => {
+      const discountedPrice = item.product.price * (100 - item.product.discountPercent) / 100
+      return total + (item.quantity * discountedPrice);
+    }, 0);
+
+    return Math.ceil(totalPrice)
   }
 
   get status(): MetaStatus {
@@ -114,20 +124,33 @@ export default class CartStore {
 
  
   addToCart(product: ProductType): void {
+    if(this._status !== META_STATUS.SUCCESS) {
+      return;
+    }
+
     this._addToCartItem(product);
     this._createDebounceTimer(product);
   }
 
   removeFromCart(product: ProductType): void {
+    if(this._status !== META_STATUS.SUCCESS) {
+      return;
+    }
+
     this._removeFromCartItem(product);
     this._createDebounceTimer(product);
   }
   
   removeAllProductItems(product: ProductType): void {
+    if(this._status !== META_STATUS.SUCCESS) {
+      return;
+    }
+    
     const item = this._products.entities[product.id];
     if (!item) {
       return;
     }
+    
     this._removeFromCartItem(product, item.quantity);
     this._createDebounceTimer(product);
   }

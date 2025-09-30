@@ -11,10 +11,11 @@ import style from '../Card.module.scss'
 
 export type DefaultCardActionSlot = {
   product: ProductType, 
-  priority?: 'primary' | 'secondary' 
+  priority?: 'primary' | 'secondary',
+  className?: string,
 }
 
-const DefaultCardActionSlot: React.FC<DefaultCardActionSlot> = ({ product, priority = 'primary' }) => {
+const DefaultCardActionSlot: React.FC<DefaultCardActionSlot> = ({ product, priority = 'primary', className }) => {
   const { cartStore } = useRootStore();
   const productFromCart = cartStore.getProductById(product.id)  
   const count =  productFromCart?.quantity ?? 0
@@ -34,7 +35,7 @@ const DefaultCardActionSlot: React.FC<DefaultCardActionSlot> = ({ product, prior
   }, [cartStore, product])
 
   return (
-    <div className={clsx(style['action-slot'])}>
+    <div className={clsx(style['action-slot'], className)}>
       {count === 0
         ? (
           <Button

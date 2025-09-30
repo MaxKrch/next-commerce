@@ -80,11 +80,11 @@ const Card: React.FC<CardProps> = ({
       </main>
 
       <footer className={clsx(style[`${display}__footer`])}>
-        <div className={clsx(style[`${display}__price-slot`])}>
+        <div className={clsx(style['price-slot'], style[`${display}__price-slot`])}>
           {PriceSlot && <PriceSlot product={product} />}
         </div>
 
-        <div className={clsx(style[`${display}__action-slot`])}>
+        <div className={clsx(style['action-slot'], style[`${display}__action-slot`])}>
           {ActionSlot && <ActionSlot product={product} />}
         </div>
       </footer>

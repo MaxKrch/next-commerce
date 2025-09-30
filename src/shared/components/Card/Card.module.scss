@@ -204,10 +204,28 @@ $base-line-height: 150%;
     }
 }
 
-.action-slot__button {
-    min-width: $button-min-width;
+.action-slot {    
+    display: flex;
+    gap: $space-s;
+
+    &__button {
+        min-width: $button-min-width;
+    }
 }
 
 .price-slot {
-    font-size: 1.5em;
+    display: flex;
+    align-items: baseline;
+    gap: $space-xxs;
+
+    &__title {
+        font-size: 0.9em; 
+    color: $brand;
+    }
+
+    &__full {
+        text-decoration: line-through;
+        color: red;
+        font-size: 0.75em;
+    }
 }

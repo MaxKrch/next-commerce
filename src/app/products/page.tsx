@@ -61,7 +61,7 @@ export default async function ProductsPage ({searchParams}: ProductsPageProps) {
             error: err instanceof Error ? err.message : "UnknownError"
         }
     }
-    
+
     return (
         <div>
             <ProductsStoreProvider initData={initData}>

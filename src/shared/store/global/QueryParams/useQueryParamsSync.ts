@@ -12,7 +12,6 @@ const useQueryParamsSync = (store: QueryParamsStore) => {
     const queryString = searchParams.toString()
 
 useEffect(() => {
-  store.resetQueryParams(); // очищаем store до реакции
   store.setFromSearchParams(searchParams)
 }, [searchParams, store, params]);
 

@@ -4,9 +4,6 @@ import clsx from 'clsx';
 import { observer } from 'mobx-react-lite';
 import React, { ReactNode, useCallback, useEffect, useRef } from 'react';
 import style from './ProductCard.module.scss';
-import ActionSlot from './slots/ActionSlot';
-import ContentSlot from './slots/ContentSlot';
-import { ProductDetailsInitData } from '@store/local/ProductDetailsStore/ProductDetailsStore';
 import { useProductDetailsStore } from '@providers/ProductDetailsStoreProvider';
 import { notFound, useParams } from 'next/navigation';
 import { META_STATUS } from '@constants/meta-status';
@@ -14,6 +11,8 @@ import NetworkError from '@components/NetworkError';
 import DefaultNetworkErrorContentSlot from '@components/NetworkError/slots/DefaultNetworkErrorContentSlot';
 import DefaultNetworkErrorActionSlot from '@components/NetworkError/slots/DefaultNetworkErrorActionSlot';
 import Card, { CardSkeleton } from '@components/Card';
+import DefaultCardPriceSlot from '@components/Card/slots/DefaultCardPriceSlot';
+import ProductCardAction from './components/ProductCardAction';
 
 const ProductCard: React.FC = () => {
   const productDetailsStore = useProductDetailsStore()
@@ -26,6 +25,7 @@ const ProductCard: React.FC = () => {
       productDetailsStore.fetchProduct(productId);
     }
   }, [productDetailsStore, productId]);
+  
 
   useEffect(() => {   
     if(isFirstRender.current) {
@@ -70,8 +70,8 @@ const ProductCard: React.FC = () => {
         <Card
           display="full"
           product={product}
-          PriceSlot={() => <ContentSlot product={product} />}
-          ActionSlot={ActionSlot}
+          PriceSlot={() => <DefaultCardPriceSlot product={product} className={clsx(style['product-card__price-slot'])} />}
+          ActionSlot={() => <ProductCardAction product={product} />}
         />
       );
       break;

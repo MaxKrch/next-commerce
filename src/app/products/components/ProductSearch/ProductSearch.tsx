@@ -2,7 +2,7 @@
 
 import { clsx } from 'clsx';
 import { observer } from 'mobx-react-lite';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import style from './ProductSearch.module.scss';
 import CrossIcon from '@components/icons/CrossIcon';
 import Button from '@components/Button';
@@ -17,9 +17,13 @@ import Loader from '@components/Loader';
 
 const ProductSearch = () => {
   const { categoriesStore, queryParamsStore } = useRootStore();
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+  
   const searchStore = useSearchStore();
   const productsStore = useProductsStore()
-
   const handleCrossInputClick = useCallback(() => {
     searchStore.changeInput('');
   }, [searchStore]);
@@ -51,12 +55,12 @@ const ProductSearch = () => {
             className={clsx(style['query-input-element'])}
             name="searchInput"
           />
-          {searchStore.inputValue.length > 0 &&
+          {mounted && searchStore.inputValue.length > 0 &&
             <CrossIcon
               onClick={handleCrossInputClick}
               className={clsx(style['query-input-cross'])}
             />
-          }
+          } 
         </div>
 
         <Button
@@ -84,7 +88,7 @@ const ProductSearch = () => {
         ) : (
           <div className={clsx(style['filter'], style['filter-skeleton'])} />
         )}
-        {searchStore.selectedCategories.length > 0 &&
+        {mounted && searchStore.selectedCategories.length > 0 &&
           <CrossIcon onClick={() => {handleCrossFilterClick()}} className={clsx(style['filter-cross'])} />
         }
       </div>
