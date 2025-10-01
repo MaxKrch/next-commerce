@@ -2,7 +2,7 @@
 
 import Button from "@components/Button";
 import { ProductType } from "@model/products";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useRootStore } from "@providers/RootStoreContext";
 import { observer } from "mobx-react-lite";
 import Counter from "@components/Counter";
@@ -17,8 +17,14 @@ export type DefaultCardActionSlot = {
 
 const DefaultCardActionSlot: React.FC<DefaultCardActionSlot> = ({ product, priority = 'primary', className }) => {
   const { cartStore } = useRootStore();
-  const productFromCart = cartStore.getProductById(product.id)  
-  const count =  productFromCart?.quantity ?? 0
+  const [mounted, setMounted] = useState(false)
+  const productFromCart = cartStore.getProductById(product.id);
+  const count =  productFromCart?.quantity ?? 0;
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   const handleClick = useCallback(
     (product: ProductType) => {
       cartStore.addToCart(product);
@@ -36,7 +42,7 @@ const DefaultCardActionSlot: React.FC<DefaultCardActionSlot> = ({ product, prior
 
   return (
     <div className={clsx(style['action-slot'], className)}>
-      {count === 0
+      {count === 0 || !mounted
         ? (
           <Button
             priority={priority} 
