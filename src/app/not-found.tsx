@@ -7,10 +7,6 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { appRoutes } from "@constants/app-routes";
 
-export const metadata: Metadata = {
-  title: "Страница 404",
-}
-
 export default function NotFoundPage () {
     return(
         <article className={clsx(style['error'])}>

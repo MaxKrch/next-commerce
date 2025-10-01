@@ -5,13 +5,8 @@ import style from './app.module.scss'
 import Text from "@components/Text";
 import Image from "next/image";
 import Button from "@components/Button";
-import { Metadata } from "next";
 import Link from "next/link";
 import { appRoutes } from "@constants/app-routes";
-
-export const metadata: Metadata = {
-  title: "Страница ошибки",
-}
 
 export default function ErrorPage ({ reset }: { reset: () => void }) {
     return(

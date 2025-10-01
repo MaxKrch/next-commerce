@@ -2,7 +2,7 @@
 
 import { clsx } from 'clsx';
 import { observer } from 'mobx-react-lite';
-import { useCallback, useEffect, useState } from 'react';
+import { KeyboardEvent, useCallback, useEffect, useState } from 'react';
 import style from './ProductSearch.module.scss';
 import CrossIcon from '@components/icons/CrossIcon';
 import Button from '@components/Button';
@@ -14,13 +14,10 @@ import MultiDropdown from '@components/MultiDropdown';
 import { useProductsStore } from '@providers/ProductsStoreProvider';
 import { useRootStore } from '@providers/RootStoreContext';
 import Loader from '@components/Loader';
+import OnlyClient from '@components/OnlyClient';
 
 const ProductSearch = () => {
   const { categoriesStore, queryParamsStore } = useRootStore();
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => {
-    setMounted(true)
-  }, []);
   
   const searchStore = useSearchStore();
   const productsStore = useProductsStore()
@@ -35,6 +32,13 @@ const ProductSearch = () => {
   const handleSearchClick = useCallback(() => {
     const params = queryParamsStore.queryObject;
     productsStore.fetchProducts(params)
+  }, [queryParamsStore.queryObject, productsStore]);
+
+  const handleInputKeyDown = useCallback((event: KeyboardEvent<HTMLInputElement>) => {
+    if(event.key === "Enter") {
+      const params = queryParamsStore.queryObject;
+      productsStore.fetchProducts(params)      
+    }
   }, [queryParamsStore.queryObject, productsStore])
 
   useEffect(() => {
@@ -54,12 +58,15 @@ const ProductSearch = () => {
             placeholder={'Что будем искать?'}
             className={clsx(style['query-input-element'])}
             name="searchInput"
+            onKeyDown={handleInputKeyDown}
           />
-          {mounted && searchStore.inputValue.length > 0 &&
-            <CrossIcon
-              onClick={handleCrossInputClick}
-              className={clsx(style['query-input-cross'])}
-            />
+          {searchStore.inputValue.length > 0 &&
+            <OnlyClient>
+              <CrossIcon
+                onClick={handleCrossInputClick}
+                className={clsx(style['query-input-cross'])}
+              />
+            </OnlyClient>
           } 
         </div>
 
@@ -88,8 +95,10 @@ const ProductSearch = () => {
             className={clsx(style['filter-dropdown'])}
           />
         )}
-        {mounted && searchStore.selectedCategories.length > 0 &&
-          <CrossIcon onClick={() => {handleCrossFilterClick()}} className={clsx(style['filter-cross'])} />
+        {searchStore.selectedCategories.length > 0 &&
+          <OnlyClient>
+            <CrossIcon onClick={() => {handleCrossFilterClick()}} className={clsx(style['filter-cross'])} />
+          </OnlyClient>
         }
       </div>
     </div>

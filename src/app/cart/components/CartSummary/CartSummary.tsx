@@ -9,7 +9,7 @@ import Button from '@components/Button';
 
 const CartSummary: React.FC<{className?: string }> = ({ className }) => {
   const { cartStore } = useRootStore();
-  const discounter = cartStore.totalPrice - cartStore.totalDiscountedrPrice;
+  const discounter = cartStore.totalPrice - cartStore.totalDiscountedPrice;
   return (
     <div className={className}>
       <section className={clsx(style['summary'])}>
@@ -31,7 +31,7 @@ const CartSummary: React.FC<{className?: string }> = ({ className }) => {
           {discounter &&
             <Text className={clsx(style['summary__total-value'], style['summary__total-value_through'])}>${cartStore.totalPrice}</Text>
           }            
-          <Text className={clsx(style['summary__total-value'])}>${cartStore.totalDiscountedrPrice}</Text>
+          <Text className={clsx(style['summary__total-value'])}>${cartStore.totalDiscountedPrice}</Text>
         </div>
         <Button disabled={cartStore.inStockProducts.length === 0} className={clsx(style['summary__button'])}>Перейти к оплате</Button>
       </section>

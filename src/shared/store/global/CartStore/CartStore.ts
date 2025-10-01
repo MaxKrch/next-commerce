@@ -37,7 +37,7 @@ export default class CartStore {
       inStockProducts: computed,
       outOfStockProducts: computed,
       totalPrice: computed,
-      totalDiscountedrPrice: computed,
+      totalDiscountedPrice: computed,
       totalItemsToOrder: computed,
       status: computed,
       error: computed,
@@ -77,7 +77,7 @@ export default class CartStore {
     }, 0);
   }
  
-  get totalDiscountedrPrice(): number {
+  get totalDiscountedPrice(): number {
     const totalPrice = this.inStockProducts.reduce((total, item) => {
       const discountedPrice = item.product.price * (100 - item.product.discountPercent) / 100
       return total + (item.quantity * discountedPrice);

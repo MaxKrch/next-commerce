@@ -137,12 +137,12 @@ export default class CategoriesStore implements ICategoriesStore {
         this._status = META_STATUS.SUCCESS; 
       });
 
-    } catch (err) {
-      runInAction(() => {
-        if (err instanceof Error && err.name === 'AbortError') {
+    } catch (err) {      
+      if (err instanceof Error && err.name === 'AbortError') {
           return;
         }
-
+  
+      runInAction(() => {
         this._list = getInitialCollection();
         this._status = META_STATUS.ERROR;
       });

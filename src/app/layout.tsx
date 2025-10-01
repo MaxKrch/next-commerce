@@ -31,6 +31,7 @@ export default function RootLayout({
         <div className={clsx(style['app'])}>
           <Providers>
             <Header />
+            <div id="modal-portal" />
             {children}
           </Providers>
         </div>

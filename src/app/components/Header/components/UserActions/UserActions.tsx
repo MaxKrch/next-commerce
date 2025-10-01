@@ -1,7 +1,7 @@
 "use client"
 
 import clsx from 'clsx';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import style from './UserActions.module.scss';
 import Link from 'next/link';
 import { appRoutes } from '@constants/app-routes';
@@ -13,7 +13,10 @@ import Text from '@components/Text';
 import { observer } from 'mobx-react-lite';
 
 const UserActions = () => {
-  const { cartStore } = useRootStore();
+  const { cartStore } = useRootStore(); 
+
+  
+
   useEffect(() => {
     if(cartStore.status === META_STATUS.IDLE) {
       cartStore.fetchCart()
