@@ -3,7 +3,6 @@
 
 $active-link-color: $brand;
 $link-hover-color: $brand-hover;
-$base-width: 340px;
 
 @mixin link-bottom {
     border-bottom: 2px solid transparent;
@@ -14,7 +13,11 @@ $base-width: 340px;
     justify-content: space-around;
     align-items: center;
     height: 100%;
-    flex-basis: $base-width;
+    flex-basis: 75%;
+    
+    @include tablet-up() {
+        flex-basis: 50%;       
+    }
 
     &-item {
         &__link {

@@ -2,7 +2,7 @@
 
 import { clsx } from 'clsx';
 import { observer } from 'mobx-react-lite';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import style from './ProductSearch.module.scss';
 import CrossIcon from '@components/icons/CrossIcon';
 import Button from '@components/Button';
@@ -17,9 +17,13 @@ import Loader from '@components/Loader';
 
 const ProductSearch = () => {
   const { categoriesStore, queryParamsStore } = useRootStore();
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, []);
+  
   const searchStore = useSearchStore();
   const productsStore = useProductsStore()
-
   const handleCrossInputClick = useCallback(() => {
     searchStore.changeInput('');
   }, [searchStore]);
@@ -39,6 +43,7 @@ const ProductSearch = () => {
     }
   }, [categoriesStore])
 
+
   return (
     <div className={clsx(style['search'])}>
       <div className={clsx(style['query'])}>
@@ -50,12 +55,12 @@ const ProductSearch = () => {
             className={clsx(style['query-input-element'])}
             name="searchInput"
           />
-          {searchStore.inputValue.length > 0 && (
+          {mounted && searchStore.inputValue.length > 0 &&
             <CrossIcon
               onClick={handleCrossInputClick}
               className={clsx(style['query-input-cross'])}
             />
-          )}
+          } 
         </div>
 
         <Button
@@ -72,7 +77,9 @@ const ProductSearch = () => {
         </Button>
       </div>
       <div className={clsx(style['filter'])}>
-        {categoriesStore.status === META_STATUS.SUCCESS ? (
+        {categoriesStore.status === META_STATUS.IDLE ? (
+          <div className={clsx(style['filter'], style['filter-skeleton'])} />
+        ) : (
           <MultiDropdown
             options={searchStore.categoriesOptions}
             value={searchStore.categoriesValue}
@@ -80,13 +87,10 @@ const ProductSearch = () => {
             getTitle={() => searchStore.titleCategoriesValue}
             className={clsx(style['filter-dropdown'])}
           />
-        ) : (
-          <div className={clsx(style['filter'], style['filter-skeleton'])} />
         )}
-
-        {searchStore.categoriesValue.length > 0 && (
+        {mounted && searchStore.selectedCategories.length > 0 &&
           <CrossIcon onClick={() => {handleCrossFilterClick()}} className={clsx(style['filter-cross'])} />
-        )} 
+        }
       </div>
     </div>
   );

@@ -4,7 +4,6 @@ import CardList from '@components/CardList';
 import { observer } from 'mobx-react-lite';
 import React, { ReactNode, useCallback, useEffect, useRef } from 'react';
 import style from './ProductList.module.scss';
-import { ProductsInitData } from '@store/local/ProductsStore/ProductsStore';
 import { useProductsStore } from '@providers/ProductsStoreProvider';
 import { META_STATUS } from '@constants/meta-status';
 import { notFound } from 'next/navigation';
@@ -19,11 +18,8 @@ import DefaultCardActionSlot from '@components/Card/slots/DefaultCardActionSlot'
 import { useRootStore } from '@providers/RootStoreContext';
 
 
-export type ProductListprops = {
-  initData: ProductsInitData
-}
-const ProductList: React.FC<ProductListprops> = ({initData}) => {
-  const initApplied = useRef(false);
+
+const ProductList: React.FC = () => {
   const isFirstRender = useRef(true);
   const prevQueryString = useRef<string | null>(null);
   const requestId = useRef<string | null>(null);
@@ -32,16 +28,6 @@ const ProductList: React.FC<ProductListprops> = ({initData}) => {
   const refetch = useCallback(() => {
     productsStore.fetchProducts(queryParamsStore.queryObject);
   }, [productsStore, queryParamsStore]);
-
-  useEffect(() => {
-     if(!initApplied.current && initData && productsStore.status === META_STATUS.IDLE) {
-      productsStore.setInitData(initData);
-      prevQueryString.current = initData.query;
-      initApplied.current = true;
-    }
-      
-  }, [productsStore, initData])
-
 
   useEffect(() => {
     if(isFirstRender.current) {
@@ -85,8 +71,8 @@ const ProductList: React.FC<ProductListprops> = ({initData}) => {
     case notFoundProducts: {
       content = (
         <div className={clsx(style['product-list__not-found'])}>
-          <Text view='title'>
-            Под ваше описание ничего не найдено
+          <Text view='title' className={clsx(style['product-list-title__name'])}>
+            Ничего не найдено
           </Text>
           <Text view='p-20'>
             Поробуйте изменить запрос 

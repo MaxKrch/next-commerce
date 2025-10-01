@@ -1,18 +1,19 @@
 "use client"
 
 import QueryParamsStore from "./QueryParamsStore";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams, useRouter, useParams } from "next/navigation";
 import { useEffect } from "react";
 import { reaction } from "mobx";
 
 const useQueryParamsSync = (store: QueryParamsStore) => {
     const router = useRouter();
     const searchParams = useSearchParams();
+    const params = useParams()
     const queryString = searchParams.toString()
 
-    useEffect(() => {
-        store.setFromSearchParams(searchParams)
-    }, [searchParams, queryString, store]);
+useEffect(() => {
+  store.setFromSearchParams(searchParams)
+}, [searchParams, store, params]);
 
     useEffect(() => {
         const dispose = reaction(
@@ -23,7 +24,7 @@ const useQueryParamsSync = (store: QueryParamsStore) => {
                     return;
                 }
                 const href = newQuery ? `?${newQuery}` : '/';
-                router.replace(href)
+                router.replace(href, {scroll: false})
             },
             { fireImmediately: false }
         )

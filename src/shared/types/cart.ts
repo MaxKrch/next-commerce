@@ -12,10 +12,8 @@ export type ProductInCart = {
   quantity: number;
 };
 
-export type AwaitingSynchProduct = {
-  [key: number]: {
-    lastSynchQuantity: number;
-    debounce: ReturnType<typeof setTimeout> | null;
-    abortCtrl: AbortController | null;
-  }
+export type AwaitingItem = {
+  lastSynchQuantity: number;
+  debounce: ReturnType<typeof setTimeout> | null;
+  abortCtrl: AbortController | null;
 };

@@ -6,6 +6,10 @@ import useCreateRootStore from '@store/RootStore';
 import { IRootStore } from '@store/RootStore/RootStore';
 import React, { type PropsWithChildren } from 'react';
 import { useStrictContext } from '@hooks/useSctrictContext';
+import { enableStaticRendering } from 'mobx-react-lite';
+
+export const isServer = typeof window === "undefined";
+enableStaticRendering(isServer);
 
 const RootStoreContext = React.createContext<IRootStore | null>(null);
 

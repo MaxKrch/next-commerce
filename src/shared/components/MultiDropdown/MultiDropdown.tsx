@@ -14,8 +14,8 @@ export type MultiDropdownProps = {
   getTitle: (value: Option[]) => string;
 };
 
-const isNode = (element: EventTarget | null): element is Node => {
-  return element !== null && element instanceof Node;
+const isElement = (target: EventTarget | null): target is Element => {
+  return target instanceof Element;
 };
 
 const MultiDropdown: React.FC<MultiDropdownProps> = ({
@@ -58,7 +58,8 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
     }
   }, [disabled, isShowDropdown]);
 
-  const handleOptionClick = useCallback((id: string) => {
+  const handleOptionClick = useCallback((event: React.MouseEvent<HTMLLIElement>) => {
+    const id = event.currentTarget.dataset.id;
     const isSelected = value.findIndex(item => item.key === id) > -1;
 
     if (isSelected) {
@@ -74,8 +75,11 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
 
   const handleClickOutside = useCallback((event: MouseEvent) => {  
     const target = event.target;
-    
-    if(!isNode(target)) {
+    if(!isElement(target)) {
+      return;
+    }
+
+    if (containerRef.current?.contains(target) && target.closest('li')) {
       return;
     }
 
@@ -119,7 +123,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
             .map((option) => (
               <li
                 data-id={option.key}
-                onClick={() => handleOptionClick(option.key)}
+                onClick={handleOptionClick}
                 key={option.key}
                 className={clsx(
                   style['dropdown__option'],

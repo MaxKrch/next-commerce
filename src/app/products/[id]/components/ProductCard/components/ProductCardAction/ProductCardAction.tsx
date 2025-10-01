@@ -1,14 +1,15 @@
 import clsx from 'clsx';
-import React, { memo, useCallback } from 'react';
-import style from '../ProductCard.module.scss';
+import React, { useCallback } from 'react';
+import style from './ProductCardAction.module.scss'
 import { ProductType } from '@model/products';
 import { useRouter } from 'next/navigation';
 import { appRoutes } from '@constants/app-routes';
 import Button from '@components/Button';
 import { useRootStore } from '@providers/RootStoreContext';
+import { observer } from 'mobx-react-lite';
 import DefaultCardActionSlot from '@components/Card/slots/DefaultCardActionSlot';
 
-const ActionSlot: React.FC<{ product: ProductType }> = ({ product }) => {
+const ProductCardAction: React.FC<{ product: ProductType }> = ({ product }) => {
   const { cartStore } = useRootStore();
   const router = useRouter()
 
@@ -21,11 +22,11 @@ const ActionSlot: React.FC<{ product: ProductType }> = ({ product }) => {
   );
 
   return (
-    <div className={clsx(style['action-slot'])}>
-      <Button className={clsx(style['action-slot__button'])} onClick={() => handlePrimaryBtn(product)}>Купить</Button>
-      <DefaultCardActionSlot priority='secondary' product={product}/>
-    </div>
+    <>
+      <Button className={clsx(style['action__button'])} onClick={() => handlePrimaryBtn(product)}>Купить</Button>
+      <DefaultCardActionSlot priority="secondary" product={product}/>
+    </>
   );
 };
 
-export default memo(ActionSlot);
+export default observer(ProductCardAction);

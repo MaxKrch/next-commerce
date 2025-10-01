@@ -32,18 +32,3 @@
         opacity: 0.5;
     }
 }
-
-.content-slot {
-    display: flex;
-    gap: $space-s;
-    align-items: center;
-
-    &__title {
-        font-size: 1em;
-        color: $brand;
-    }
-
-    &__value {
-        font-size: 1.5em;
-    }
-}

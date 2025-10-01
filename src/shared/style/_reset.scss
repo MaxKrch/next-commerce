@@ -2,17 +2,11 @@
 *::before,
 *::after {
     box-sizing: border-box;
-    /* Единая модель box-sizing */
 }
 
 * {
     margin: 0;
     padding: 0;
-}
-
-html {
-    scroll-behavior: smooth;
-    -webkit-text-size-adjust: 100%;
 }
 
 input,

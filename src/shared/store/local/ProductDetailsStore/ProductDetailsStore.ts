@@ -21,6 +21,12 @@ export type ProductDetailsInitData = {
     error: string,
 }
 
+export type ProductsStoreArgs = {
+  rootStore: RootStore,
+  initData: ProductDetailsInitData
+}
+
+
 export default class ProductDetailsStore implements ILocalStore {
   private _product: ProductType | null = null;
   private _abortCtrl: AbortController | null = null;
@@ -31,7 +37,7 @@ export default class ProductDetailsStore implements ILocalStore {
   private _isInitialized = false;
   reactions: IReactionDisposer[] = [];
 
-  constructor({ rootStore }: { rootStore: RootStore }) {
+  constructor({ rootStore, initData }: ProductsStoreArgs) {
     makeObservable<ProductDetailsStore, PrivateFields>(this, {
       _product: observable,
       _status: observable,
@@ -44,13 +50,14 @@ export default class ProductDetailsStore implements ILocalStore {
       error: computed, 
 
       _setProduct: action,
-      setInitData: action.bound,
+      _setInitData: action,
       resetProduct: action.bound,
       fetchProduct: action.bound,
     });
 
     this._rootStore = rootStore;
     this.initReactions();
+    this._setInitData(initData)
   }
 
   initReactions(): void {
@@ -73,7 +80,7 @@ export default class ProductDetailsStore implements ILocalStore {
     return this._requestId;
   }
 
-  setInitData = (init: ProductDetailsInitData): void => {
+  _setInitData = (init: ProductDetailsInitData): void => {
     if(this._isInitialized) {
       return;
     } 

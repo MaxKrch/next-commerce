@@ -146,6 +146,7 @@ export default class QueryParamsStore {
     }
     
     setFromSearchParams(searchParams: ReadonlyURLSearchParams | string) {
+        this.resetQueryParams();
         const queryString = typeof searchParams === "string"
             ? searchParams
             : searchParams.toString();

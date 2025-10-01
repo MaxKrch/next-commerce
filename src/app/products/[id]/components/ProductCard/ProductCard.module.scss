@@ -3,25 +3,14 @@
 
 .product-card {
     @include content-container();
-
+    
     margin-top: 0.8rem;
-}
 
-.content-slot {
-    font-size: 1.5em;
-}
+    &__price-slot {
+        font-size: $space-xxl;
 
-.action-slot {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    gap: 1em;
-
-    @include mobile-up() {
-        justify-content: start;
-    }
-
-    &__button {
-        min-width: $button-min-width;
+        @include laptop-up() {
+            font-size: $space-xxxl;
+        }
     }
 }

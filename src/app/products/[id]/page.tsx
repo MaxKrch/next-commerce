@@ -91,11 +91,11 @@ export default async function ProductDetailsPage ({params}: ProductDetailsPagePr
     
     return (
         <div>
-             <ProductDetailsStoreProvider>
-                <ProductsStoreProvider>
+             <ProductDetailsStoreProvider initData={productDetailsInitData}>
+                <ProductsStoreProvider initData={productsInitData}>
                     <StepBack />
-                    <ProductCard initData={productDetailsInitData} />
-                    <RelatedProducts initData={productsInitData}/>
+                    <ProductCard />
+                    <RelatedProducts />
                  </ProductsStoreProvider>
             </ProductDetailsStoreProvider>
         </div>

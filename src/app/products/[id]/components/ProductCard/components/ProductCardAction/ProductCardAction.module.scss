@@ -1,0 +1,10 @@
+@use '@style/variables' as *;
+@use '@style/mixins' as *;
+
+.action {
+    gap: 1em;
+
+    @include mobile-up() {
+        justify-content: start;
+    }
+}

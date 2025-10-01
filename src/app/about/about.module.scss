@@ -11,6 +11,17 @@
     gap: $space-xxxl;
     padding: $space-xxl $space-xl;
 
+    &__image {
+        object-fit: cover;
+        
+        &-container {
+            aspect-ratio: 3 / 2;
+            position: relative;
+            max-width: 768px;
+            width: 100%;
+        }
+    }
+
     &__title {
         font-size: 2em;
     }

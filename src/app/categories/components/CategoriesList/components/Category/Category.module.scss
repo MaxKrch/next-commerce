@@ -5,12 +5,12 @@
     @include base-adaptive-font-size();
     width: 100%;
     background-color: #fff;
+    overflow: hidden;
+    border-radius: $border-radius-primary;
 
     &:hover {
         box-shadow: $shadow-normal;
         transition: box-shadow 0.3s;
-        border-radius: $border-radius-primary;
-        overflow: hidden;
     }
     
     &__image {
@@ -34,6 +34,7 @@
         color: $brand;
         font-size: 2em;
         padding-top: $space-xxl;
+        border-bottom: 3px solid $brand;
     }
 }
 

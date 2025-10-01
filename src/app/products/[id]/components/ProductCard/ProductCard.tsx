@@ -4,9 +4,6 @@ import clsx from 'clsx';
 import { observer } from 'mobx-react-lite';
 import React, { ReactNode, useCallback, useEffect, useRef } from 'react';
 import style from './ProductCard.module.scss';
-import ActionSlot from './slots/ActionSlot';
-import ContentSlot from './slots/ContentSlot';
-import { ProductDetailsInitData } from '@store/local/ProductDetailsStore/ProductDetailsStore';
 import { useProductDetailsStore } from '@providers/ProductDetailsStoreProvider';
 import { notFound, useParams } from 'next/navigation';
 import { META_STATUS } from '@constants/meta-status';
@@ -14,15 +11,11 @@ import NetworkError from '@components/NetworkError';
 import DefaultNetworkErrorContentSlot from '@components/NetworkError/slots/DefaultNetworkErrorContentSlot';
 import DefaultNetworkErrorActionSlot from '@components/NetworkError/slots/DefaultNetworkErrorActionSlot';
 import Card, { CardSkeleton } from '@components/Card';
+import DefaultCardPriceSlot from '@components/Card/slots/DefaultCardPriceSlot';
+import ProductCardAction from './components/ProductCardAction';
 
-export type ProductCardProps = {
-  initData: ProductDetailsInitData
-
-};
-
-const ProductCard: React.FC<ProductCardProps> = ({ initData }) => {
+const ProductCard: React.FC = () => {
   const productDetailsStore = useProductDetailsStore()
-  const initApplied = useRef(false);
   const isFirstRender = useRef(true);
   const prevProduct = useRef<string | null>(null);
   const { id: productId } = useParams()
@@ -32,15 +25,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ initData }) => {
       productDetailsStore.fetchProduct(productId);
     }
   }, [productDetailsStore, productId]);
-
-  useEffect(() => {
-     if(!initApplied.current && initData && productDetailsStore.status === META_STATUS.IDLE) {
-      productDetailsStore.setInitData(initData);
-      prevProduct.current = initData.id;
-      initApplied.current = true;
-    }      
-  }, [productDetailsStore, initData])
-
+  
 
   useEffect(() => {   
     if(isFirstRender.current) {
@@ -85,8 +70,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ initData }) => {
         <Card
           display="full"
           product={product}
-          PriceSlot={() => <ContentSlot product={product} />}
-          ActionSlot={ActionSlot}
+          PriceSlot={() => <DefaultCardPriceSlot product={product} className={clsx(style['product-card__price-slot'])} />}
+          ActionSlot={() => <ProductCardAction product={product} />}
         />
       );
       break;
