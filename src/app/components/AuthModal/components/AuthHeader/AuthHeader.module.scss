@@ -1,0 +1,17 @@
+@use '@style/variables' as *;
+@use '@style/mixins' as *;
+
+.header {
+    display: flex;
+    flex-direction: row;
+    position: sticky;
+    top: 0;
+
+    &__button {
+        flex-basis: 50%;
+        &_active {
+            cursor: auto;
+            pointer-events: none;
+        }
+    }
+}
