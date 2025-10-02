@@ -1,7 +1,7 @@
 "use client"
 
 import clsx from 'clsx';
-import { useEffect, useState } from 'react';
+import React, { PropsWithChildren, useCallback, useEffect, useState } from 'react';
 import style from './UserActions.module.scss';
 import Link from 'next/link';
 import { appRoutes } from '@constants/app-routes';
@@ -11,33 +11,45 @@ import { useRootStore } from '@providers/RootStoreContext';
 import { META_STATUS } from '@constants/meta-status';
 import Text from '@components/Text';
 import { observer } from 'mobx-react-lite';
+import { usePathname } from 'next/navigation';
+import { MODES } from '@constants/modal';
 
 const UserActions = () => {
-  const { cartStore } = useRootStore(); 
+  const path = usePathname()
+  const { 
+    cartStore,
+    userStore,
+    modalStore 
+  } = useRootStore();
 
-  
+  const CartComponent: React.FC<PropsWithChildren> = path === appRoutes.cart.mask
+    ? ({ children }) => <p>{children}</p>
+    : ({ children }) => <Link href={appRoutes.cart.create()}>{children}</Link>
 
-  useEffect(() => {
-    if(cartStore.status === META_STATUS.IDLE) {
-      cartStore.fetchCart()
-    }
-  }, [cartStore])
+  const handleUserIconClick = useCallback(() => {
+    const mode = userStore.isAuthorized ? MODES.PROFILE : MODES.AUTH;
+    modalStore.open(mode)
+  }, [userStore, modalStore]);  
 
   return (
     <div className={clsx(style['actions'])}>
-      <div className={clsx(style['actions-cart'], style['actions__item'])}>
-        <Link href={appRoutes.cart.create()}>
+      <div className={clsx(
+        style['actions-cart'], 
+        style['actions__item'], 
+        path === appRoutes.cart.mask && style['actions__item_active']
+      )}>
+        <CartComponent>
           <BagIcon className={clsx(style['actions__icon'])} />
-        </Link>
+        </CartComponent>
         {cartStore.totalItemsToOrder > 0 &&
           <Text weight='bold' className={clsx(style['actions-cart__count'])}>
             {cartStore.totalItemsToOrder}
           </Text>
         }
       </div>
-      <Link href={appRoutes.cart.create()} className={clsx(style['actions__item'])}>
+      <div onClick={handleUserIconClick} className={clsx(style['actions__item'])}>
         <UserIcon className={clsx(style['actions__icon'])} />
-      </Link>
+      </div>
     </div>
   );
 };

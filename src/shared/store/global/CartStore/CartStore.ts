@@ -268,8 +268,8 @@ export default class CartStore {
     });
 
     try {
-      const response = await this._api.getCart(this._abortCtrl.signal);
 
+      const response = await this._api.getCart(this._abortCtrl.signal);
       runInAction(() => {
         this._abortCtrl = null;
         this._error = null;
@@ -277,6 +277,7 @@ export default class CartStore {
         this._status = META_STATUS.SUCCESS;
       });
     } catch (err) {
+
       if (err instanceof Error && err.name === 'AbortError') {
         return;
       }

@@ -4,6 +4,7 @@ import { QueryParamsStoreProvider } from './QueryParamsStoreProvider';
 import Loader from '@components/Loader';
 import clsx from 'clsx';
 import style from '../app.module.scss';
+import ModalsProvider from './ModalsProvider';
 
 const Provoders: React.FC<PropsWithChildren> = ({children}) => {
     return(
@@ -14,7 +15,9 @@ const Provoders: React.FC<PropsWithChildren> = ({children}) => {
         }>
             <RootStoreProvider>
                 <QueryParamsStoreProvider>
-                    {children}
+                    <ModalsProvider>
+                        {children}
+                    </ModalsProvider>
                 </QueryParamsStoreProvider>
             </RootStoreProvider>
         </Suspense>

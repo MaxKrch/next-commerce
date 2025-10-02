@@ -4,7 +4,7 @@
 $dropdown-width: $control-field-width;
 $dropdown-options-bg: #fff;
 $dropdown-options-shadow: $shadow-normal;
-$dropdown-option-height: $control-field-heihgt;
+$dropdown-option-height: $control-field-height;
 $dropdown-option-hover-color: $text-secondary;
 $dropdown-option-selected-color: $text-accent;
 
@@ -21,7 +21,7 @@ $dropdown-option-selected-color: $text-accent;
   position: absolute;
   left: 0;
   width: 100%;
-  top: $control-field-heihgt;
+  top: $control-field-height;
 
   &__option {
     display: flex;

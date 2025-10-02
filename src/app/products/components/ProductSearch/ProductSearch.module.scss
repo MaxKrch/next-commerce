@@ -2,7 +2,7 @@
 @use '@style/mixins' as *;
 
 $cross-size: 24px;
-$cross-margin: calc(($control-field-heihgt - $cross-size) / 2);
+$cross-margin: calc(($control-field-height - $cross-size) / 2);
 $filter-cross-right: 32px;
 $input-right-padding: calc($cross-size + 2 * $cross-margin);
 
@@ -23,7 +23,7 @@ $input-right-padding: calc($cross-size + 2 * $cross-margin);
 .filter {
     width: 100%;
     display: flex;
-    gap: $space-xs;
+    gap: $space-xxs;
     align-items: center;
 
     @include mobile-up() {
@@ -31,16 +31,24 @@ $input-right-padding: calc($cross-size + 2 * $cross-margin);
     }
 
     &-cross {
-        width: $cross-size;
-        height: $cross-size;
-        color: $brand;
-        cursor: pointer;
+        width: $control-field-height;
         flex-shrink: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        &__icon {
+            width: $cross-size;
+            height: $cross-size;
+            color: $brand;
+            flex-shrink: 0;
+        }
     }
 
     &-skeleton {
         @include pulse-gradient();
-        height: $control-field-heihgt;
+        height: $control-field-height;
     }
 
     &-dropdown {
@@ -71,12 +79,13 @@ $input-right-padding: calc($cross-size + 2 * $cross-margin);
             height: $cross-size;
             color: $brand;
             cursor: pointer;
+            flex-shrink: 0;
         }
     }
 
     &-button {
         padding: 0;
-        width: $control-field-heihgt;
+        width: $control-field-height;
         flex-shrink: 0;
 
         &:disabled {

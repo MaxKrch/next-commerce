@@ -31,4 +31,15 @@
     &__body {
         font-size: 0.9em;
     }
+
+    &__image {
+        object-fit: cover;
+
+        &-wrapper {
+            position: relative;
+            aspect-ratio: 3 / 2;
+            max-width: 768px;
+            width: 100%;
+        }
+    }
 }

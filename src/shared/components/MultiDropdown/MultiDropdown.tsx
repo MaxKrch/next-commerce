@@ -1,7 +1,7 @@
 import clsx from 'clsx';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import style from './MultiDropdown.module.scss';
-import Input from '@components/Input';
+import { InputValueAdapter } from '@components/Input';
 import ArrowDownIcon from '@components/icons/ArrowDownIcon';
 import { Option } from '@model/option-dropdown';
 
@@ -30,7 +30,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
   const inputRef = useRef<HTMLInputElement | null>(null);
   const title = useMemo(() => getTitle(value), [value, getTitle]);
   const [isShowDropdown, setIsShowDropdown] = useState(false);
-  const [inputValue, setInputvalue] = useState(value.length > 0 ? title : '');
+  const [inputValue, setInputValue] = useState(value.length > 0 ? title : '');
 
   const stateRef = useRef({
     options,
@@ -96,9 +96,9 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
 
   useEffect(() => {
     if (isShowDropdown || stateRef.current.value.length === 0) {
-      setInputvalue('');
+      setInputValue('');
     } else {
-      setInputvalue(title);
+      setInputValue(title);
     }
   }, [isShowDropdown, title]);
 
@@ -106,9 +106,9 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
 
   return (
     <div ref={containerRef} className={clsx(style['dropdown-container'], className)}>
-      <Input
+      <InputValueAdapter
         disabled={disabled}
-        onChange={setInputvalue}
+        onChange={setInputValue}
         value={inputValue}
         ref={inputRef}
         afterSlot={<ArrowDownIcon color="secondary" />}

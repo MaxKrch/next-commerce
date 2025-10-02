@@ -2,11 +2,11 @@
 
 import { clsx } from 'clsx';
 import { observer } from 'mobx-react-lite';
-import { KeyboardEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
 import style from './ProductSearch.module.scss';
 import CrossIcon from '@components/icons/CrossIcon';
 import Button from '@components/Button';
-import Input from '@components/Input';
+import { InputValueAdapter } from '@components/Input';
 import useSearchStore from '@store/local/SearchStore/useSearchStore';
 import { META_STATUS } from '@constants/meta-status';
 import SearchIcon from '@components/icons/SearchIcon';
@@ -20,7 +20,8 @@ const ProductSearch = () => {
   const { categoriesStore, queryParamsStore } = useRootStore();
   
   const searchStore = useSearchStore();
-  const productsStore = useProductsStore()
+  const productsStore = useProductsStore();
+
   const handleCrossInputClick = useCallback(() => {
     searchStore.changeInput('');
   }, [searchStore]);
@@ -52,7 +53,7 @@ const ProductSearch = () => {
     <div className={clsx(style['search'])}>
       <div className={clsx(style['query'])}>
         <div className={clsx(style['query-input'])}>
-          <Input
+          <InputValueAdapter
             value={searchStore.inputValue}
             onChange={searchStore.changeInput}
             placeholder={'Что будем искать?'}
@@ -95,11 +96,13 @@ const ProductSearch = () => {
             className={clsx(style['filter-dropdown'])}
           />
         )}
-        {searchStore.selectedCategories.length > 0 &&
-          <OnlyClient>
-            <CrossIcon onClick={() => {handleCrossFilterClick()}} className={clsx(style['filter-cross'])} />
-          </OnlyClient>
-        }
+        <div className={clsx(style['filter-cross'])}>
+          {searchStore.selectedCategories.length > 0 &&
+            <OnlyClient>
+              <CrossIcon onClick={() => {handleCrossFilterClick()}} className={clsx(style['filter-cross__icon'])} />
+            </OnlyClient>
+          }
+        </div>
       </div>
     </div>
   );

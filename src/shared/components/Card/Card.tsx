@@ -42,6 +42,7 @@ const Card: React.FC<CardProps> = ({
               src={images[0].url}
               alt={title ? title.toString() : 'Card image'}
               sizes={imageSizes}
+              priority
               fill
             />
           </Link>

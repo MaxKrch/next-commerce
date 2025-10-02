@@ -23,16 +23,23 @@ $actions-tablet-up-width: calc($actions-width + $actions-tablet-up-gap);
 
     &__item {
         flex-shrink: 0;
+        cursor: pointer;     
+        
+        &_active {
+            color: $brand-active;
+            cursor: auto;
+        }
+        
+        &:hover:not(.actions__item_active) {
+            color: $brand-hover
+        }
     }
     
     &__icon {
         padding: $action-padding;
         height: $action-sizes;
         width: $action-sizes;
-        &:hover {
-            color: $brand-hover
-        }
-    }
+    }  
 
     &-cart {
         position: relative;

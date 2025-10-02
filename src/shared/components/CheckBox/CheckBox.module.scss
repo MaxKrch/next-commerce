@@ -13,7 +13,7 @@ $checkbox-check-color: $brand;
 $checkbox-check-color-hover: $brand;
 $checkbox-check-color-disabled: $brand-disabled;
 
-$checkbox-size: $control-field-heihgt;
+$checkbox-size: $control-field-height;
 
 .checkbox {
     display: flex;
@@ -21,12 +21,12 @@ $checkbox-size: $control-field-heihgt;
     align-items: center;
     height: $checkbox-size;
     width: $checkbox-size;
-    background: $checkbox-bg;
     border: 1px solid $checkbox-border-color;
     border-radius: $border-radius-secondary;
+    color: $brand;
     cursor: pointer;
     
-    &_icon {
+    &__icon {
         flex-shrink: 0;
         color: $checkbox-check-color;
     }
@@ -36,7 +36,6 @@ $checkbox-size: $control-field-heihgt;
     }
     
     &_disabled {
-        background-color: $checkbox-bg-disabled;
         border-color: $checkbox-border-color-disabled;
 
         .checkbox__icon {

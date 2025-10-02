@@ -28,7 +28,7 @@ const CartSummary: React.FC<{className?: string }> = ({ className }) => {
         }
         <div className={clsx(style['summary__total'])}>
           <Text className={clsx(style['summary__total-title'])}>Сумма заказа:</Text>
-          {discounter &&
+          {discounter > 0 &&
             <Text className={clsx(style['summary__total-value'], style['summary__total-value_through'])}>${cartStore.totalPrice}</Text>
           }            
           <Text className={clsx(style['summary__total-value'])}>${cartStore.totalDiscountedPrice}</Text>

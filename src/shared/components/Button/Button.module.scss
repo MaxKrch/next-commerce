@@ -2,8 +2,8 @@
 @use '@style/mixins' as *;
 
 
-$button-title-base: 12px;
-$button-title-mobile: 14px;
+$button-title-base: 14px;
+$button-title-mobile: 15px;
 $button-title-tablet: 16px;
 $button-title-laptop-up: 18px;
 
@@ -27,7 +27,7 @@ $button-secondary-bg-hover: #fefefe;
 $button-secondary-bg-disabled: #eeeeee;
 $button-secondary-bg-active: #efefef;
 
-$button-height: $control-field-heihgt;
+$button-height: $control-field-height;
 $button-padding-x: $space-s;
 $button-padding-y: $space-s;
 
@@ -62,8 +62,8 @@ $button-padding-y: $space-s;
         color: $button-primary-text;
         border-color: $button-primary-bg;
 
-        &:not(.loading) {
-            &:not(.disabled):hover {
+        &:not(.button-primary_loading) {
+            &:not(.button-primary_disabled):hover {
                 background: $button-primary-bg-hover;
                 color: $button-primary-text-hover;
                 border-color: $button-primary-bg-hover
@@ -93,8 +93,8 @@ $button-padding-y: $space-s;
         color: $button-secondary-text;
         border-color: $button-secondary-text;
 
-        &:not(.loading) {
-            &:not(.disabled):hover {
+        &:not(.button-secondary_loading) {
+            &:not(.button-secondary_disabled):hover {
                 background: $button-secondary-bg-hover;
                 color: $button-secondary-text-hover;
                 border-color: $button-secondary-text-hover;

@@ -23,7 +23,7 @@ const ProductCardAction: React.FC<{ product: ProductType }> = ({ product }) => {
 
   return (
     <>
-      <Button className={clsx(style['action__button'])} onClick={() => handlePrimaryBtn(product)}>Купить</Button>
+      <Button className={clsx(style['action-slot__button'])} onClick={() => handlePrimaryBtn(product)}>Купить</Button>
       <DefaultCardActionSlot priority="secondary" product={product}/>
     </>
   );
