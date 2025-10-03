@@ -13,10 +13,11 @@ const isElement = (target: EventTarget | null): target is Element => {
 };
 
 export type ModalPortalProps = PropsWithChildren<{
+    size?: 'modal' | 'full',
     onClose?: () => void
 }>
 
-const ModalPortal: React.FC<ModalPortalProps> = ({ children, onClose }) => {
+const ModalPortal: React.FC<ModalPortalProps> = ({ children, size = 'modal', onClose }) => {
     const [portal, setPortal] = useState<HTMLElement | null>(null);
     const { modalStore } = useRootStore();
 
@@ -44,6 +45,19 @@ const ModalPortal: React.FC<ModalPortalProps> = ({ children, onClose }) => {
         }
     }, [onClose, modalStore]);
 
+    const handleKeyDown = useCallback((event: KeyboardEvent) => {
+        if(event.key !== "Escape") {
+            return;
+        }
+
+        modalStore.close();
+        window.removeEventListener('keydown', handleKeyDown);
+
+        if(onClose) {
+            onClose()
+        }
+    }, [])
+
     useEffect(() => { 
         setPortal(document.getElementById('modal-portal'))
     }, []);
@@ -54,6 +68,14 @@ const ModalPortal: React.FC<ModalPortalProps> = ({ children, onClose }) => {
         }
         document.addEventListener('pointerdown', handleClick);
         return () => removeEventListener('pointerdown', handleClick)
+    }, [handleClick, modalStore.isOpen]);
+
+    useEffect(() => {
+        if(!modalStore.isOpen) {
+            return;
+        }
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown)
     }, [handleClick, modalStore.isOpen])
 
     if(!portal) {
@@ -63,7 +85,7 @@ const ModalPortal: React.FC<ModalPortalProps> = ({ children, onClose }) => {
     return createPortal(
         <OnlyClient>
             <aside className={clsx(style['modal'])}>
-                <div data-id="modal-container" className={clsx(style['modal__container'])}>
+                <div data-id="modal-container" className={clsx(style['modal__container'], style[`modal__container_${size}`])}>
                     <div role='button' data-id="modal-close" className={clsx(style['modal__close-icon-wrapper'])}>
                         <CrossIcon className={clsx(style['modal__close-icon'])}/>
                     </div>

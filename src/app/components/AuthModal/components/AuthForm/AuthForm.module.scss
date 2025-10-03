@@ -19,8 +19,22 @@
     &__input {
         input {
             border-bottom: 1px solid $brand;
-            background-color: #DFDFDF;
+            background-color: #EFEFEF;
             border-radius: $border-radius-secondary;
+   
+
+            &::placeholder {
+                font-size: 0.9em;
+                font-style: italic;
+                color: $brand;
+                opacity: 0.5;
+            }
+        }
+
+        &_error {
+            input {
+                border-color: red;
+            }
         }
     }
 
@@ -31,13 +45,26 @@
         padding: 0 $space-xxs;
     } 
     
-    &-checkbox {
+    &__checkbox {
         display: flex;
         align-items: center;
+    }
+    
+    &__check {
+        border: 1px solid $brand;
+        background-color: #EFEFEF;
+    }
 
-        &__check {
-            border: 1px solid $brand;
-            background-color: #DFDFDF;
+    &__submit {
+        &-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: $space-xxxl
+        }
+
+        &-icon {
+            color: #fff;
         }
     }
 }

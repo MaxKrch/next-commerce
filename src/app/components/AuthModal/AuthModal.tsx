@@ -11,9 +11,10 @@ import AuthHeader  from './components/AuthHeader/AuthHeader';
 import AuthForm from './components/AuthForm/AuthForm';
 import { AUTH_MODES, AuthModes } from './constants';
 import { Schema } from './AuthModal.schema';
+import { META_STATUS } from '@constants/meta-status';
 
 const AuthModal: React.FC = () => {
-    const { modalStore, userStore, cartStore } = useRootStore();
+    const { modalStore, userStore } = useRootStore();
     const [authMode, setAuthMode] = useState<AuthModes>(AUTH_MODES.LOGIN);
  
     const handleSubmit = useCallback(async (data: Schema) => {
@@ -62,7 +63,7 @@ const AuthModal: React.FC = () => {
                     onSubmit={handleSubmit} 
                     needReset={!modalStore.isOpen} 
                     error={userStore.error} 
-                    status={userStore.status}
+                    loading={userStore.status === META_STATUS.PENDING}
                 />
             </div>
         </ModalPortal>

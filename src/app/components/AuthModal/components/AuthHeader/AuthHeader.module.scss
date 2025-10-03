@@ -6,12 +6,28 @@
     flex-direction: row;
     position: sticky;
     top: 0;
+    background-color: white;
 
     &__button {
         flex-basis: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: $control-field-height;        
+
+        &:not(.header__button_active) {
+            cursor: pointer;
+            background-color: #DFDFDF;
+            color: #fff;
+
+            &:hover {
+                color: $brand-hover;
+            }
+        }
+
         &_active {
-            cursor: auto;
             pointer-events: none;
+            color: $brand;
         }
     }
 }

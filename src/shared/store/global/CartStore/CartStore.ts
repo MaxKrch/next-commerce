@@ -48,6 +48,7 @@ export default class CartStore {
       addToCart: action.bound,
       removeFromCart: action.bound,
       fetchCart: action.bound,
+      resetCart: action.bound,
     });
 
     this._api = api;
@@ -153,6 +154,17 @@ export default class CartStore {
     
     this._removeFromCartItem(product, item.quantity);
     this._createDebounceTimer(product);
+  }
+
+  resetCart(): void {
+    if(this._abortCtrl) {
+      this._abortCtrl.abort();
+      this._abortCtrl = null;
+    }
+    this._error = null;
+    this._setProducts([]);
+    this._awaitingList.clear();
+    this._status = META_STATUS.IDLE;
   }
 
   private _addToCartItem(product: ProductType, quantity: number = 1): void {

@@ -1,8 +1,7 @@
-import React, { memo, useEffect } from "react";
+import React, { memo, useCallback, useEffect } from "react";
 import { schema, Schema } from "../../AuthModal.schema";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRootStore } from "@providers/RootStoreContext";
 import style from './AuthForm.module.scss'
 import clsx from "clsx";
 import Text from "@components/Text";
@@ -10,14 +9,14 @@ import Input from "@components/Input";
 import CheckBox from "@components/CheckBox";
 import Button from "@components/Button";
 import { AUTH_MODES, AuthModes } from "../../constants";
-import { META_STATUS, MetaStatus } from "@constants/meta-status";
+import Loader from "@components/Loader";
 
 export type AuthFormProps = {
     onSubmit: (data: Schema) => void,
     mode: AuthModes, 
     needReset: boolean,
     error?: string | null,
-    status?: MetaStatus
+    loading?: boolean
 }
 
 const AuthForm: React.FC<AuthFormProps> = ({ 
@@ -25,18 +24,30 @@ const AuthForm: React.FC<AuthFormProps> = ({
     mode, 
     needReset, 
     error, 
-    status 
+    loading
 }) => {
     const {
         register,
         control,
         formState: { errors, isValid, isDirty },
         handleSubmit,
-        reset
+        reset,
+        resetField,
+        clearErrors
     } = useForm<Schema>({
         resolver: zodResolver(schema),
         mode: 'onChange'
     })
+
+    const handleFocus = useCallback((field: keyof Schema) => {
+        clearErrors(field)
+    }, [clearErrors])
+
+    useEffect(() => {
+        if (mode === AUTH_MODES.LOGIN) {
+            resetField('email');
+        }
+    }, [mode, resetField]);
 
     useEffect(() => {
         if(needReset) {
@@ -52,11 +63,10 @@ const AuthForm: React.FC<AuthFormProps> = ({
     return(
         <form onSubmit={handleSubmit(onSubmit)} className={clsx(style['form'])}>
             <label className={clsx(style['form__label'])}>
-                <Text weight="bold" className={clsx(style['form__description'])}>
-                    Логин:
-                </Text>
                 <Input
-                    className={clsx(style['form__input'])}
+                    onFocus={() => handleFocus('login')}
+                    placeholder="Логин"
+                    className={clsx(style['form__input'], errors.login && style['form__input_error'])}
                     {...register('login')}
                 />
                 <div className={clsx(style['form__error'])}>
@@ -66,11 +76,10 @@ const AuthForm: React.FC<AuthFormProps> = ({
             
             {mode === AUTH_MODES.REGISTER &&
                 <label className={clsx(style['form__label'])}>
-                    <Text weight="bold" className={clsx(style['form__description'])}>
-                        Email:
-                    </Text>
                     <Input 
-                        className={clsx(style['form__input'])}
+                        onFocus={() => handleFocus('email')}
+                        placeholder="Email"
+                        className={clsx(style['form__input'], errors.email && style['form__input_error'])}
                         type='email'
                         {...register('email')}
                     />
@@ -81,11 +90,10 @@ const AuthForm: React.FC<AuthFormProps> = ({
             }
             
             <label className={clsx(style['form__label'])}>
-                <Text weight="bold" className={clsx(style['form__description'])}>
-                    Пароль:
-                </Text>
                 <Input 
-                    className={clsx(style['form__input'])}
+                    onFocus={() => handleFocus('password')}
+                    placeholder="Пароль"
+                    className={clsx(style['form__input'], errors.password && style['form__input_error'])}
                     type='password'
                     {...register('password')}
                 />
@@ -94,7 +102,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
                 </div>
             </label>
             
-            <label className={clsx(style['form-checkbox'])}>
+            <label className={clsx(style['form__checkbox'])}>
                 <Text weight="bold" className={clsx(style['form__description'])}>
                     Запомнить меня:
                 </Text>
@@ -107,7 +115,8 @@ const AuthForm: React.FC<AuthFormProps> = ({
                             checked={field.value}
                             onChange={field.onChange}
                             ref={field.ref}
-                            className={clsx(style['form-checkbox__check'])}
+                            className={clsx(style['form__check'])}
+                            checkSize='small'
                         />
                     )}
                 />
@@ -117,11 +126,15 @@ const AuthForm: React.FC<AuthFormProps> = ({
             </div>
             <Button
                 type='submit'
-                className={clsx(style['form__submit'])} 
+                className={clsx(style['form__submit-container'])} 
                 disabled={!isValid || !isDirty}
-                loading={status === META_STATUS.PENDING}
+                loading={loading}
+                
             >
-                {mode === AUTH_MODES.LOGIN ? 'Войти' : 'Зарегистрироваться'}
+                {loading && <Loader size='s' className={clsx(style['form__submit-icon'])}/>}
+                <div className={clsx(style['form__submit'])}>
+                    {mode === AUTH_MODES.LOGIN ? 'Войти' : 'Зарегистрироваться'}
+                </div>
             </Button>
         </form>
     )

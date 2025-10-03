@@ -19,26 +19,24 @@ const AuthHeader: React.FC<AuthHeaderProps> = ({mode, onChange}) => {
 
     return( 
         <div className={clsx(style['header'])}>                    
-            <Button 
+            <div 
                 onClick={() => handleChangeMode(AUTH_MODES.LOGIN)}
                 className={clsx(
                     style['header__button'], 
                     mode === AUTH_MODES.LOGIN && style['header__button_active']
                 )}
-                priority={mode === AUTH_MODES.LOGIN ? 'primary' : 'secondary'}
             >
                 Вход
-            </Button>
-            <Button 
+            </div>
+            <div 
                 onClick={() => handleChangeMode(AUTH_MODES.REGISTER)}
                 className={clsx(
                     style['header__button'], 
                     mode === AUTH_MODES.REGISTER && style['header__button_active']
                 )}
-                priority={mode === AUTH_MODES.REGISTER ? 'primary' : 'secondary'}
             >
                 Регистрация
-            </Button>
+            </div>
         </div>  
     )
 }

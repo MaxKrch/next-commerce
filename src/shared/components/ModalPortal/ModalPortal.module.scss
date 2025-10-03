@@ -9,20 +9,28 @@ $modal-background: rgb(0 0 0 / 0.25);
     left: 0;
     height: 100%;
     width: 100%;
-    padding: $space-xxxl 0;
+    padding: $space-xxxl 0 $space-l;
     background: $modal-background;
     z-index: 9;
 
     &__container {
-        max-width: 600px;
         min-width: $page-container-min-width;
         width: $page-container-width;
         margin: auto;
         height: 100%;
         border-radius: $border-radius-primary;
+        overflow: hidden;
         box-shadow: $shadow-bold;
         position: relative;
         background-color: #fff;
+
+        &_modal {
+            max-width: 600px;
+        }
+
+        &_full {
+            max-width: $page-container-max-width;
+        }
     }       
 
     &__content {
@@ -34,20 +42,24 @@ $modal-background: rgb(0 0 0 / 0.25);
     &__close-icon {
         width: 28px;
         height: 28px;
-        color: $brand;  
 
         &-wrapper {
             cursor: pointer;
             position: absolute;
-            top: -24px;
-            right: -24px;
             z-index: 11;
             border-radius: 50%; 
-            background-color: rgb(255 255 255 / 0.5);
-            box-shadow: $shadow-normal;
+            color: $brand;
+            box-shadow: $shadow-normal; 
+            top: -28px;
+            right: 0;  
+
+            @include tablet-up() {
+                top: -24px;
+                right: -24px;  
+            }
 
             &:hover {
-                background-color: #fff;
+                background-color: rgb(255 255 255 / 0.25);
             }
         }    
     }

@@ -14,17 +14,26 @@ $checkbox-check-color-hover: $brand;
 $checkbox-check-color-disabled: $brand-disabled;
 
 $checkbox-size: $control-field-height;
+$checkbox-size-small: 24px;
 
 .checkbox {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: $checkbox-size;
-    width: $checkbox-size;
     border: 1px solid $checkbox-border-color;
     border-radius: $border-radius-secondary;
     color: $brand;
     cursor: pointer;
+
+    &_normal{
+        height: $checkbox-size;
+        width: $checkbox-size;
+    }
+
+    &_small {
+        height: $checkbox-size-small;
+        width: $checkbox-size-small;
+    }
     
     &__icon {
         flex-shrink: 0;

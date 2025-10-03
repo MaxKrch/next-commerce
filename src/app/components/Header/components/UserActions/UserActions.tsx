@@ -27,9 +27,9 @@ const UserActions = () => {
     : ({ children }) => <Link href={appRoutes.cart.create()}>{children}</Link>
 
   const handleUserIconClick = useCallback(() => {
-    const mode = userStore.isAuthorized ? MODES.PROFILE : MODES.AUTH;
+     const mode = userStore.isAuthorized ? MODES.PROFILE : MODES.AUTH;
     modalStore.open(mode)
-  }, [userStore, modalStore]);  
+  }, [userStore.isAuthorized]);  
 
   return (
     <div className={clsx(style['actions'])}>

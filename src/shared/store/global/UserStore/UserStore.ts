@@ -6,6 +6,7 @@ import { AuthData, RegisterData, User, UserApi } from "@model/auth";
 import normalizeUser from "@store/utils/normalize-user";
 import { action, computed, makeObservable, observable, runInAction } from "mobx";
 import UserStorage from "src/shared/services/UserStorage";
+import { success } from "zod";
 
 type PrivateFields = 
     | '_user'
@@ -73,10 +74,12 @@ export default class UserStore {
         return this._authRequest(data, this.api.login, save);
     }
 
-    logout(): void {
+    logout(): { success: boolean } {
         this._clearUserData();
         this._clearStorage();
-        this._isAuthorized = false;     
+        this._isAuthorized = false;
+
+        return { success: true }
     }
 
     private _initFromStorage(): void {
@@ -95,8 +98,8 @@ export default class UserStore {
     }
 
     private _loadFromStorage(): { user: User, token: string } {
-        const user = UserStorage.getUser(localStorage);
-        const token = UserStorage.getToken(localStorage);
+        const user = UserStorage.getUser();
+        const token = UserStorage.getToken();
 
         if(!user || !token) {
             throw new Error('FailLoad')
@@ -109,8 +112,8 @@ export default class UserStore {
     }
 
     private _saveToStorage(data: {user: User, token: string}, storage: Storage): void {
-        UserStorage.setToken(data.token);
-        UserStorage.setUser(data.user);
+        UserStorage.setToken(data.token, storage);
+        UserStorage.setUser(data.user, storage);
     }
 
     private _clearStorage(): void {
@@ -173,8 +176,8 @@ export default class UserStore {
                 this._saveToStorage(respData, storage);
                 this._status = META_STATUS.SUCCESS;
             })
-
             return { success: true }
+
         } catch(err) {
             runInAction(() => {
                 const errorMessage = err instanceof Error ? err.message : "UnknownError"
@@ -183,7 +186,6 @@ export default class UserStore {
                 this._clearStorage();       
                 this._status = META_STATUS.ERROR;
             })
-
             return { success: false}
         }
 

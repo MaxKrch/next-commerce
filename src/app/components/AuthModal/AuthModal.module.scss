@@ -2,7 +2,6 @@
 @use '@style/mixins' as *;
 
 .auth {
-
     @include base-adaptive-font-size();
 }
 

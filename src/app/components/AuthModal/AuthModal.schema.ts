@@ -1,15 +1,12 @@
-import z from "zod";
+import z, { nullable } from "zod";
 
-const schema = z.object({
-    login: z.string().min(3, 'Логин должен быть длиннее 2 символов'),
+export const schema = z.object({
+    login: z.string().min(3, 'Логин должен быть не менее 3 символов'),
     email: z.email('Некорректный email').optional(),
-    password: z.string().regex(/^(?=.*[a-zA-Z])(?=.*\d).{5,}$/, { message: 'используйте минимум 5 цифр и латинских букв' }),
+    password: z.string().min(3, 'Пароль должен быть не менее 5 символов')
+        .regex(/^(?=.*[a-zA-Z])(?=.*\d).{5,}$/, { message: 'Используйте только цифры и латинские буквы' }),
     saveMe: z.boolean()
 })
 
-type Schema = z.infer<typeof schema>
+export type Schema = z.infer<typeof schema>
 
-export {
-    schema,
-    type Schema
-}

@@ -2,15 +2,25 @@ import { STORAGE_KEYS } from "@constants/storage";
 import { User } from "@model/auth";
 
 export default class UserStorage {
-    static getToken(storage: Storage = localStorage): string | null {
-        return storage.getItem(STORAGE_KEYS.TOKEN) ?? null
+    static getToken(): string | null {
+        let token = localStorage.getItem(STORAGE_KEYS.TOKEN);
+       
+        if(!token) {
+            token = sessionStorage.getItem(STORAGE_KEYS.TOKEN) ?? null
+        }
+
+        return token;
     }
 
-    static getUser(storage: Storage = localStorage): User | null {
-        const userJSON = localStorage.getItem(STORAGE_KEYS.USER);
+    static getUser(): User | null {
+        let userJSON = localStorage.getItem(STORAGE_KEYS.USER);
 
         if(!userJSON) {
-            throw new Error('FailLoad')      
+            userJSON = sessionStorage.getItem(STORAGE_KEYS.USER)      
+        }
+
+        if(!userJSON) {
+            return null;
         }
 
         return JSON.parse(userJSON);

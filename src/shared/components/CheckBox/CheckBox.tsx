@@ -3,10 +3,12 @@ import React, { forwardRef, useCallback, type ChangeEvent } from 'react';
 import style from './CheckBox.module.scss';
 import CheckIcon from '@components/icons/CheckIcon';
 
-export type CheckBoxProps = React.InputHTMLAttributes<HTMLInputElement>
+export type CheckBoxProps = React.InputHTMLAttributes<HTMLInputElement> & {
+  checkSize?: 'normal' | 'small',
+}
 
 const CheckBox = React.forwardRef<HTMLInputElement, CheckBoxProps>(
-  ({ onChange, disabled, checked, className, ...rest }, ref) => {
+  ({ onChange, disabled, checked, className, checkSize = 'normal', ...rest }, ref) => {
     const handleChange = useCallback(
       (event: ChangeEvent<HTMLInputElement>) => {
         if (!onChange) {
@@ -17,7 +19,7 @@ const CheckBox = React.forwardRef<HTMLInputElement, CheckBoxProps>(
       
     return (
       <label
-        className={clsx(style['checkbox'], disabled && style['checkbox_disabled'], className)}
+        className={clsx(style['checkbox'], disabled && style['checkbox_disabled'], style[`checkbox_${checkSize}`], className)}
       >
         <input
           {...rest}

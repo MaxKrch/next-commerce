@@ -14,9 +14,15 @@ import NetworkError from '@components/NetworkError';
 import DefaultNetworkErrorContentSlot from '@components/NetworkError/slots/DefaultNetworkErrorContentSlot';
 import DefaultNetworkErrorActionSlot from '@components/NetworkError/slots/DefaultNetworkErrorActionSlot';
 import OnlyClient from '@components/OnlyClient';
+import { useRouter } from 'next/navigation';
+import Loader from '@components/Loader';
+import { MODES } from '@constants/modal';
+import { appRoutes } from '@constants/app-routes';
+import PrivateRoute from '@components/PrivateRoute';
 
 const CartPage: React.FC = () => {
-  const { cartStore, userStore } = useRootStore();
+  const router = useRouter()
+  const { cartStore, userStore, modalStore } = useRootStore();
   const debouncer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
@@ -26,8 +32,9 @@ const CartPage: React.FC = () => {
       }
   }, [cartStore, cartStore.status, userStore.isAuthorized])
 
+
   return (
-    <OnlyClient>
+    <PrivateRoute>
       <div className={clsx(style['cart'])}>
         {(cartStore.status === META_STATUS.PENDING || cartStore.status === META_STATUS.IDLE) && (
           <Skeleton />
@@ -45,7 +52,7 @@ const CartPage: React.FC = () => {
           </>
         )}
       </div>
-    </OnlyClient>
+    </PrivateRoute>
   );
 };
 

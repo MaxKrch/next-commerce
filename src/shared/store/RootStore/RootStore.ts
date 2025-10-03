@@ -63,6 +63,14 @@ export default class RootStore implements IRootStore {
         }
       }),
       { fireImmediately: true }
-    )
+    );
+    reaction(
+      () => this.userStore.isAuthorized,
+      (isAuthorized => {
+        if (!isAuthorized) {
+          this.cartStore.resetCart();
+        }
+      }),
+    );
   }
 }
