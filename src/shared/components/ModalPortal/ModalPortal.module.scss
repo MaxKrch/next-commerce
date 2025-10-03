@@ -18,11 +18,7 @@ $modal-background: rgb(0 0 0 / 0.25);
         width: $page-container-width;
         margin: auto;
         height: 100%;
-        border-radius: $border-radius-primary;
-        overflow: hidden;
-        box-shadow: $shadow-bold;
         position: relative;
-        background-color: #fff;
 
         &_modal {
             max-width: 600px;
@@ -37,6 +33,9 @@ $modal-background: rgb(0 0 0 / 0.25);
         max-height: 100%;
         overflow: auto;
         scrollbar-width: thin; 
+        border-radius: $border-radius-primary;
+        box-shadow: $shadow-bold;
+        background-color: #fff;
     }
     
     &__close-icon {
@@ -50,7 +49,7 @@ $modal-background: rgb(0 0 0 / 0.25);
             border-radius: 50%; 
             color: $brand;
             box-shadow: $shadow-normal; 
-            top: -28px;
+            top: -32px;
             right: 0;  
 
             @include tablet-up() {

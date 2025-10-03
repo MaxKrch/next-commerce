@@ -1,3 +1,4 @@
+import { DEFAULT_SORT } from "@constants/product-sort";
 import { QueryParams } from "@model/query-params";
 import { action, computed, makeObservable, observable, runInAction } from "mobx";
 import { ReadonlyURLSearchParams } from "next/navigation";
@@ -101,49 +102,16 @@ export default class QueryParamsStore {
         const paramsObj = this.queryObject;
 
         if(paramsObj.page && paramsObj.page === 1) {
-            delete paramsObj.page
-        }
-        return qs.stringify(paramsObj, { arrayFormat: "repeat" });
-    }
-    
-    private _setQueryParams(params: QueryParams): void {
-        if(params.categories) {
-            if(Array.isArray(params.categories)) {
-                this._categories = params.categories.length > 0
-                    ? params.categories.map(Number)
-                    : undefined
-
-            } else {
-                const categoryNumber = Number(params.categories)
-                this._categories = !Number.isNaN(categoryNumber)
-                    ? [categoryNumber]
-                    : undefined;   
-            }
+            delete paramsObj.page;
         }
 
-        if(params.query !== undefined && params.query !== null) {
-            this._query = params.query.length > 0
-                ? params.query
-                : undefined;
-        }
-
-        if(params.sort) {
-            this._sort = params.sort;
-        }
-
-        if(params.inStock) {
-            this._inStock = params.inStock ?? undefined;
-        }
-
-        if(params.count) {
-            this._count = params.count;
+        if(paramsObj.sort && paramsObj.sort === DEFAULT_SORT) {
+            delete paramsObj.sort;
         }
         
-        if (params.page) {
-            this._page = params.page;
-        }
+        return qs.stringify(paramsObj, { arrayFormat: "repeat" });
     }
-    
+        
     setFromSearchParams(searchParams: ReadonlyURLSearchParams | string) {
         const queryString = typeof searchParams === "string"
             ? searchParams
@@ -176,7 +144,7 @@ export default class QueryParamsStore {
                 this._query = undefined;
             }
 
-            this._sort = params.sort ?? undefined;
+            this._sort = params.sort  ?? undefined;
             this._inStock = params.inStock ?? undefined;
             this._count = params.count ?? undefined;
             this._page = params.page ?? undefined;            
@@ -209,9 +177,7 @@ export default class QueryParamsStore {
                 this._sort = params.sort;
             }
 
-            if(params.inStock) {
-                this._inStock = params.inStock ?? undefined;
-            }
+            this._inStock = params.inStock ?? undefined;
 
             if(params.count) {
                 this._count = params.count;

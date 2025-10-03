@@ -12,6 +12,9 @@ import Text from '@components/Text';
 import Image from 'next/image';
 import { META_STATUS } from '@constants/meta-status';
 import Loader from '@components/Loader';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru'
+
 
 const UserModal: React.FC = () => {
     const { modalStore, userStore } = useRootStore();
@@ -25,7 +28,7 @@ const UserModal: React.FC = () => {
             setError('Что-то пошло не так...');
             return;
         }
-        
+
         modalStore.close()
     }, [])
 
@@ -72,7 +75,7 @@ const UserModal: React.FC = () => {
                             Регистрация: 
                         </Text>
                         <Text className={clsx(style['user-modal__section-value'])}>
-                            {"25 марта 2025"}
+                            {dayjs(userStore.user?.createdAt).locale('ru').format('D MMMM YYYY')}
                         </Text>  
                     </div>
                 </div>

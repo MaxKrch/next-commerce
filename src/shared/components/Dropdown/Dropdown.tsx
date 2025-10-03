@@ -5,54 +5,34 @@ import { InputValueAdapter } from '@components/Input';
 import ArrowDownIcon from '@components/icons/ArrowDownIcon';
 import { Option } from '@model/option-dropdown';
 
-export type MultiDropdownProps = {
+export type DropdownProps = {
   className?: string;
   options: Option[];
-  value: Option[];
-  mode?: 'multi' | 'single',
-  onChange: (value: Option[]) => void;
+  inputValue: string;
+  selected: Option[];
+  onChange: (value: Option) => void;
+  onInput?: (Value: string) => void;
   disabled?: boolean;
-  getTitle: (value: Option[]) => string;
+  placeholder?: string
 };
 
 const isElement = (target: EventTarget | null): target is Element => {
   return target instanceof Element;
 };
 
-const MultiDropdown: React.FC<MultiDropdownProps> = ({
+const Dropdown: React.FC<DropdownProps> = ({
   options,
-  value,
+  onInput,
+  inputValue,
+  selected,
   onChange,
   disabled,
-  mode,
-  getTitle,
   className,
+  placeholder
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const title = useMemo(() => getTitle(value), [value, getTitle]);
   const [isShowDropdown, setIsShowDropdown] = useState(false);
-  const [inputValue, setInputValue] = useState(value.length > 0 ? title : '');
-
-  const stateRef = useRef({
-    options,
-    value,
-    disabled,
-    isShowDropdown,
-    inputValue,
-    title,
-  });
-
-  useEffect(() => {
-    stateRef.current = {
-      options,
-      value,
-      disabled,
-      isShowDropdown,
-      inputValue,
-      title,
-    };
-  }, [options, value, disabled, isShowDropdown, inputValue, title]);
 
   const handleInputClick = useCallback(() => {
     if (!disabled && !isShowDropdown) {
@@ -60,25 +40,19 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
     }
   }, [disabled, isShowDropdown]);
 
+  const handleInputValue = useCallback((value: string) => {
+    if(onInput) {
+      onInput(value)
+    }
+  }, [onInput])
+
   const handleOptionClick = useCallback((event: React.MouseEvent<HTMLLIElement>) => {
     const id = event.currentTarget.dataset.id;
-
-    if(mode === 'single') {
-      return options.find(item => item.key === id);
+    const currentOptions = options.find(item => item.key === id)
+    if(currentOptions) {
+      onChange(currentOptions)
     }
-
-    const isSelected = value.findIndex(item => item.key === id) > -1;
-
-    if (isSelected) {
-      onChange(value.filter(item => item.key !== id));
-      return;
-    } 
-    
-    const targetOption = options.find(item => item.key === id);
-    if (targetOption) {
-      onChange([...value, targetOption]);
-    }
-  },  [value, options, onChange]);
+  },  [options, onChange]);
 
   const handleClickOutside = useCallback((event: MouseEvent) => {  
     const target = event.target;
@@ -100,26 +74,15 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [handleClickOutside]);
 
-
-  useEffect(() => {
-    if (isShowDropdown || stateRef.current.value.length === 0) {
-      setInputValue('');
-    } else {
-      setInputValue(title);
-    }
-  }, [isShowDropdown, title]);
-
-
-
   return (
     <div ref={containerRef} className={clsx(style['dropdown-container'], className)}>
       <InputValueAdapter
         disabled={disabled}
-        onChange={setInputValue}
+        onChange={handleInputValue}
         value={inputValue}
         ref={inputRef}
         afterSlot={<ArrowDownIcon color="secondary" />}
-        placeholder={title}
+        placeholder={placeholder}
         name="multiDropdownInput"
         onClick={handleInputClick}
       />
@@ -134,7 +97,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
                 key={option.key}
                 className={clsx(
                   style['dropdown__option'],
-                  value.find((value) => value.key === option.key) && style['dropdown__option_selected']
+                  selected.find((item) => item.key === option.key) && style['dropdown__option_selected']
                 )}
               >
                 {option.value}
@@ -146,4 +109,4 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
   );
 };
 
-export default MultiDropdown;
+export default Dropdown;

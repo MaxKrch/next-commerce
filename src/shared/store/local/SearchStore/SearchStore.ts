@@ -1,4 +1,5 @@
 import { META_STATUS } from '@constants/meta-status';
+import { DEFAULT_SORT, SORT_OPTIONS, SortOption, SortType } from '@constants/product-sort';
 import { Option } from '@model/option-dropdown';
 import { ProductCategoryType } from '@model/products';
 import { QueryParams } from '@model/query-params';
@@ -17,15 +18,20 @@ import {
 type PrivateFields =
   | '_inputValue'
   | '_selectedCategories'
-  | '_filterSelectedCategories'
-  | '_setInitData'
+  | '_activeSort'
+  | '_inStock'
+  | '_cleanupSelectedCategories'
+  | '_initFromQueryParamsStore'
+  | '_resetQuery'
 
 export default class SearchStore implements ILocalStore {
+  private _rootStore: RootStore;
   private _inputValue: string = '';
   private _selectedCategories: ProductCategoryType['id'][] = [];
   private _debounce: ReturnType<typeof setTimeout> | null = null;
   private _handleChange: (params: QueryParams) => void;
-  private _rootStore: RootStore;
+  private _inStock: boolean = false;
+  private _activeSort: SortType = DEFAULT_SORT;
   reactions: IReactionDisposer[] = [];
 
   constructor({
@@ -38,15 +44,24 @@ export default class SearchStore implements ILocalStore {
     makeObservable<SearchStore, PrivateFields>(this, {
       _inputValue: observable,
       _selectedCategories: observable,
+      _activeSort: observable,
+      _inStock: observable,
 
       changeInput: action.bound,
       selectCategories: action.bound,
-      resetValues: action.bound,
+      setActiveSort: action.bound,
+      setInStock: action.bound,
 
-      _setInitData: action,
-      _filterSelectedCategories: action,
+      _resetQuery: action,
+      _initFromQueryParamsStore: action,
+      _cleanupSelectedCategories: action,
 
       inputValue: computed,
+      inStock: computed,
+
+      sortOptions: computed,
+      activeSort: computed,
+
       selectedCategories: computed,
       categoriesOptions: computed,
       categoriesValue: computed,
@@ -56,7 +71,7 @@ export default class SearchStore implements ILocalStore {
     this._handleChange = handleChange;
     this._rootStore = rootStore;
     this.initReactions();
-    this._setInitData();
+    this._initFromQueryParamsStore();
   }
 
   initReactions(): void {
@@ -70,7 +85,7 @@ export default class SearchStore implements ILocalStore {
           return;
         }
 
-        this._filterSelectedCategories(categories);
+        this._cleanupSelectedCategories(categories);
       }
     );
     this.reactions.push(reactionLoadCategories)
@@ -90,21 +105,20 @@ export default class SearchStore implements ILocalStore {
       (categories) => this._selectedCategories = categories ?? [],
     )
     this.reactions.push(reactionChangeCategories)
+
+    const reactionChangeInStock = reaction(
+      () => this._rootStore.queryParamsStore.inStock,
+      (inStock) => this._inStock = inStock ?? false,
+    )
+    this.reactions.push(reactionChangeInStock)
+
+    const reactionChangeSort = reaction(
+      () => this._rootStore.queryParamsStore.sort,
+      (sort) => this._activeSort = sort ?? DEFAULT_SORT,
+    )
+    this.reactions.push(reactionChangeCategories)
   }
 
-  private _setInitData(): void {
-   
-    this._inputValue = this._rootStore.queryParamsStore.query ?? '';
-    this._selectedCategories = this._rootStore.queryParamsStore.categories ?? []
-  }
-
-  private _filterSelectedCategories(categories: ProductCategoryType[]): void {
-    const filtredCategories = categories
-      .filter((item) => this._selectedCategories.includes(item.id))
-      .map(item => item.id);
-
-    this._selectedCategories = filtredCategories;
-  }
 
   get categoriesOptions(): Option[] {
     return this._rootStore.categoriesStore._list.order.map(id => ({
@@ -136,7 +150,22 @@ export default class SearchStore implements ILocalStore {
     return this._selectedCategories;
   }
 
-  resetValues(): void {
+  get inStock(): boolean {
+    return this._inStock;
+  }
+
+  get sortOptions(): Option[] {
+    return Object.values(SORT_OPTIONS).map(item => ({
+      key: item.key,
+      value: item.label
+    }))
+  }
+
+  get activeSort(): SortOption {
+    return SORT_OPTIONS[this._activeSort];
+  } 
+
+  _resetQuery(): void {
     if (this._debounce) {
       clearTimeout(this._debounce);
       this._debounce = null;
@@ -179,6 +208,31 @@ export default class SearchStore implements ILocalStore {
     this._rootStore.queryParamsStore.mergeQueryParams({
       categories: selected,
     })
+  }
+
+  setInStock(value: boolean): void {
+    this._rootStore.queryParamsStore.mergeQueryParams({
+      inStock: value,
+    })
+  }
+
+  setActiveSort(value: SortType): void {
+    this._rootStore.queryParamsStore.mergeQueryParams({
+      sort: value,
+    })
+  }
+ 
+  private _initFromQueryParamsStore(): void {
+    this._inputValue = this._rootStore.queryParamsStore.query ?? '';
+    this._selectedCategories = this._rootStore.queryParamsStore.categories ?? []
+  }
+
+  private _cleanupSelectedCategories(categories: ProductCategoryType[]): void {
+    const cleanCategories = categories
+      .filter((item) => this._selectedCategories.includes(item.id))
+      .map(item => item.id);
+
+    this._selectedCategories = cleanCategories;
   }
 
   clearReactions(): void {

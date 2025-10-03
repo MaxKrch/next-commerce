@@ -15,7 +15,7 @@ export default class CategoriesApi {
     private _createGetCategoriesURL = (): string => {
         const queryString = buildQueryString({
             populate: this.populate,
-          });
+          }, 'categories');
     
           return `/product-categories?${queryString}`;
         }
