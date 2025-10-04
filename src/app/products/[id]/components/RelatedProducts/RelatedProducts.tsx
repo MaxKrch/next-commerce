@@ -2,7 +2,7 @@
 import clsx from 'clsx';
 import { observer } from 'mobx-react-lite';
 import style from './RelatedProducts.module.scss';
-import React, { ReactNode, useCallback, useEffect, useRef } from 'react';
+import React, { ReactNode, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useProductsStore } from '@providers/ProductsStoreProvider';
 import { useProductDetailsStore } from '@providers/ProductDetailsStoreProvider';
 import { useParams } from 'next/navigation';
@@ -33,6 +33,10 @@ const RelatedProducts: React.FC = () => {
     }
   }, [productsStore, productDetailsStore.product]);
   
+  const filteredProducts = useMemo(
+    () => productsStore.products.filter(item => item.id !== productDetailsStore.product?.id), 
+    [productsStore.products, productDetailsStore.product]
+  )
   
   useEffect(() => {   
     if(isFirstRender.current) {
@@ -58,11 +62,8 @@ const RelatedProducts: React.FC = () => {
   }, [productId, productsStore, productDetailsStore, productDetailsStore.status]);
 
   const isFailedRequest = productsStore.status === META_STATUS.ERROR
-
   const notFoundProducts = productsStore.status === META_STATUS.SUCCESS && productsStore.products.length === 0
-
   const showRelatedProducts = productsStore.status === META_STATUS.SUCCESS && productDetailsStore.status === META_STATUS.SUCCESS 
-    
 
   let content: ReactNode
   switch(true) {
@@ -79,7 +80,7 @@ const RelatedProducts: React.FC = () => {
     case notFoundProducts: {
       content = (
         <Text>
-          Похожие товары не найдены, похоже - это что-то уникальное
+          Нет похожих товаров, кажется - вы нашли что-то уникальное
         </Text>
       )
       break;
@@ -89,7 +90,7 @@ const RelatedProducts: React.FC = () => {
       content =(
         <CardList
           display="preview"
-          products={productsStore.products}
+          products={filteredProducts}
           CaptionSlot={DefaultCardCaptionSlot}
           PriceSlot={DefaultCardPriceSlot}
           ActionSlot={DefaultCardActionSlot}

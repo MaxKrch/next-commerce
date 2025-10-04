@@ -10,9 +10,9 @@ import { useProductsStore } from '@providers/ProductsStoreProvider';
 import { useRootStore } from '@providers/RootStoreContext';
 import SearchQuery from './components/SearchQuery';
 import CategoriesFilter from './components/CategoriesFilter';
-import ProductSort from './components/ProductSort';
 import Text from '@components/Text';
 import CheckBox from '@components/CheckBox';
+import SingleDropdown from '@components/SingleDropdown';
 
 const ProductSearch = () => {
   const { categoriesStore, queryParamsStore } = useRootStore();
@@ -24,7 +24,7 @@ const ProductSearch = () => {
   }, [searchStore]);
 
   const handleFilterCrossClick = useCallback(() => {
-    searchStore.selectCategories([]);
+    searchStore.setCategories([]);
   }, [searchStore]);
 
   const handleSearchClick = useCallback(() => {
@@ -45,7 +45,6 @@ const ProductSearch = () => {
     }
   }, [categoriesStore])
 
-
   return (
     <div className={clsx(style['search'])}>
       <SearchQuery
@@ -55,30 +54,38 @@ const ProductSearch = () => {
         onInputCrossClick={handleInputCrossClick}
         onSearchClick={handleSearchClick}
         searchStatus={productsStore.status}
-        className={clsx(style['search-query'])}
+        className={clsx(style['search__query'])}
+      />
+      
+      <SingleDropdown 
+        options={searchStore.sortOptions}
+        selectedOption={searchStore.selectedSortOption}
+        onSelect={searchStore.setActiveSort}
+        getTitle={() => searchStore.titleSortValue}
+        className={clsx(style['search__sort'])} 
       />
       
       <CategoriesFilter
         options={searchStore.categoriesOptions}
-        value={searchStore.categoriesValue}
-        onChange={searchStore.selectCategories}
+        selectedOptions={searchStore.selectedCategoriesOptions}
+        onSelect={searchStore.setCategories}
         getTitle={() => searchStore.titleCategoriesValue}
         status={categoriesStore.status}
         onFilterCrossClick={handleFilterCrossClick}
-        className={clsx(style['search-categories-filter'])} 
+        className={clsx(style['search__categories-filter'])} 
       />
 
-      <ProductSort />
-      <div>
-        <Text>
-          Только доступные для заказа
+      <label className={clsx(style['search__stock'])}>
+        <Text className={clsx(style['search__stock-description'])}>
+          Только доступные для заказа:
         </Text>
         <CheckBox
-          checked={searchStore.inStock}
+          className={clsx(style['search__stock-icon'])}
+          checked={!!searchStore.inStock}
           onChange={() => {searchStore.setInStock(!searchStore.inStock)}} 
           checkSize="small"
         />
-      </div>
+      </label>
     </div>
   );
 };

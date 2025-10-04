@@ -7,6 +7,7 @@ import { IRootStore } from '@store/RootStore/RootStore';
 import React, { type PropsWithChildren } from 'react';
 import { useStrictContext } from '@hooks/useSctrictContext';
 import { enableStaticRendering } from 'mobx-react-lite';
+import { useSearchParams } from 'next/navigation';
 
 export const isServer = typeof window === "undefined";
 enableStaticRendering(isServer);
@@ -15,11 +16,12 @@ const RootStoreContext = React.createContext<IRootStore | null>(null);
 
 let client: IClient;
 
-export const RootStoreProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const createClient = () => new Client()
-  client = client ?? createClient()
+export const RootStoreProvider: React.FC<PropsWithChildren> = ({ children }) => { 
+  const params = useSearchParams()
+  const createClient = () => new Client();
+  client = client ?? createClient() ;  
 
-  const rootStore = useCreateRootStore({ client })
+  const rootStore = useCreateRootStore({ client, params })
 
   return (
     <RootStoreContext.Provider value={rootStore}>

@@ -12,14 +12,16 @@ const ProductPagination: React.FC = () => {
   const { queryParamsStore } = useRootStore()
   const productsStore = useProductsStore();
   const { pageCount, total } = productsStore.pagination || {};
+  const page = queryParamsStore.page ?? 1
 
   const currentPage = useMemo(
-    () => normalizeCurrentPage(queryParamsStore.page ?? 1, pageCount),
+    () => normalizeCurrentPage(page, pageCount),
     [queryParamsStore.page, pageCount]
   );
 
   useEffect(() => {
-    if (pageCount && pageCount < currentPage) {
+    console.log(pageCount, currentPage)
+    if (pageCount && pageCount < page) {
       queryParamsStore.mergeQueryParams({ page: pageCount });
     }
   }, [pageCount, queryParamsStore, currentPage]);

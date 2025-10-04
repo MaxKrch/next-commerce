@@ -10,6 +10,9 @@ import CheckBox from "@components/CheckBox";
 import Button from "@components/Button";
 import { AUTH_MODES, AuthModes } from "../../constants";
 import Loader from "@components/Loader";
+import UserIcon from "@components/icons/UserIcon";
+import MailIcon from "@components/icons/MailIcon";
+import KeyIcon from "@components/icons/KeyIcon";
 
 export type AuthFormProps = {
     onSubmit: (data: Schema) => void,
@@ -63,6 +66,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
     return(
         <form onSubmit={handleSubmit(onSubmit)} className={clsx(style['form'])}>
             <label className={clsx(style['form__label'])}>
+                <UserIcon className={clsx(style['form__icon'])}/>
                 <Input
                     onFocus={() => handleFocus('login')}
                     placeholder="Логин"
@@ -76,6 +80,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
             
             {mode === AUTH_MODES.REGISTER &&
                 <label className={clsx(style['form__label'])}>
+                    <MailIcon className={clsx(style['form__icon'])}/>
                     <Input 
                         onFocus={() => handleFocus('email')}
                         placeholder="Email"
@@ -90,6 +95,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
             }
             
             <label className={clsx(style['form__label'])}>
+                <KeyIcon className={clsx(style['form__icon'])}/>
                 <Input 
                     onFocus={() => handleFocus('password')}
                     placeholder="Пароль"

@@ -1,0 +1,137 @@
+@use '@style/variables' as *;
+@use '@style/mixins' as *;
+
+$icons-preview-size: 36px;
+$icon-full-size: 54px;
+$icon-bg-color: rgb(25 25 25 / 0.5);
+$icon-bg-color-hover: rgb(25 25 25 / 0.75);
+$icon-color: #fff;
+$icon-color-hover: $brand-hover;
+$icon-margin: $space-xxs;
+
+.gallery {
+    &_full {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    &_preview {
+        position: relative;
+        aspect-ratio: 1 / 1;
+        width: 100%;
+    }
+
+    &__cross {
+        width: 100%;
+        height: 100%;
+        color: $brand;
+        border-radius: 50%;
+
+        &-container {
+            width: $icon-full-size;
+            height: $icon-full-size;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: $shadow-normal;
+            background-color: $icon-bg-color;
+
+            &:hover {
+                background-color: $icon-bg-color-hover;
+            }
+        }
+    }
+    
+    &__arrow {
+        height: 100%;
+        width: 100%;
+
+        &-container {
+            border-radius: 50%;
+            background-color: $icon-bg-color;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: $icon-color;
+            z-index: 2;
+
+            &:hover {
+                background-color: $icon-bg-color-hover;
+                color: $icon-color-hover;
+
+            }
+
+            &_left {
+                left: $icon-margin;
+            }
+
+            &_right {
+                right: $icon-margin;
+            }
+
+            &_full {
+
+            }
+
+            &_preview {
+                position: absolute;
+                top: 50%;
+                transform: translate(0, -50%);
+                width: $icons-preview-size;
+                height: $icons-preview-size;
+            }
+        }
+
+        &_left {
+            transform: rotate(180deg);
+
+        }
+    }
+
+    &__bg {
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        filter: blur(15px);
+    }
+
+    &__image {
+        transition: opacity 1s;
+        opacity: 0;
+        &_full {
+            object-fit: contain;
+        }
+
+        &_preview {
+            &:hover {
+                box-shadow: $shadow-normal;
+                cursor: zoom-in;
+                object-fit: cover;
+            }
+        }    
+        
+        &_active {
+            transition: opacity 1s;
+            opacity: 1;
+            z-index: 1;
+        }  
+        
+        &-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+    }  
+}

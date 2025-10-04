@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import React, { memo } from 'react';
 import style from './Card.module.scss';
-import ImageGalery from './components/ImageGalery';
+import ImageGallery from '@components/ImageGallery';
 import { ProductType } from '@model/products';
 import Link from 'next/link';
 import { appRoutes } from '@constants/app-routes';
@@ -34,7 +34,7 @@ const Card: React.FC<CardProps> = ({
     <article className={clsx(style['card'], style[display], className)}>
       <div className={clsx(style['card__image-wrapper'], style[`${display}__image-wrapper`])}>      
         {display === 'full' ? (
-          <ImageGalery images={images} sizes={imageSizes} />
+          <ImageGallery images={images} sizes={imageSizes} />
         ) : (
           <Link href={href} className={clsx(style['card__image-link'])}>
             <Image

@@ -1,6 +1,6 @@
 import qs from 'qs';
 import { QueryParams } from '@model/query-params';
-import { DEFAULT_SORT, SORT_OPTIONS } from '@constants/product-sort';
+import { DEFAULT_SORT, SORT_VARIABLES } from '@constants/product-sort';
 
 type buildQueryStringArgs = QueryParams & {
   populate?: string[] | string | object;
@@ -45,7 +45,7 @@ export function buildQueryString(params: buildQueryStringArgs, type: 'products' 
     }
 
     const currentSort = sort ? sort : DEFAULT_SORT
-    const currentSortApi = SORT_OPTIONS[currentSort].api;
+    const currentSortApi = SORT_VARIABLES[currentSort].api;
     strapiQuery.sort = `${currentSortApi.field}:${currentSortApi.order}`
   }
   

@@ -28,10 +28,10 @@ export default function ErrorPage ({ reset }: { reset: () => void }) {
                     />
                 </div>
                 <Text className={clsx(style['error__description'])}>
-                    Совесм скоро найдем виновнкиа и все исправим! 
+                    Совсем скоро все исправим! 
                 </Text>
                 <Text className={clsx(style['error__description'])}>
-                    Хотите попробовать снова или перейди на главную страницу?
+                    Хотите обновить страницу или перейти на главную?
                 </Text>
             </main>
             <footer className={clsx(style['error__footer'])}>
@@ -39,7 +39,7 @@ export default function ErrorPage ({ reset }: { reset: () => void }) {
                     onClick={reset} 
                     className={clsx(style['error__button'])}
                 >
-                    Попробовать снова   
+                    Обновить  
                 </Button>
                 <Button 
                     priority="secondary" 

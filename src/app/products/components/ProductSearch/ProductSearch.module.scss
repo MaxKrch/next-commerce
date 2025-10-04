@@ -4,8 +4,62 @@
 
 .search {
     @include content-container();
-    display: flex;
-    flex-direction: column;
-    gap: $space-xl;
+    display: grid;
+    grid-template-areas: 
+        "query"
+        "categories"
+        "sort"
+        "stock";
+    gap: $space-xxxl;
     width: 100%;
+    
+    @include tablet-up() {
+        grid-template-columns: min(50%, 400px) auto;
+        grid-template-areas: 
+            "query query"
+            "categories sort"
+            "stock stock";       
+    }
+
+    @include laptop-up() {
+        grid-template-areas: 
+            "query query"
+            "categories sort"
+            "stock stock";    
+    }
+
+    &__query {
+        grid-area: query;
+        width: 100%;
+    }
+
+    &__categories-filter {
+        grid-area: categories;
+    }
+
+    &__sort {
+        grid-area: sort;
+        @include tablet-up() {
+            max-width: 400px;
+        }
+    }
+
+    &__stock {
+        grid-area: stock;
+        display: flex;
+        align-items: flex-end;
+        gap: $space-xxxs;
+
+
+        &-description {
+            font-size: 1.1em;
+            border-bottom: 1px solid $brand;
+        }
+
+        &-icon {
+            background-color: #fff;
+            border: 1px solid $brand;
+        }
+       
+    }
 }

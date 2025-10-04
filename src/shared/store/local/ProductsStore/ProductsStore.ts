@@ -131,7 +131,7 @@ export default class ProductsStore implements ILocalStore {
     this._status = META_STATUS.SUCCESS;
   }
 
-  getProductbyId(id: ProductType['id']): ProductType | undefined {
+  getProductById(id: ProductType['id']): ProductType | undefined {
     return this._products.entities[id];
   }
 

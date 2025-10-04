@@ -1,6 +1,6 @@
 "use client"
 
-import React, {  useCallback, useState } from 'react';
+import React, {  useCallback, useRef, useState } from 'react';
 import style from './AuthModal.module.scss';
 import { useRootStore } from '@providers/RootStoreContext';
 import { observer } from 'mobx-react-lite';
@@ -16,34 +16,42 @@ import { META_STATUS } from '@constants/meta-status';
 const AuthModal: React.FC = () => {
     const { modalStore, userStore } = useRootStore();
     const [authMode, setAuthMode] = useState<AuthModes>(AUTH_MODES.LOGIN);
+    const [error, setError] = useState<string | null>(null);
+    const errorTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
  
     const handleSubmit = useCallback(async (data: Schema) => {
-        let success: boolean;
+        let result: { success: boolean };
 
         if(authMode === AUTH_MODES.REGISTER) {
             if(!data.email) {
                 return;
             }
 
-            const result = await userStore.register({
+            result = await userStore.register({
                 username: data.login,
                 password: data.password,
                 email: data.email
                 
             }, data.saveMe);
-            success = result.success;
 
         } else {
-            const result = await userStore.login({
+            result = await userStore.login({
                 identifier: data.login,
                 password: data.password,
             }, data.saveMe);
-            success = result.success
         }
 
-        if(success) {
-            modalStore.close();
+        if(!result.success) {
+            if(errorTimer.current) {
+                clearTimeout(errorTimer.current);
+            }
+            setError(userStore.error);
+            errorTimer.current = setTimeout(() => setError(null), 3 * 1000);
+            
+            return;
         }
+        
+        modalStore.close();
     }, [userStore, modalStore, authMode])
 
     const shouldShow = modalStore.isOpen 
@@ -62,7 +70,7 @@ const AuthModal: React.FC = () => {
                     mode={authMode}
                     onSubmit={handleSubmit} 
                     needReset={!modalStore.isOpen} 
-                    error={userStore.error} 
+                    error={error} 
                     loading={userStore.status === META_STATUS.PENDING}
                 />
             </div>

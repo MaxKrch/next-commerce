@@ -88,7 +88,7 @@ export default async function ProductDetailsPage ({params}: ProductDetailsPagePr
             error: err instanceof Error ? err.message : "UnknownError"
         }
     }
-      console.log("SSR запрос пошёл")
+
     return (
         <div>
              <ProductDetailsStoreProvider initData={productDetailsInitData}>

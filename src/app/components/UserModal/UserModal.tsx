@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import style from './UserModal.module.scss';
 import { useRootStore } from '@providers/RootStoreContext';
 import ModalPortal from '@components/ModalPortal';
@@ -18,14 +18,19 @@ import 'dayjs/locale/ru'
 
 const UserModal: React.FC = () => {
     const { modalStore, userStore } = useRootStore();
-    const [error, setError] = useState<string | null>(null)
+    const [error, setError] = useState<string | null>(null);
+    const errorTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const handleLogout = useCallback(() => {
         setError(null)
         const result = userStore.logout();
         
         if(!result.success) {
-            setError('Что-то пошло не так...');
+            if(errorTimer.current) {
+                clearTimeout(errorTimer.current)
+            }
+            setError(userStore.error);
+            errorTimer.current = setTimeout(() => setError(null), 3 * 1000)
             return;
         }
 
@@ -56,7 +61,7 @@ const UserModal: React.FC = () => {
                 <div className={clsx(style['user-modal__info'])}>
                     <div className={clsx(style['user-modal__section'])}>
                         <Text className={clsx(style['user-modal__section-title'])} weight='bold'>
-                            Ник: 
+                            Логин: 
                         </Text>
                         <Text className={clsx(style['user-modal__section-value'])}>
                             {userStore.user?.username}
@@ -80,7 +85,7 @@ const UserModal: React.FC = () => {
                     </div>
                 </div>
                 <div className={clsx(style['user-modal__error'])}>
-                    {error && <span>Что-то пошло не так...</span>}
+                    {error}
                 </div>                
                 <div className={clsx(style['user-modal__action'])}>
                     <Button onClick={handleLogout} loading={userStore.status === META_STATUS.PENDING} className={clsx(style['user-modal__button'])}>

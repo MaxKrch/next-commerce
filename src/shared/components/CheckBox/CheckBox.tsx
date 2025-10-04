@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import React, { forwardRef, useCallback, type ChangeEvent } from 'react';
 import style from './CheckBox.module.scss';
 import CheckIcon from '@components/icons/CheckIcon';
+import OnlyClient from '@components/OnlyClient';
 
 export type CheckBoxProps = React.InputHTMLAttributes<HTMLInputElement> & {
   checkSize?: 'normal' | 'small',
@@ -30,7 +31,11 @@ const CheckBox = React.forwardRef<HTMLInputElement, CheckBoxProps>(
           className={style['input']}
           onChange={handleChange}
         />
-        {checked && <CheckIcon width={40} height={40} className={clsx(style['checkbox__icon'])} />}
+        {checked && 
+          <OnlyClient>
+            <CheckIcon width={40} height={40} className={clsx(style['checkbox__icon'])} /> 
+          </OnlyClient>
+        }
       </label>
     );
   }

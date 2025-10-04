@@ -101,13 +101,14 @@ $base-line-height: 150%;
         "image"
         "main"
         "footer";
+    gap: $base-gap;
 
     @include tablet-up() {
         grid-template-areas:
             "image main"
             "image footer";
         grid-template-rows: auto 1fr;
-        gap: ($base-gap * 2);
+        gap: ($base-gap * 3);
     }
 
     &__image-wrapper {
@@ -134,6 +135,7 @@ $base-line-height: 150%;
     }
 
     &__description {
+        margin-top: 1em;;
         font-size: 0.8em;
         line-height: $base-line-height;
     }

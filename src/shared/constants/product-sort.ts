@@ -1,52 +1,47 @@
-export const SORT_OPTIONS = {
-  NEWEST: {
-    key: 'NEWEST',
+export const SORT_VARIABLES = {
+  newest: {
+    key: 'newest',
     label: 'Новинки',
-    url: 'newest',
     api: {
       field: 'price',
       order: 'desc',
     },
   },
-  POPULAR: {
-    key: 'POPULAR',
+  popular: {
+    key: 'popular',
     label: 'Популярные',
-    url: 'popular',
     api: {
       field: 'rating',
       order: 'desc',
     },
   },
-  PRICE_ASC: {
-    key: 'PRICE_ASC',
+  price_asc: {
+    key: 'price_asc',
     label: 'Сначала дешевле',
-    url: 'price',
     api: {
       field: 'price',
       order: 'asc',
     },
   },
-  PRICE_DESC: {
-    key: 'PRICE_DESC',
+  price_desc: {
+    key: 'price_desc',
     label: 'Сначала дороже',
-    url: 'price_desc',
     api: {
       field: 'price',
       order: 'desc',
     },
   },
-  DISCOUNT: {
-    key: 'DISCOUNT',
+  discount: {
+    key: 'discount',
     label: 'Со скидкой',
-    url: 'discount',
     api: {
-      field: 'discount',
+      field: 'discountPercent',
       order: 'desc',
     },
   },
  } as const
 
-export type SortOption = typeof SORT_OPTIONS[keyof typeof SORT_OPTIONS] 
-export type SortType = SortOption['key']
-export const DEFAULT_SORT = SORT_OPTIONS.NEWEST.key
+export type SortVariables = typeof SORT_VARIABLES[keyof typeof SORT_VARIABLES] 
+export type SortKeys = SortVariables['key']
+export const DEFAULT_SORT = SORT_VARIABLES.newest.key
 

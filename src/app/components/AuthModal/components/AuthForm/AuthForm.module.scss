@@ -1,6 +1,10 @@
 @use '@style/variables' as *;
 @use '@style/mixins' as *;
 
+$icon-size: 24px;
+$icon-margin: calc(($control-field-height - $icon-size) / 2);
+$input-left-padding: calc($control-field-height);
+
 .form {
     display: flex;
     gap: $space-xxl;
@@ -16,16 +20,20 @@
 
     }
 
+    &__label {
+        position: relative;
+    } 
+
     &__input {
         input {
             border-bottom: 1px solid $brand;
             background-color: #EFEFEF;
             border-radius: $border-radius-secondary;
+            padding-left: $input-left-padding;
    
 
             &::placeholder {
                 font-size: 0.9em;
-                font-style: italic;
                 color: $brand;
                 opacity: 0.5;
             }
@@ -37,6 +45,16 @@
             }
         }
     }
+
+    &__icon{
+        position: absolute;
+        top: $icon-margin;
+        left: $icon-margin;
+        width: $icon-size;
+        height: $icon-size;
+        color: $brand;
+    }
+
 
     &__error {
         color: rgb(225 25 0);

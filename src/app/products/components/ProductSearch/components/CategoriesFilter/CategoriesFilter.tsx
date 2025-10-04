@@ -9,8 +9,8 @@ import CrossIcon from '@components/icons/CrossIcon';
 
 export type CategoriesFilterProps = {
     options: Option[],
-    value: Option[],
-    onChange: (options: Option[]) => void,
+    selectedOptions: Option[],
+    onSelect: (options: Option[]) => void,
     getTitle: () => string,
     status: MetaStatus,
     className?: string,
@@ -18,8 +18,8 @@ export type CategoriesFilterProps = {
 }
 const CategoriesFilter: React.FC<CategoriesFilterProps> = ({
     options,
-    value,
-    onChange,
+    selectedOptions,
+    onSelect,
     getTitle,
     status,
     className,
@@ -32,14 +32,14 @@ const CategoriesFilter: React.FC<CategoriesFilterProps> = ({
         ) : (
           <MultiDropdown
             options={options}
-            value={value}
-            onChange={onChange}
+            selectedOptions={selectedOptions}
+            onSelect={onSelect}
             getTitle={getTitle}
             className={clsx(style['filter__dropdown'])}
           />
         )}
         <div className={clsx(style['filter__cross'])}>
-          {value.length > 0 &&
+          {selectedOptions.length > 0 &&
             <OnlyClient>
               <CrossIcon onClick={onFilterCrossClick} className={clsx(style['filter__icon'])} />
             </OnlyClient>

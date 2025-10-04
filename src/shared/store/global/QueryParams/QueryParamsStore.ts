@@ -20,7 +20,7 @@ export default class QueryParamsStore {
     private _sort: QueryParams['sort'] = undefined;
     private _inStock: QueryParams['inStock'] = undefined;
 
-    constructor() {
+    constructor(params: URLSearchParams | ReadonlyURLSearchParams) {
         makeObservable<QueryParamsStore, PrivateFields>(this, {
             _categories: observable,
             _query: observable,
@@ -42,6 +42,7 @@ export default class QueryParamsStore {
             mergeQueryParams: action.bound,
             setFromSearchParams: action.bound,            
         })
+        this.setFromSearchParams(params)
     }
 
     get categories(): QueryParams['categories'] {
@@ -112,7 +113,7 @@ export default class QueryParamsStore {
         return qs.stringify(paramsObj, { arrayFormat: "repeat" });
     }
         
-    setFromSearchParams(searchParams: ReadonlyURLSearchParams | string) {
+    setFromSearchParams(searchParams: URLSearchParams | ReadonlyURLSearchParams | string) {
         const queryString = typeof searchParams === "string"
             ? searchParams
             : searchParams.toString();
@@ -144,6 +145,7 @@ export default class QueryParamsStore {
                 this._query = undefined;
             }
 
+            
             this._sort = params.sort  ?? undefined;
             this._inStock = params.inStock ?? undefined;
             this._count = params.count ?? undefined;

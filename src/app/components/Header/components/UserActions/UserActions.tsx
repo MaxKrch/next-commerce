@@ -1,18 +1,18 @@
 "use client"
 
 import clsx from 'clsx';
-import React, { PropsWithChildren, useCallback, useEffect, useState } from 'react';
+import React, { PropsWithChildren, useCallback } from 'react';
 import style from './UserActions.module.scss';
 import Link from 'next/link';
 import { appRoutes } from '@constants/app-routes';
 import BagIcon from '@components/icons/BagIcon';
 import UserIcon from '@components/icons/UserIcon';
 import { useRootStore } from '@providers/RootStoreContext';
-import { META_STATUS } from '@constants/meta-status';
 import Text from '@components/Text';
 import { observer } from 'mobx-react-lite';
 import { usePathname } from 'next/navigation';
 import { MODES } from '@constants/modal';
+import OnlyClient from '@components/OnlyClient';
 
 const UserActions = () => {
   const path = usePathname()
@@ -42,9 +42,11 @@ const UserActions = () => {
           <BagIcon className={clsx(style['actions__icon'])} />
         </CartComponent>
         {cartStore.totalItemsToOrder > 0 &&
-          <Text weight='bold' className={clsx(style['actions-cart__count'])}>
-            {cartStore.totalItemsToOrder}
-          </Text>
+          <OnlyClient>
+            <Text weight='bold' className={clsx(style['actions-cart__count'])}>
+              {cartStore.totalItemsToOrder}
+            </Text>
+          </OnlyClient>
         }
       </div>
       <div onClick={handleUserIconClick} className={clsx(style['actions__item'])}>

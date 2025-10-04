@@ -1,6 +1,6 @@
 import clsx from 'clsx';
-import React, { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import style from './MultiDropdown.module.scss';
+import React, { ChangeEvent, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import style from './Dropdown.module.scss';
 import { InputValueAdapter } from '@components/Input';
 import ArrowDownIcon from '@components/icons/ArrowDownIcon';
 import { Option } from '@model/option-dropdown';
@@ -8,12 +8,12 @@ import { Option } from '@model/option-dropdown';
 export type DropdownProps = {
   className?: string;
   options: Option[];
-  inputValue: string;
+  getTitle: (options: Option[]) => string,
   selected: Option[];
-  onChange: (value: Option) => void;
-  onInput?: (Value: string) => void;
+  onSelect: (value: Option) => void;
   disabled?: boolean;
-  placeholder?: string
+  placeholder?: string;
+  mode: 'single' | 'multi';
 };
 
 const isElement = (target: EventTarget | null): target is Element => {
@@ -22,17 +22,24 @@ const isElement = (target: EventTarget | null): target is Element => {
 
 const Dropdown: React.FC<DropdownProps> = ({
   options,
-  onInput,
-  inputValue,
+  getTitle,
   selected,
-  onChange,
+  onSelect,
   disabled,
   className,
-  placeholder
+  mode
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
+
   const [isShowDropdown, setIsShowDropdown] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  
+  const title = useMemo(() => getTitle(selected), [selected, getTitle]);
+  const filteredOptions = useMemo(
+    () => options.filter(item => item.value.toLowerCase().includes(inputValue.toLowerCase())),
+    [options, inputValue]
+  );
 
   const handleInputClick = useCallback(() => {
     if (!disabled && !isShowDropdown) {
@@ -40,19 +47,18 @@ const Dropdown: React.FC<DropdownProps> = ({
     }
   }, [disabled, isShowDropdown]);
 
-  const handleInputValue = useCallback((value: string) => {
-    if(onInput) {
-      onInput(value)
-    }
-  }, [onInput])
-
   const handleOptionClick = useCallback((event: React.MouseEvent<HTMLLIElement>) => {
     const id = event.currentTarget.dataset.id;
-    const currentOptions = options.find(item => item.key === id)
+    const currentOptions = options.find(item => item.key === id);
+
     if(currentOptions) {
-      onChange(currentOptions)
+      onSelect(currentOptions)
     }
-  },  [options, onChange]);
+
+    if(mode === 'single') {
+      setIsShowDropdown(false)
+    }
+  },  [options, onSelect]);
 
   const handleClickOutside = useCallback((event: MouseEvent) => {  
     const target = event.target;
@@ -73,40 +79,38 @@ const Dropdown: React.FC<DropdownProps> = ({
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [handleClickOutside]);
-
+  
   return (
     <div ref={containerRef} className={clsx(style['dropdown-container'], className)}>
       <InputValueAdapter
         disabled={disabled}
-        onChange={handleInputValue}
+        onChange={setInputValue}
         value={inputValue}
         ref={inputRef}
         afterSlot={<ArrowDownIcon color="secondary" />}
-        placeholder={placeholder}
+        placeholder={title}
         name="multiDropdownInput"
         onClick={handleInputClick}
       />
       {isShowDropdown && !disabled && (
         <ul className={clsx(style['dropdown'])}>
-          {options
-            .filter((item) => item.value.toLowerCase().includes(inputValue.toLowerCase()))
-            .map((option) => (
-              <li
-                data-id={option.key}
-                onClick={handleOptionClick}
-                key={option.key}
-                className={clsx(
-                  style['dropdown__option'],
-                  selected.find((item) => item.key === option.key) && style['dropdown__option_selected']
-                )}
-              >
-                {option.value}
-              </li>
-            ))}
+          {filteredOptions.map((option) => (
+            <li
+              data-id={option.key}
+              onClick={handleOptionClick}
+              key={option.key}
+              className={clsx(
+                style['dropdown__option'],
+                selected.find((item) => item.key === option.key) && style['dropdown__option_selected']
+              )}
+            >
+              {option.value}
+            </li>
+          ))}
         </ul>
       )}
     </div>
   );
 };
 
-export default Dropdown;
+export default memo(Dropdown);
