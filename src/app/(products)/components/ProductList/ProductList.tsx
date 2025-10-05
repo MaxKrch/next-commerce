@@ -51,7 +51,7 @@ const ProductList: React.FC = () => {
       return;
     } 
 
-    const id = crypto.randomUUID();
+    const id = `${Date.now()}-${Math.random()}`;
     requestId.current = id;
     prevQueryString.current = nextQueryString;
 

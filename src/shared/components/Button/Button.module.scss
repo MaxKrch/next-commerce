@@ -61,12 +61,14 @@ $button-padding-y: $space-s;
         background: $button-primary-bg;
         color: $button-primary-text;
         border-color: $button-primary-bg;
+        transition: 0.5s;
 
         &:not(.button-primary_loading) {
             &:not(.button-primary_disabled):hover {
                 background: $button-primary-bg-hover;
                 color: $button-primary-text-hover;
-                border-color: $button-primary-bg-hover
+                border-color: $button-primary-bg-hover;
+                transition: 0.5s;
             }
 
             &:active {
@@ -94,12 +96,14 @@ $button-padding-y: $space-s;
                 background: $button-secondary-bg-hover;
                 color: $button-secondary-text-hover;
                 border-color: $button-secondary-text-hover;
+                transition: 0.5s;
             }
 
             &:active {
                 background: $button-secondary-bg-active;
                 color: $button-secondary-text-active;
                 border-color: $button-secondary-text-active;
+                transition: 0.5s;
             }
         }
 

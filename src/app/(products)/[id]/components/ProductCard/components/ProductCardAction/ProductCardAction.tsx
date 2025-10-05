@@ -10,11 +10,16 @@ import { observer } from 'mobx-react-lite';
 import DefaultCardActionSlot from '@components/Card/slots/DefaultCardActionSlot';
 
 const ProductCardAction: React.FC<{ product: ProductType }> = ({ product }) => {
-  const { cartStore } = useRootStore();
+  const { cartStore, userStore, modalStore } = useRootStore();
   const router = useRouter()
 
   const handlePrimaryBtn = useCallback(
     (product: ProductType) => {
+      if(!userStore.isAuthorized) {
+        modalStore.open('auth')
+        return;
+      }
+
       cartStore.addToCart(product);
       router.push(appRoutes.cart.create());
     },

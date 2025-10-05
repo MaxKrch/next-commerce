@@ -60,6 +60,10 @@ const Dropdown: React.FC<DropdownProps> = ({
     }
   },  [options, onSelect]);
 
+  const handleInputBlur = useCallback(() => {
+    setInputValue('')
+  }, [inputValue])
+
   const handleClickOutside = useCallback((event: MouseEvent) => {  
     const target = event.target;
     if(!isElement(target)) {
@@ -91,6 +95,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         placeholder={title}
         name="multiDropdownInput"
         onClick={handleInputClick}
+        onBlur={handleInputBlur}
       />
       {isShowDropdown && !disabled && (
         <ul className={clsx(style['dropdown'])}>

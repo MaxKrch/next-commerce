@@ -23,7 +23,8 @@ $actions-tablet-up-width: calc($actions-width + $actions-tablet-up-gap);
 
     &__item {
         flex-shrink: 0;
-        cursor: pointer;     
+        cursor: pointer;   
+        transition: color 0.5s;  
         
         &_active {
             color: $brand-active;
@@ -31,6 +32,7 @@ $actions-tablet-up-width: calc($actions-width + $actions-tablet-up-gap);
         }
         
         &:hover:not(.actions__item_active) {
+            transition: color 0.5s;
             color: $brand-hover
         }
     }

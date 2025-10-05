@@ -21,13 +21,15 @@ $base-line-height: 150%;
         width: 100%;
         display: block;
         position: relative;
-            
+        transition: transform 1s, filter 1s;
+
         &-wrapper {
             aspect-ratio: 1 / 1;
             background: $preview-card-image-bg;
             width: 100%;
             cursor: pointer;
             position: relative;
+            overflow: hidden;
         }
 
         &-link {
@@ -57,9 +59,17 @@ $base-line-height: 150%;
     background: $preview-card-bg;
     border-radius: $border-radius-primary;
     overflow: hidden;
+    transition: box-shadow 0.5s;
 
     &:hover {
         box-shadow: $shadow-normal;
+        transition: box-shadow 0.5s;
+
+        .card__image {
+            transition: transform 1s, filter 1s;
+            transform: scale(1.1);
+            filter: blur(1px);
+        }
     }
     
     &__main {

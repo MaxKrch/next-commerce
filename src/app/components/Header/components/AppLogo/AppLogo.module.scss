@@ -2,10 +2,10 @@
 @use '@style/mixins' as *;
 
 $logo-width: 130px;
-$logo-width-withaout-name: 42px;
+$logo-width-without-name: 42px;
 
 .logo {
-    width: $logo-width-withaout-name;
+    width: $logo-width-without-name;
     display: flex;
     justify-content: space-between;
     align-items: center;

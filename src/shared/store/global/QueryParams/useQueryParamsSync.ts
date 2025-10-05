@@ -1,14 +1,25 @@
 "use client"
 
 import QueryParamsStore from "./QueryParamsStore";
-import { useSearchParams, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useEffect, useRef } from "react";
 import { reaction } from "mobx";
 
 const useQueryParamsSync = (store: QueryParamsStore) => {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const queryString = searchParams.toString()
+    const path = usePathname();
+    const prevPathRef = useRef(path);
+    const queryString = searchParams.toString();
+
+    useEffect(() => {
+        if(path === prevPathRef.current) {
+            return;
+        }
+
+        store.setFromSearchParams(searchParams);
+        prevPathRef.current = path;
+    }, [searchParams, store, path])
 
     useEffect(() => {
         const dispose = reaction(

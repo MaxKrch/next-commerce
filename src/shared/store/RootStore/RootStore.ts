@@ -58,7 +58,7 @@ export default class RootStore implements IRootStore {
     this.userStore = new UserStore(this.api.auth);
     this.cartStore = new CartStore(this.api.cart);
     this.modalStore = new ModalStore();
-
+console.log(params)
     reaction(
       () => this.userStore.isAuthorized,
       (isAuthorized => {

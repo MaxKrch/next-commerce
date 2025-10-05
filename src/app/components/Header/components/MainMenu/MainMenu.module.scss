@@ -24,6 +24,7 @@ $link-hover-color: $brand-hover;
             display: flex;
             align-items: center;
             height: 100%;
+            transition: color 0.5s, border 0.5s;
             @include link-bottom();
 
             &:hover:not(.active) {
@@ -32,6 +33,7 @@ $link-hover-color: $brand-hover;
             }
 
             &_active {
+                transition: color 0.5s, border 0.5s;
                 color: $active-link-color;
                 pointer-events: none;        
             }

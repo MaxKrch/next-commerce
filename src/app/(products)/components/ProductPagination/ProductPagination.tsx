@@ -20,7 +20,6 @@ const ProductPagination: React.FC = () => {
   );
 
   useEffect(() => {
-    console.log(pageCount, currentPage)
     if (pageCount && pageCount < page) {
       queryParamsStore.mergeQueryParams({ page: pageCount });
     }

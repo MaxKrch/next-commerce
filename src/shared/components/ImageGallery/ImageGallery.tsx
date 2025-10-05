@@ -3,21 +3,23 @@ import { observer } from 'mobx-react-lite';
 import style from './ImageGallery.module.scss'
 import { ProductType } from '@model/products';
 import Image from 'next/image';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import CrossIcon from '@components/icons/CrossIcon';
 import ArrowRightIcon from '@components/icons/ArrowRightIcon';
 
 export type ImageGalleryProps = {
   images: ProductType['images'];
-  sizes: string
+  previewSizes?: string
 };
 
-const ImageGallery: React.FC<ImageGalleryProps> = ({ images, sizes }) => {
+const ImageGallery: React.FC<ImageGalleryProps> = ({ images, previewSizes }) => {
   const [mode, setMode] = useState<'preview' | 'full'>('preview');
   const [index, setIndex] = useState(0);
 
   const handleClickImg = useCallback(() => {
-    setMode(mode === 'preview' ? 'full' : 'preview')
+    if(mode === 'preview') {
+      setMode('full')
+    }
   }, [mode]);
 
   const handleClickLeftArrow = useCallback(() => {
@@ -38,45 +40,68 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, sizes }) => {
     setMode('preview')
   }, [mode])
 
+  useEffect(() => {
+    if(mode === 'full') {
+      document.body.classList.add(style['gallery_no-scroll'])
+    } else {
+      document.body.classList.remove(style['gallery_no-scroll'])
+    }
+
+    return () => document.body.classList.remove(style['gallery_no-scroll'])
+  }, [mode])
+
   return (
     <div className={clsx(style['gallery'], style[`gallery_${mode}`])}>
       {mode === 'full' &&
-        <div className={clsx(style['gallery__cross-container'])} onClick={handleClickCross}>
-          <CrossIcon className={clsx(style['gallery__cross'])}/>
+        <div 
+          className={clsx(
+            style['gallery__icon-container'], 
+            style['gallery__cross-container']
+          )} 
+          onClick={handleClickCross}
+        >
+          <CrossIcon className={clsx(style['gallery__icon'])}/>
         </div>
       }
 
       <div
         onClick={handleClickLeftArrow} 
         className={clsx(
+          style['gallery__icon-container'],
           style['gallery__arrow-container'], 
           style['gallery__arrow-container_left'], 
-          style[`gallery__arrow-container_${mode}`]
         )}
       >
-        <ArrowRightIcon  className={clsx(style['gallery__arrow'], style['gallery__arrow_left'])}/>
+        <ArrowRightIcon className={clsx(
+          style['gallery__icon'],
+          style['gallery__arrow'], 
+          style['gallery__arrow_left'],
+        )}/>
       </div>
 
       <div 
         onClick={handleClickRightArrow}
         className={clsx(
+          style['gallery__icon-container'],
           style['gallery__arrow-container'], 
           style['gallery__arrow-container_right'], 
-          style[`gallery__arrow-container_${mode}`]
         )}
       >
-        <ArrowRightIcon  className={clsx(style['gallery__arrow'], style['gallery__arrow_right'])}/>
+        <ArrowRightIcon className={clsx(
+          style['gallery__icon'],
+          style['gallery__arrow'], 
+          style['gallery__arrow_right']
+        )}/>
       </div>
 
       {mode === 'full' &&
-        <div
-          className={clsx(style['gallery__bg'])} 
-          style={{
-            background: `url(${images[index].url})`
-          }} 
-        />
+        <div className={clsx(style['gallery__bg'])}></div>
       }
-      <div className={clsx(style['gallery__image-container'])} onClick={handleClickImg}>
+
+      <div 
+        className={clsx(style['gallery__image-container'])} 
+        onClick={handleClickImg}
+      >
         {
           images.map((img, currentIndex) => (
             <Image
@@ -89,14 +114,12 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, sizes }) => {
               src={img.url}
               alt={img.alternativeText ?? 'Card Image'}
               fill
-              sizes={mode === 'preview' ? sizes : '100vh'}
+              sizes={(mode === 'preview' && previewSizes) ? previewSizes : '100vh'}
               priority
             />
           ))
         }
       </div>
-
-      
     </div>
   );
 };

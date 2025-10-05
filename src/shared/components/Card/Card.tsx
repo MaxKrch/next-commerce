@@ -27,7 +27,7 @@ const Card: React.FC<CardProps> = ({
   className,
 }) => {
   const { images, description, title } = product;
-  const href = appRoutes.products.details.create(product.documentId);
+  const href = appRoutes.product.create(product.documentId);
   const imageSizes = getCardImageSizes(display);
 
   return (

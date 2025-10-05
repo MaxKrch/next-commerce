@@ -5,7 +5,7 @@ import SearchStore from './SearchStore';
 
 const useSearchStore = () => {  
   const rootStore = useRootStore();
-
+  
   const searchStore = useLocalStore(
     () =>
       new SearchStore({

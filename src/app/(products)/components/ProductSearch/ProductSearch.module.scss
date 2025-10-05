@@ -39,8 +39,9 @@
 
     &__sort {
         grid-area: sort;
+            margin-right: 50px;
         @include tablet-up() {
-            max-width: 400px;
+            max-width: 350px;
         }
     }
 
@@ -49,11 +50,14 @@
         display: flex;
         align-items: flex-end;
         gap: $space-xxxs;
+        cursor: pointer;
 
+        &:hover {
+            color: $brand;
+        }
 
         &-description {
             font-size: 1.1em;
-            border-bottom: 1px solid $brand;
         }
 
         &-icon {

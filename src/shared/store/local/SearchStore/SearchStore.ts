@@ -67,6 +67,7 @@ export default class SearchStore implements ILocalStore {
     this._rootStore = rootStore;
     this.initReactions();
     this._initFromQueryParamsStore();
+    console.log(rootStore)
   }
 
   initReactions(): void {

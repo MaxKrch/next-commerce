@@ -3,7 +3,7 @@ import { appRoutes } from './app-routes';
 const AppMenu = [
   {
     title: 'Товары',
-    path: appRoutes.products.list.create(),
+    path: appRoutes.main.create(),
   },
   {
     title: 'Категории',
