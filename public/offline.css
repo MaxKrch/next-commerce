@@ -1,0 +1,38 @@
+.offline {
+    max-width: 900px;
+    min-width: 300px;
+    width: 90%;
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.offline__image-wrapper {
+    max-width: 600px;
+    width: 100%;
+    margin: auto;
+}
+
+.offline__image {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+}
+
+.offline__action {
+    width: 300px;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    background-color: #518581;
+    cursor: pointer;
+    color: white;
+}
+
+.offline__action:hover {
+    background-color: #86aaa7;
+}

@@ -1,24 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <title>Offline</title>
-  <style>
-    body { text-align: center; font-family: sans-serif; padding: 2rem; }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lalasia - Оффлайн</title>
+  <link rel="stylesheet" href="/offline.css"> <!-- Скомпилированный CSS из SCSS -->
 </head>
 <body>
-    <h1>
-        Кажется, что-то пошло не так...
-    </h1>
-      <div>
-        <img
-          src="/network-error.png"
-          alt="Network Error" 
-        />
-      </div>
-      <div>
-        Проверьте, пожалуйста, интернет - и попробуйте обновить страницу
-      </div>
+  <div class="offline">
+    <h1 class="offline__title">Кажется, что-то пошло не так</h1>
+    <div class="offline__image-wrapper">
+      <img src="/network-error.png" alt="Network Error" class="offline__image">
+    </div>
+    <p class="offline__description">Попробуем снова?</p>
+    <button class="offline__action" type="button" onclick="window.location.reload();">Мне повезет!</button>
+  </div>
 </body>
 </html>

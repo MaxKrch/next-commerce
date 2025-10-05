@@ -4,6 +4,7 @@ const CACHE_NAME = `Lalasia-${VERSION}`;
 const STATIC_FILES = [
     '/',
     '/offline.html',
+    '/offline.css',    
     '/favicon.ico',
     '/network-error.png'
 ];
