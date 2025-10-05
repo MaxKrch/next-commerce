@@ -9,7 +9,7 @@ const ModalsProvider: React.FC<PropsWithChildren> = ({ children }) => {
             <UserModal />
             {children} 
         </>
-    )
-}
+    );
+};
 
 export default ModalsProvider;

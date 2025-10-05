@@ -44,7 +44,7 @@ export default class ProductsStore implements ILocalStore {
   private _rootStore: RootStore;
   private _error: string | null = null;
   private _isInitialized = false;
-  reactions: IReactionDisposer[]
+  reactions: IReactionDisposer[];
 
   constructor({ rootStore, initData }: ProductsStoreArgs) {
     makeObservable<ProductsStore, PrivateFields>(this, {
@@ -70,7 +70,7 @@ export default class ProductsStore implements ILocalStore {
     this._rootStore = rootStore;
     this.reactions = [];
     this.initReactions();
-    this._setInitData(initData)
+    this._setInitData(initData);
   }
 
   initReactions(): void {
@@ -129,14 +129,14 @@ export default class ProductsStore implements ILocalStore {
     this._setProducts(init.products);
     this._meta = init.meta;
     this._status = META_STATUS.SUCCESS;
-  }
+  };
 
   getProductById(id: ProductType['id']): ProductType | undefined {
     return this._products.entities[id];
   }
 
   findProductByDocumentId(documentId: ProductType['documentId']): ProductType | undefined {
-    return this.products.find(item => item.documentId === documentId)
+    return this.products.find(item => item.documentId === documentId);
   }
 
   resetProductList(): void {
@@ -180,7 +180,7 @@ export default class ProductsStore implements ILocalStore {
       runInAction(() => {
         this._meta = null;
         this._requestId = undefined;
-        this._error = err instanceof Error ? err.message : "UnknownError" 
+        this._error = err instanceof Error ? err.message : "UnknownError"; 
         this._setProducts(null);
         this._status = META_STATUS.ERROR;
       });

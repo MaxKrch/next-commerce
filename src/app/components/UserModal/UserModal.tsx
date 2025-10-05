@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useCallback, useRef, useState } from 'react';
 import style from './UserModal.module.scss';
@@ -13,7 +13,7 @@ import Image from 'next/image';
 import { META_STATUS } from '@constants/meta-status';
 import Loader from '@components/Loader';
 import dayjs from 'dayjs';
-import 'dayjs/locale/ru'
+import 'dayjs/locale/ru';
 
 
 const UserModal: React.FC = () => {
@@ -22,24 +22,24 @@ const UserModal: React.FC = () => {
     const errorTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const handleLogout = useCallback(() => {
-        setError(null)
+        setError(null);
         const result = userStore.logout();
         
         if(!result.success) {
             if(errorTimer.current) {
-                clearTimeout(errorTimer.current)
+                clearTimeout(errorTimer.current);
             }
             setError(userStore.error);
-            errorTimer.current = setTimeout(() => setError(null), 3 * 1000)
+            errorTimer.current = setTimeout(() => setError(null), 3 * 1000);
             return;
         }
 
-        modalStore.close()
-    }, [])
+        modalStore.close();
+    }, [modalStore, userStore]);
 
     const shouldShow = modalStore.isOpen 
         && modalStore.mode === MODES.PROFILE 
-        && userStore.isAuthorized 
+        && userStore.isAuthorized; 
    
     if(!shouldShow) {
         return null;
@@ -98,8 +98,8 @@ const UserModal: React.FC = () => {
     
             </div>
         </ModalPortal> 
-    )
-} 
+    );
+}; 
 
 export default observer(UserModal)
 

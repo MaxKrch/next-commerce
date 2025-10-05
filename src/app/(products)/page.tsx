@@ -18,12 +18,12 @@ export const sectionText = {
     'Мы собрали для вас самые горячие новинки сезона',
     'Если ищите что-то конкретное - просто нанчните вводить название'
   ]
-}   
+};   
 
 export const metadata: Metadata = {
   title: "Каталок товаров",
   description: "Самые горячие новинки сезона - тысячи товаров специально для вас",
-}
+};
 
 type ProductsPageProps = {
     searchParams: Promise<QueryParams>
@@ -35,13 +35,13 @@ export default async function ProductsPage ({searchParams}: ProductsPageProps) {
     const params = await searchParams;
     const categories = params.categories;
     if(categories && !Array.isArray(categories)) {
-        params.categories = [categories]
+        params.categories = [categories];
     }
     const productsApi = new ProductsApi(new Client);
     const queryString = qs.stringify(params, { arrayFormat: 'repeat' });
 
     try {
-        const response = await productsApi.getProductList(params, { next: { cache: "no-store" }})
+        const response = await productsApi.getProductList(params, { next: { cache: "no-store" }});
         
         if(!isStrapiSuccessResponseProducts(response)) {
             throw response;
@@ -52,14 +52,14 @@ export default async function ProductsPage ({searchParams}: ProductsPageProps) {
             query: queryString,
             products: response.data,
             meta: response.meta,            
-        }
+        };
 
     } catch(err) {
         initData = {
             success: false,
             query: queryString,
             error: err instanceof Error ? err.message : "UnknownError"
-        }
+        };
     }
 
     return (

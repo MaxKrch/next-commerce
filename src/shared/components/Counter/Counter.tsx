@@ -1,9 +1,9 @@
-import MinusIcon from '@components/icons/MinusIcon'
-import style from './Counter.module.scss'
-import PlusIcon from '@components/icons/PlusIcon'
-import Text from '@components/Text'
-import { memo } from 'react'
-import clsx from 'clsx'
+import MinusIcon from '@components/icons/MinusIcon';
+import style from './Counter.module.scss';
+import PlusIcon from '@components/icons/PlusIcon';
+import Text from '@components/Text';
+import { memo } from 'react';
+import clsx from 'clsx';
 
 export type CounterProps = {
     count: number,
@@ -32,8 +32,8 @@ const Counter: React.FC<CounterProps> = ({
                 <PlusIcon className={clsx(style['counter__icon'])} onClick={onInc}/>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default memo(Counter)
+export default memo(Counter);
 

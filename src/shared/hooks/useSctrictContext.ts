@@ -1,4 +1,4 @@
-import 'client-only'
+import 'client-only';
 import { Context, useContext } from "react";
 
 type UseStrictContextParams<T> = {

@@ -34,7 +34,7 @@ const Card: React.FC<CardProps> = ({
     <article className={clsx(style['card'], style[display], className)}>
       <div className={clsx(style['card__image-wrapper'], style[`${display}__image-wrapper`])}>      
         {display === 'full' ? (
-          <ImageGallery images={images} sizes={imageSizes} />
+          <ImageGallery images={images} previewSizes={imageSizes} />
         ) : (
           <Link href={href} className={clsx(style['card__image-link'])}>
             <Image

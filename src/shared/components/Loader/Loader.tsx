@@ -18,7 +18,7 @@ const sizeClasses = {
 const colorClasses = {
   primary: style['loader-color_primary'],
   secondary: style['loader-color_secondary'],
-} as const
+} as const;
 
 const Loader: React.FC<LoaderProps> = ({ size = 'l', color = 'primary', className }) => {
   const classes = clsx(style['loader'], sizeClasses[size], colorClasses[color], className);

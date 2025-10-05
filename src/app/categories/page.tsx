@@ -12,12 +12,12 @@ export const sectionText = {
     'Все категории товаров нашего сайта',
     'Выберите, что вам инетресно - и наслажадйтесьь покупками!' 
   ]
-}   
+};   
 
 export const metadata: Metadata = {
   title: "Категории товаров",
   description: "Тысячи товаров каждое категории, от ярких новином до горячих хитов",
-}
+};
 
 export default async function CategoriesPage () {
     let initData: CategoriesInitData; 
@@ -25,7 +25,7 @@ export default async function CategoriesPage () {
     const categoriesApi = new CategoriesApi(new Client);
   
     try {
-        const response = await categoriesApi.getCategories({ next: { revalidate: 60 * 60 }})
+        const response = await categoriesApi.getCategories({ next: { revalidate: 60 * 60 }});
         
         if(!isStrapiSuccessResponseProducts(response)) {
             throw response;
@@ -35,13 +35,13 @@ export default async function CategoriesPage () {
             success: true,
             categories: response.data,
             meta: response.meta,            
-        }
+        };
 
     } catch(err) {
         initData = {
             success: false,
             error: err instanceof Error ? err.message : "UnknownError"
-        }
+        };
     }
 
     return (

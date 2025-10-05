@@ -41,8 +41,8 @@ export default class QueryParamsStore {
 
             mergeQueryParams: action.bound,
             setFromSearchParams: action.bound,            
-        })
-        this.setFromSearchParams(params)
+        });
+        this.setFromSearchParams(params);
     }
 
     get categories(): QueryParams['categories'] {
@@ -125,10 +125,10 @@ export default class QueryParamsStore {
                 if(Array.isArray(params.categories)) {
                     this._categories = params.categories.length > 0
                         ? params.categories.map(Number)
-                        : undefined
+                        : undefined;
 
                 } else {
-                    const categoryNumber = Number(params.categories)
+                    const categoryNumber = Number(params.categories);
                     this._categories = !Number.isNaN(categoryNumber)
                         ? [categoryNumber]
                         : undefined;   
@@ -150,7 +150,7 @@ export default class QueryParamsStore {
             this._inStock = params.inStock ?? undefined;
             this._count = params.count ?? undefined;
             this._page = params.page ?? undefined;            
-        })
+        });
     }
 
     mergeQueryParams(params: QueryParams): void {
@@ -159,10 +159,10 @@ export default class QueryParamsStore {
                 if(Array.isArray(params.categories)) {
                     this._categories = params.categories.length > 0
                         ? params.categories.map(Number)
-                        : undefined
+                        : undefined;
 
                 } else {
-                    const categoryNumber = Number(params.categories)
+                    const categoryNumber = Number(params.categories);
                     this._categories = !Number.isNaN(categoryNumber)
                         ? [categoryNumber]
                         : undefined;   
@@ -188,6 +188,6 @@ export default class QueryParamsStore {
             if (params.page) {
                 this._page = params.page;
             }
-        })
+        });
     }
 }

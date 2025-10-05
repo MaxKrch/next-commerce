@@ -12,7 +12,7 @@ import RelatedProducts from "./components/RelatedProducts";
 import { Metadata } from "next";
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-    const productApi = new ProductsApi(new Client())
+    const productApi = new ProductsApi(new Client());
     const { id } = await params;
     try {
         const response = await productApi.getProductDetails(id, {next: { revalidate: 60 }});
@@ -23,12 +23,12 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
         return {
             title: response.data.title,
             description: response.data.description,
-         }
+         };
 
     } catch {
         return {
             title: "Страница товара"
-        }
+        };
     }
 }
 
@@ -47,7 +47,7 @@ export default async function ProductDetailsPage ({params}: ProductDetailsPagePr
         const [productDetailsRes, productsRes] = await Promise.all([
             productsApi.getProductDetails(id, {next: { revalidate: 120 }}),
             productsApi.getProductList({count: 6}, {})
-        ])
+        ]);
 
            
         if(!isStrapiSuccessResponseProducts(productDetailsRes)) {
@@ -62,31 +62,31 @@ export default async function ProductDetailsPage ({params}: ProductDetailsPagePr
             success: true,
             product: productDetailsRes.data,
             id: id,                       
-        }
+        };
         
         productsInitData = {
             success: true,
             products: productsRes.data,
             query: id,
             meta: productsRes.meta,
-        }
+        };
 
     } catch(err) {
         if(err instanceof Error && err.message === 'Not Found') {
-            notFound()
+            notFound();
         }
 
         productDetailsInitData = {
             success: false,
             id: id,
             error: err instanceof Error ? err.message : "UnknownError"
-        }
+        };
 
         productsInitData = {
             success: false,
             query: id,
             error: err instanceof Error ? err.message : "UnknownError"
-        }
+        };
     }
 
     return (

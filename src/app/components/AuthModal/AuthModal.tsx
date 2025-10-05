@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, {  useCallback, useRef, useState } from 'react';
 import style from './AuthModal.module.scss';
@@ -52,11 +52,11 @@ const AuthModal: React.FC = () => {
         }
         
         modalStore.close();
-    }, [userStore, modalStore, authMode])
+    }, [userStore, modalStore, authMode]);
 
     const shouldShow = modalStore.isOpen 
         && modalStore.mode === MODES.AUTH 
-        && !userStore.isAuthorized 
+        && !userStore.isAuthorized; 
 
     if(!shouldShow) {
         return null;
@@ -75,7 +75,7 @@ const AuthModal: React.FC = () => {
                 />
             </div>
         </ModalPortal>
-    )
-}
+    );
+};
 
 export default observer(AuthModal);

@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { type ChangeEvent } from 'react';
+import React from 'react';
 
 import style from './Input.module.scss';
 
@@ -25,5 +25,5 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   }
 );
 
-Input.displayName = 'Input'
+Input.displayName = 'Input';
 export default Input;

@@ -22,7 +22,7 @@ const CheckBoxValueAdapter = React.forwardRef<HTMLInputElement, CheckBoxValueAda
         />
     );
   }
-)
+);
 
-CheckBoxValueAdapter.displayName = "CheckBoxValueAdapter"
+CheckBoxValueAdapter.displayName = "CheckBoxValueAdapter";
 export default CheckBoxValueAdapter;

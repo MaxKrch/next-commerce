@@ -3,6 +3,6 @@ import FetchClient from "./fetch";
 
 const Client = typeof window === 'undefined'
     ? FetchClient
-    : AxiosClient
+    : AxiosClient;
 
-export default Client
+export default Client;

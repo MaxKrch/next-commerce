@@ -33,7 +33,6 @@ export default class AxiosClient {
         }
 
         if (error?.response) {
-          console.log(error)
           return Promise.reject(new Error(error.response.data.error.message ?? 'ServerError'));
         }
 
@@ -48,12 +47,12 @@ export default class AxiosClient {
 
   get = async <T = unknown>(url: string, options?: RequestOptions): Promise<T> => {
     const { next: _next, ...clearedOptions } = options ?? {};
-    void _next
+    void _next;
     return this.instance.get(url, clearedOptions);
   };
   post = async <T = unknown>(url: string, data?: unknown, options?: RequestOptions): Promise<T> => {
     const { next: _next, ...clearedOptions } = options ?? {};
-    void _next
+    void _next;
     return this.instance.post(url, data, clearedOptions);
   };
 };

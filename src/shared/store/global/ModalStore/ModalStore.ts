@@ -19,7 +19,7 @@ export default class ModalStore {
 
             open: action.bound,
             close: action.bound,
-        })
+        });
     }
 
     get mode(): Modes | null {
@@ -33,12 +33,12 @@ export default class ModalStore {
     open(mode: Modes): void {
         this._mode = mode;
         this._isOpen = true;
-        document.body.style.overflow = 'hidden'
+        document.body.style.overflow = 'hidden';
     }
 
     close(): void {
         this._mode = null;
         this._isOpen = false;
-        document.body.style.overflow = ''
+        document.body.style.overflow = '';
     }
 }

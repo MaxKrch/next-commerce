@@ -18,7 +18,7 @@ export default class CategoriesApi {
           }, 'categories');
     
           return `/product-categories?${queryString}`;
-        }
+        };
 
     getCategories = async ({ signal, next }: RequestOptions) => {
         try {
@@ -36,5 +36,5 @@ export default class CategoriesApi {
         } catch (err) {
             throw formateError(err);
         }
-    }
+    };
 }

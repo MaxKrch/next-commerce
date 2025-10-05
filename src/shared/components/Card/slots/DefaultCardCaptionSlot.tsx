@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Text from "@components/Text";
 import { ProductType } from "@model/products";

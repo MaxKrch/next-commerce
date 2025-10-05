@@ -100,11 +100,11 @@ export default class CategoriesStore implements ICategoriesStore {
 
     this._status = META_STATUS.SUCCESS;
     this._meta = init.meta;
-    this._setCategories(init.categories)
+    this._setCategories(init.categories);
   }
 
   setCategories(categories: ProductCategoryApiType[]): void {
-    this._setCategories(categories)
+    this._setCategories(categories);
   }
 
   getCategoryById(id: ProductCategoryType['id']): ProductCategoryType | undefined {

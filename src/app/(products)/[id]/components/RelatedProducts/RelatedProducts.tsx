@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import clsx from 'clsx';
 import { observer } from 'mobx-react-lite';
 import style from './RelatedProducts.module.scss';
@@ -29,14 +29,14 @@ const RelatedProducts: React.FC = () => {
     if(currentProduct) {
       productsStore.fetchProducts({
         categories: [currentProduct.productCategory.id],
-      })
+      });
     }
   }, [productsStore, productDetailsStore.product]);
   
   const filteredProducts = useMemo(
     () => productsStore.products.filter(item => item.id !== productDetailsStore.product?.id), 
     [productsStore.products, productDetailsStore.product]
-  )
+  );
   
   useEffect(() => {   
     if(isFirstRender.current) {
@@ -48,24 +48,24 @@ const RelatedProducts: React.FC = () => {
       let productCategory: number[] = [];
       
       if(typeof productId === 'string') {
-        const targetProduct = productsStore.findProductByDocumentId(productId)
+        const targetProduct = productsStore.findProductByDocumentId(productId);
       
         if(targetProduct) {
-          productCategory = [targetProduct.productCategory.id]
+          productCategory = [targetProduct.productCategory.id];
         }
       }
        
       productsStore.fetchProducts({
         categories: productCategory
-      })
+      });
     }
   }, [productId, productsStore, productDetailsStore, productDetailsStore.status]);
 
-  const isFailedRequest = productsStore.status === META_STATUS.ERROR
-  const notFoundProducts = productsStore.status === META_STATUS.SUCCESS && productsStore.products.length === 0
-  const showRelatedProducts = productsStore.status === META_STATUS.SUCCESS && productDetailsStore.status === META_STATUS.SUCCESS 
+  const isFailedRequest = productsStore.status === META_STATUS.ERROR;
+  const notFoundProducts = productsStore.status === META_STATUS.SUCCESS && productsStore.products.length === 0;
+  const showRelatedProducts = productsStore.status === META_STATUS.SUCCESS && productDetailsStore.status === META_STATUS.SUCCESS; 
 
-  let content: ReactNode
+  let content: ReactNode;
   switch(true) {
     case isFailedRequest: {
       content = (
@@ -73,7 +73,7 @@ const RelatedProducts: React.FC = () => {
           ContentSlot={DefaultNetworkErrorContentSlot}
           ActionSlot={() => <DefaultNetworkErrorActionSlot action={refetch} />}
         />
-      )
+      );
       break;
     }
 
@@ -82,7 +82,7 @@ const RelatedProducts: React.FC = () => {
         <Text>
           Нет похожих товаров, кажется - вы нашли что-то уникальное
         </Text>
-      )
+      );
       break;
     }
 
@@ -96,7 +96,7 @@ const RelatedProducts: React.FC = () => {
           ActionSlot={DefaultCardActionSlot}
           className={clsx(style['related-products'])}
         />
-      )
+      );
       break;
     }
 
@@ -107,7 +107,7 @@ const RelatedProducts: React.FC = () => {
           skeletonCount={6}
           className={clsx(style['related-products'])}
         />
-      )
+      );
     }
   }
 

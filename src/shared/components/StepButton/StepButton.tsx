@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import clsx from 'clsx';
 import React, { memo, useCallback } from 'react';
@@ -14,13 +14,13 @@ export type StepButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const StepButton: React.FC<StepButtonProps> = ({ direction, children, className, ...rest }) => {
-  const router = useRouter()
+  const router = useRouter();
 
   const handleClick = useCallback(() => {
     if (direction === 'back') {
       router.back();
     } else {
-      router.forward()
+      router.forward();
     }
   }, [direction, router]);
 

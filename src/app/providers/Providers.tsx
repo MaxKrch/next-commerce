@@ -21,8 +21,8 @@ const Provoders: React.FC<PropsWithChildren> = ({children}) => {
                 </QueryParamsStoreProvider>
             </RootStoreProvider>
         </Suspense>
-    )
-}
+    );
+};
 
 export default Provoders;
 

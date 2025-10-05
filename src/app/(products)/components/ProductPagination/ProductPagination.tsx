@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Pagination from '@components/Pagination';
 import normalizeCurrentPage from '@components/Pagination/utils/normalize-current-page';
@@ -9,21 +9,21 @@ import type React from 'react';
 import { useCallback, useEffect, useMemo } from 'react';
 
 const ProductPagination: React.FC = () => {
-  const { queryParamsStore } = useRootStore()
+  const { queryParamsStore } = useRootStore();
   const productsStore = useProductsStore();
   const { pageCount, total } = productsStore.pagination || {};
-  const page = queryParamsStore.page ?? 1
+  const page = queryParamsStore.page ?? 1;
 
   const currentPage = useMemo(
     () => normalizeCurrentPage(page, pageCount),
-    [queryParamsStore.page, pageCount]
+    [page, pageCount]
   );
 
   useEffect(() => {
     if (pageCount && pageCount < page) {
       queryParamsStore.mergeQueryParams({ page: pageCount });
     }
-  }, [pageCount, queryParamsStore, currentPage]);
+  }, [pageCount, queryParamsStore, page]);
 
   const handleClick = useCallback(
     (page: number) => {

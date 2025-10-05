@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Client from '@api/client';
 import { IClient } from '@api/types';
@@ -17,11 +17,11 @@ const RootStoreContext = React.createContext<IRootStore | null>(null);
 let client: IClient;
 
 export const RootStoreProvider: React.FC<PropsWithChildren> = ({ children }) => { 
-  const params = useSearchParams()
+  const params = useSearchParams();
   const createClient = () => new Client();
   client = client ?? createClient() ;  
 
-  const rootStore = useCreateRootStore({ client, params })
+  const rootStore = useCreateRootStore({ client, params });
 
   return (
     <RootStoreContext.Provider value={rootStore}>

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import clsx from 'clsx';
 import { observer } from 'mobx-react-lite';
@@ -15,10 +15,10 @@ import DefaultCardPriceSlot from '@components/Card/slots/DefaultCardPriceSlot';
 import ProductCardAction from './components/ProductCardAction';
 
 const ProductCard: React.FC = () => {
-  const productDetailsStore = useProductDetailsStore()
+  const productDetailsStore = useProductDetailsStore();
   const isFirstRender = useRef(true);
   const prevProduct = useRef<string | null>(null);
-  const { id: productId } = useParams()
+  const { id: productId } = useParams();
 
   const refetch = useCallback(() => {
     if(typeof productId === 'string') {
@@ -43,14 +43,14 @@ const ProductCard: React.FC = () => {
   }, [productId, productDetailsStore]);
 
   if(productDetailsStore.error === 'NotFound' || productDetailsStore.error === 'Not Found') {
-    notFound()
+    notFound();
   }
 
   const isFailedRequest = productDetailsStore.status === META_STATUS.ERROR 
     || (productDetailsStore.status === META_STATUS.SUCCESS && productDetailsStore.product?.documentId !== productId);
 
   const isSuccessRequest = productDetailsStore.status === META_STATUS.SUCCESS 
-    && !!productDetailsStore.product
+    && !!productDetailsStore.product;
 
   let content: ReactNode;
   switch (true) {

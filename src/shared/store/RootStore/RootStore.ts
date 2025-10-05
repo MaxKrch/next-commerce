@@ -40,7 +40,7 @@ export default class RootStore implements IRootStore {
     products: ProductsApi,
     auth: AuthApi,
     cart: CartApi,
-  }
+  };
 
   constructor({
     client,
@@ -52,13 +52,13 @@ export default class RootStore implements IRootStore {
       products: new ProductsApi(client),
       auth: new AuthApi(client),
       cart: new CartApi(client),
-    }
-    this.queryParamsStore = new QueryParamsStore(params)
+    };
+    this.queryParamsStore = new QueryParamsStore(params);
     this.categoriesStore = new CategoriesStore(this.api.categories);
     this.userStore = new UserStore(this.api.auth);
     this.cartStore = new CartStore(this.api.cart);
     this.modalStore = new ModalStore();
-console.log(params)
+
     reaction(
       () => this.userStore.isAuthorized,
       (isAuthorized => {

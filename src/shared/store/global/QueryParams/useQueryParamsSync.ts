@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import QueryParamsStore from "./QueryParamsStore";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
@@ -19,7 +19,7 @@ const useQueryParamsSync = (store: QueryParamsStore) => {
 
         store.setFromSearchParams(searchParams);
         prevPathRef.current = path;
-    }, [searchParams, store, path])
+    }, [searchParams, store, path]);
 
     useEffect(() => {
         const dispose = reaction(
@@ -30,12 +30,12 @@ const useQueryParamsSync = (store: QueryParamsStore) => {
                     return;
                 }
                 const href = newQuery ? `?${newQuery}` : '/';
-                window.history.replaceState(null, "", href)
+                window.history.replaceState(null, "", href);
             },
             { fireImmediately: false }
-        )
-        return () => dispose()
-    }, [queryString, searchParams, store, router])
-}
+        );
+        return () => dispose();
+    }, [queryString, searchParams, store, router]);
+};
 
 export default useQueryParamsSync;

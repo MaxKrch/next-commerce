@@ -1,5 +1,5 @@
 import Text from "@components/Text";
-import style from './about.module.scss'
+import style from './about.module.scss';
 import clsx from "clsx";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -7,7 +7,7 @@ import Image from "next/image";
 export const metadata: Metadata = {
   title: "О нас",
   description: "Онлайн-магазин бесполезных товаров",
-}
+};
 
 export default function AboutPage () {
     return(
@@ -37,6 +37,6 @@ export default function AboutPage () {
                 Удачных покупок!
             </Text>
         </article>
-    )
+    );
 }
 

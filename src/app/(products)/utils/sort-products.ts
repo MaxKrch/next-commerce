@@ -2,7 +2,7 @@ import { SortKeys } from "@constants/product-sort";
 import { ProductType } from "@model/products";
 
 const sortProducts = (products: ProductType[], sort: SortKeys) => {
-    const cloned = [...products]
+    const cloned = [...products];
     switch(sort) {
         case 'newest':
             return cloned.sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime());
@@ -22,6 +22,6 @@ const sortProducts = (products: ProductType[], sort: SortKeys) => {
         default:
             return products;
     }
-}
+};
 
 export default sortProducts;

@@ -1,12 +1,9 @@
 import AuthApi from "@api/AuthApi";
-import { IClient } from "@api/types";
 import { META_STATUS, MetaStatus } from "@constants/meta-status";
-import { STORAGE_KEYS } from "@constants/storage";
 import { AuthData, RegisterData, User, UserApi } from "@model/auth";
 import normalizeUser from "@store/utils/normalize-user";
 import { action, computed, makeObservable, observable, runInAction } from "mobx";
 import UserStorage from "src/shared/services/UserStorage";
-import { success } from "zod";
 
 type PrivateFields = 
     | '_user'
@@ -43,7 +40,7 @@ export default class UserStore {
         });
 
         this.api = api;
-        this._initFromStorage()
+        this._initFromStorage();
     }
 
     get user(): User | null {
@@ -79,7 +76,7 @@ export default class UserStore {
         this._clearStorage();
         this._isAuthorized = false;
 
-        return { success: true }
+        return { success: true };
     }
 
     private _initFromStorage(): void {
@@ -91,7 +88,7 @@ export default class UserStore {
             const data = this._loadFromStorage();
             this._setUserData(data);
     
-        } catch(err) {
+        } catch {
             this._clearUserData();
             this._clearStorage();
         }
@@ -102,13 +99,13 @@ export default class UserStore {
         const token = UserStorage.getToken();
 
         if(!user || !token) {
-            throw new Error('FailLoad')
+            throw new Error('FailLoad');
         }
 
         return {
             user,
             token,
-        }
+        };
     }
 
     private _saveToStorage(data: {user: User, token: string}, storage: Storage): void {
@@ -117,7 +114,7 @@ export default class UserStore {
     }
 
     private _clearStorage(): void {
-        UserStorage.clearStorage()
+        UserStorage.clearStorage();
     }
 
     private _setUserData(data: {user: User, token: string}): void {
@@ -128,7 +125,7 @@ export default class UserStore {
 
     private _clearUserData(): void {
         this._user = null;
-        this._token = null,
+        this._token = null;
         this._isAuthorized = false;
     }
 
@@ -157,36 +154,36 @@ export default class UserStore {
             this._clearStorage();
             this._status = META_STATUS.PENDING;
             this._error = null;
-        })
+        });
         
         try {
             const response = await request(data);
             if(!response.user || !response.jwt) {
-                throw new Error('AuthError')
+                throw new Error('AuthError');
             }
 
             const respData = {
                 user: normalizeUser(response.user),
                 token: response.jwt
-            }
-            const storage = save ? localStorage : sessionStorage            
+            };
+            const storage = save ? localStorage : sessionStorage;            
 
             runInAction(() => {
                 this._setUserData(respData);
                 this._saveToStorage(respData, storage);
                 this._status = META_STATUS.SUCCESS;
-            })
-            return { success: true }
+            });
+            return { success: true };
 
         } catch(err) {
             runInAction(() => {
-                const errorMessage = err instanceof Error ? err.message : "UnknownError"
+                const errorMessage = err instanceof Error ? err.message : "UnknownError";
                 this._formateErrorMessage(errorMessage);
                 this._clearUserData();
                 this._clearStorage();       
                 this._status = META_STATUS.ERROR;
-            })
-            return { success: false}
+            });
+            return { success: false};
         }
 
     } 

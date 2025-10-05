@@ -6,7 +6,7 @@ export default class UserStorage {
         let token = localStorage.getItem(STORAGE_KEYS.TOKEN);
        
         if(!token) {
-            token = sessionStorage.getItem(STORAGE_KEYS.TOKEN) ?? null
+            token = sessionStorage.getItem(STORAGE_KEYS.TOKEN) ?? null;
         }
 
         return token;
@@ -16,7 +16,7 @@ export default class UserStorage {
         let userJSON = localStorage.getItem(STORAGE_KEYS.USER);
 
         if(!userJSON) {
-            userJSON = sessionStorage.getItem(STORAGE_KEYS.USER)      
+            userJSON = sessionStorage.getItem(STORAGE_KEYS.USER);      
         }
 
         if(!userJSON) {

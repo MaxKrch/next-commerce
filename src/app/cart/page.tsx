@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import clsx from 'clsx';
 import { observer } from 'mobx-react-lite';
@@ -13,24 +13,18 @@ import { useEffect, useRef } from 'react';
 import NetworkError from '@components/NetworkError';
 import DefaultNetworkErrorContentSlot from '@components/NetworkError/slots/DefaultNetworkErrorContentSlot';
 import DefaultNetworkErrorActionSlot from '@components/NetworkError/slots/DefaultNetworkErrorActionSlot';
-import OnlyClient from '@components/OnlyClient';
-import { useRouter } from 'next/navigation';
-import Loader from '@components/Loader';
-import { MODES } from '@constants/modal';
-import { appRoutes } from '@constants/app-routes';
 import PrivateRoute from '@components/PrivateRoute';
 
 const CartPage: React.FC = () => {
-  const router = useRouter()
-  const { cartStore, userStore, modalStore } = useRootStore();
-  const debouncer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const { cartStore, userStore } = useRootStore();
+  const debouncer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
       if(cartStore.status !== META_STATUS.PENDING && !debouncer.current && userStore.isAuthorized) {
         cartStore.fetchCart();
-        debouncer.current = setTimeout(() => debouncer.current === null, 60 * 1000)
+        debouncer.current = setTimeout(() => debouncer.current === null, 60 * 1000);
       }
-  }, [cartStore, cartStore.status, userStore.isAuthorized])
+  }, [cartStore, cartStore.status, userStore.isAuthorized]);
 
 
   return (

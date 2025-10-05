@@ -9,7 +9,7 @@ const normalizeUser = (from: UserApi): User => {
         blocked: from.blocked,
         createdAt: new Date(from.createdAt),
         updatedAt: new Date(from.updatedAt)
-    })
-}
+    });
+};
 
-export default normalizeUser
+export default normalizeUser;

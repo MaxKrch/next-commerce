@@ -11,7 +11,7 @@ const InputValueAdapter = React.forwardRef<HTMLInputElement, InputValueAdapterPr
 
         const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
             onChange(event.target.value);
-        }, [onChange])
+        }, [onChange]);
 
         return (
             <Input 
@@ -20,9 +20,9 @@ const InputValueAdapter = React.forwardRef<HTMLInputElement, InputValueAdapterPr
                 value={value} 
                 onChange={handleInputChange}
             />
-        )
+        );
     }
-)
+);
 
-InputValueAdapter.displayName = "InputValueAdapter"
+InputValueAdapter.displayName = "InputValueAdapter";
 export default InputValueAdapter;

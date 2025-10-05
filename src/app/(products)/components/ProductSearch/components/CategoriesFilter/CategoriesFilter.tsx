@@ -46,7 +46,7 @@ const CategoriesFilter: React.FC<CategoriesFilterProps> = ({
           }
         </div>
       </div>
-    )
-}
+    );
+};
 
 export default memo(CategoriesFilter);

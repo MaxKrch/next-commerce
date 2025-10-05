@@ -1,1 +1,1 @@
-export { default } from './ProductCardAction'
+export { default } from './ProductCardAction';

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { clsx } from 'clsx';
 import CardList from '@components/CardList';
 import { observer } from 'mobx-react-lite';
@@ -25,7 +25,7 @@ const ProductList: React.FC = () => {
   const requestId = useRef<string | null>(null);
   const productsStore = useProductsStore();
   const { queryParamsStore } = useRootStore();
-  const [products, setProducts] = useState(productsStore.products)
+  const [products, setProducts] = useState(productsStore.products);
   
   const refetch = useCallback(() => {
     productsStore.fetchProducts(queryParamsStore.queryObject);
@@ -33,12 +33,12 @@ const ProductList: React.FC = () => {
 
   const sort = useMemo(
     () => queryParamsStore.sort ?? SORT_VARIABLES[DEFAULT_SORT].key, 
-    [queryParamsStore.sort, DEFAULT_SORT]
+    [queryParamsStore.sort]
   );
 
   useEffect(() => {
-    setProducts(sortProducts(productsStore.products, sort))
-  }, [sort, productsStore.products])
+    setProducts(sortProducts(productsStore.products, sort));
+  }, [sort, productsStore.products]);
 
   useEffect(() => {
     if(isFirstRender.current) {
@@ -59,16 +59,16 @@ const ProductList: React.FC = () => {
   }, [queryParamsStore.queryObject, queryParamsStore.queryString, productsStore]);
 
   if(productsStore.error === 'NotFound' || productsStore.error === 'Not Found') {
-    notFound()
+    notFound();
   }
 
   const isFailedRequest = productsStore.status === META_STATUS.ERROR ||
     (productsStore.status === META_STATUS.SUCCESS && !!requestId.current && productsStore.requestId !== requestId.current);
 
-  const notFoundProducts = productsStore.status === META_STATUS.SUCCESS && productsStore.products.length === 0
-  const showProducts = productsStore.status === META_STATUS.SUCCESS
+  const notFoundProducts = productsStore.status === META_STATUS.SUCCESS && productsStore.products.length === 0;
+  const showProducts = productsStore.status === META_STATUS.SUCCESS;
 
-  let content: ReactNode
+  let content: ReactNode;
   switch(true) {
     case isFailedRequest: {
       content = (
@@ -76,7 +76,7 @@ const ProductList: React.FC = () => {
           ContentSlot={DefaultNetworkErrorContentSlot} 
           ActionSlot={() => <DefaultNetworkErrorActionSlot action={refetch}/>} 
         />
-      )
+      );
       break;
     }
     case notFoundProducts: {
@@ -90,7 +90,7 @@ const ProductList: React.FC = () => {
           </Text>          
         </div>
 
-      )
+      );
       break;
     }
 
@@ -113,14 +113,14 @@ const ProductList: React.FC = () => {
             ActionSlot={DefaultCardActionSlot}
           />
         </>
-      )
+      );
       break;
     }
 
     default: {
       content = (
         <CardListSkeleton skeletonCount={6} display="preview" />
-      )
+      );
     }
   }
 

@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { observer } from 'mobx-react-lite';
-import style from './ImageGallery.module.scss'
+import style from './ImageGallery.module.scss';
 import { ProductType } from '@model/products';
 import Image from 'next/image';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -18,37 +18,37 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, previewSizes }) => 
 
   const handleClickImg = useCallback(() => {
     if(mode === 'preview') {
-      setMode('full')
+      setMode('full');
     }
   }, [mode]);
 
   const handleClickLeftArrow = useCallback(() => {
     const nextIndex = index === 0 
       ? images.length - 1 
-      : index - 1
-    setIndex(nextIndex)
-  }, [index])
+      : index - 1;
+    setIndex(nextIndex);
+  }, [index, images.length]);
 
   const handleClickRightArrow = useCallback(() => {
     const nextIndex = index + 1 < images.length
       ? index + 1
-      : 0
-      setIndex(nextIndex)
-  }, [index])
+      : 0;
+      setIndex(nextIndex);
+  }, [index, images.length]);
 
   const handleClickCross = useCallback(() => {
-    setMode('preview')
-  }, [mode])
+    setMode('preview');
+  }, []);
 
   useEffect(() => {
     if(mode === 'full') {
-      document.body.classList.add(style['gallery_no-scroll'])
+      document.body.classList.add(style['gallery_no-scroll']);
     } else {
-      document.body.classList.remove(style['gallery_no-scroll'])
+      document.body.classList.remove(style['gallery_no-scroll']);
     }
 
-    return () => document.body.classList.remove(style['gallery_no-scroll'])
-  }, [mode])
+    return () => document.body.classList.remove(style['gallery_no-scroll']);
+  }, [mode]);
 
   return (
     <div className={clsx(style['gallery'], style[`gallery_${mode}`])}>

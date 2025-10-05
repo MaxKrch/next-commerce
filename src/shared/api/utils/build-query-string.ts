@@ -41,12 +41,12 @@ export function buildQueryString(params: buildQueryStringArgs, type: 'products' 
       strapiQuery.filters = {
         ...(strapiQuery.filters || {}),
         isInStock: { $eq: true },
-      }
+      };
     }
 
-    const currentSort = sort ? sort : DEFAULT_SORT
+    const currentSort = sort ? sort : DEFAULT_SORT;
     const currentSortApi = SORT_VARIABLES[currentSort].api;
-    strapiQuery.sort = `${currentSortApi.field}:${currentSortApi.order}`
+    strapiQuery.sort = `${currentSortApi.field}:${currentSortApi.order}`;
   }
   
   return qs.stringify(strapiQuery);

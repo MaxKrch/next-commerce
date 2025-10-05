@@ -1,4 +1,3 @@
-import Button from "@components/Button";
 import style from './AuthHeader.module.scss';
 import clsx from "clsx";
 import { memo, useCallback } from "react";
@@ -13,9 +12,9 @@ export type AuthHeaderProps = {
 const AuthHeader: React.FC<AuthHeaderProps> = ({mode, onChange}) => {
     const handleChangeMode = useCallback((newMode: AuthModes) => {
         if(mode !== newMode) {
-            onChange(newMode)
+            onChange(newMode);
         }
-    }, [mode])
+    }, [mode, onChange]);
 
     return( 
         <div className={clsx(style['header'])}>                    
@@ -38,7 +37,7 @@ const AuthHeader: React.FC<AuthHeaderProps> = ({mode, onChange}) => {
                 Регистрация
             </div>
         </div>  
-    )
-}
+    );
+};
 
 export default memo(AuthHeader);

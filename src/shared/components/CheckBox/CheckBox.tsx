@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { forwardRef, useCallback, type ChangeEvent } from 'react';
+import React, { useCallback, type ChangeEvent } from 'react';
 import style from './CheckBox.module.scss';
 import CheckIcon from '@components/icons/CheckIcon';
 import OnlyClient from '@components/OnlyClient';
@@ -16,7 +16,7 @@ const CheckBox = React.forwardRef<HTMLInputElement, CheckBoxProps>(
           return;
         }
         onChange(event);
-      }, [onChange, disabled]);
+      }, [onChange]);
       
     return (
       <label
@@ -39,7 +39,7 @@ const CheckBox = React.forwardRef<HTMLInputElement, CheckBoxProps>(
       </label>
     );
   }
-)
+);
 
-CheckBox.displayName = "CheckBox"
+CheckBox.displayName = "CheckBox";
 export default CheckBox;

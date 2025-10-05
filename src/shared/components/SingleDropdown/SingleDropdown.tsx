@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useMemo, useState } from 'react';
+import React, { memo, useCallback } from 'react';
 import { Option } from '@model/option-dropdown';
 import Dropdown from '@components/Dropdown';
 

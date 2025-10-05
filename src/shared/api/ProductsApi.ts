@@ -7,7 +7,7 @@ import formateError from "./utils/formate-error";
 
 export default class ProductsApi {
     private client: IClient;
-    private populate = ['images', 'productCategory']
+    private populate = ['images', 'productCategory'];
      
     constructor(client: IClient) {
         this.client = client;
@@ -20,13 +20,13 @@ export default class ProductsApi {
       });
 
       return `/products?${queryString}`;
-    }
+    };
 
     private createGetProductDetailsURL = (id: string ): string => {
       const queryString = buildQueryString({ populate: this.populate });
 
       return `/products/${id}?${queryString}`;
-    }
+    };
     
     getProductList = async (params: QueryParams, { signal, next }: RequestOptions) => {
         try {
@@ -42,7 +42,7 @@ export default class ProductsApi {
         } catch (err) {
             throw formateError(err);
         }
-    }
+    };
 
     getProductDetails = async (id: ProductType['documentId'], { signal, next }: RequestOptions) => {
         try {
@@ -59,5 +59,5 @@ export default class ProductsApi {
         } catch (err) {
             throw formateError(err);
         }
-    }
+    };
 }

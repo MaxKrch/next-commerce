@@ -1,14 +1,14 @@
-import React from 'react'
-import style from './Category.module.scss'
-import { ProductCategoryType } from '@model/products'
-import Image from 'next/image'
-import Link from 'next/link'
-import buildLinkWithCategoryFilter from './utils/build-link-with-category-filter'
-import Text from '@components/Text'
-import clsx from 'clsx'
+import React from 'react';
+import style from './Category.module.scss';
+import { ProductCategoryType } from '@model/products';
+import Image from 'next/image';
+import Link from 'next/link';
+import buildLinkWithCategoryFilter from './utils/build-link-with-category-filter';
+import Text from '@components/Text';
+import clsx from 'clsx';
 
 const Category: React.FC<{category: ProductCategoryType}> = ({ category }) => {
-    const link = buildLinkWithCategoryFilter(category.id)
+    const link = buildLinkWithCategoryFilter(category.id);
 
     return(
         <article className={clsx(style['category'])}>
@@ -27,7 +27,7 @@ const Category: React.FC<{category: ProductCategoryType}> = ({ category }) => {
                 </Text>
             </Link>
         </article>
-    )
-}
+    );
+};
 
 export default Category;

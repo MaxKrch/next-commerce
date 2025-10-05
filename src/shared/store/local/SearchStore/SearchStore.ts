@@ -1,5 +1,5 @@
 import { META_STATUS } from '@constants/meta-status';
-import { DEFAULT_SORT, SORT_VARIABLES, SortVariables, SortKeys } from '@constants/product-sort';
+import { DEFAULT_SORT, SORT_VARIABLES, SortKeys } from '@constants/product-sort';
 import { Option } from '@model/option-dropdown';
 import { ProductCategoryType } from '@model/products';
 import { QueryParams } from '@model/query-params';
@@ -67,7 +67,6 @@ export default class SearchStore implements ILocalStore {
     this._rootStore = rootStore;
     this.initReactions();
     this._initFromQueryParamsStore();
-    console.log(rootStore)
   }
 
   initReactions(): void {
@@ -84,16 +83,16 @@ export default class SearchStore implements ILocalStore {
         this._cleanupSelectedCategories(categories);
       }
     );
-    this.reactions.push(reactionLoadCategories)
+    this.reactions.push(reactionLoadCategories);
     
     const reactionChangeInput = reaction(
       () => this._rootStore.queryParamsStore.query,
       (query) => {
         if(query !== this._inputValue) {
-          this._inputValue = query ?? ''
+          this._inputValue = query ?? '';
         }
       }
-    )
+    );
     this.reactions.push(reactionChangeInput);
   }
 
@@ -101,15 +100,15 @@ export default class SearchStore implements ILocalStore {
     return Object.values(SORT_VARIABLES).map(item => ({
       key: item.key,
       value: item.label
-    }))
+    }));
   }
 
   get selectedSortOption(): Option {
-    const currentSort = SORT_VARIABLES[this._rootStore.queryParamsStore.sort ?? DEFAULT_SORT]
+    const currentSort = SORT_VARIABLES[this._rootStore.queryParamsStore.sort ?? DEFAULT_SORT];
     return ({
       key: currentSort.key,
       value: currentSort.label
-    })
+    });
   }
 
   get titleSortValue(): string {
@@ -120,7 +119,7 @@ export default class SearchStore implements ILocalStore {
     return this._rootStore.categoriesStore._list.order.map(id => ({
       key: `${id}`,
       value: this._rootStore.categoriesStore._list.entities[id]?.title,
-    }))
+    }));
   }
 
   get selectedCategoriesOptions(): Option[] {   
@@ -128,7 +127,7 @@ export default class SearchStore implements ILocalStore {
     return categories.map(id => ({
       key: `${id}`,
       value: this._rootStore.categoriesStore._list.entities[id]?.title,
-    }))
+    }));
   }
 
   get titleCategoriesValue(): string {
@@ -181,7 +180,7 @@ export default class SearchStore implements ILocalStore {
     const selected: ProductCategoryType['id'][] = [];
     
     options.forEach((item) => {
-      const categoriesId = Number(item.key)
+      const categoriesId = Number(item.key);
     
       if (this._rootStore.categoriesStore._list.order.includes(categoriesId)) {
         selected.push(categoriesId);
@@ -190,13 +189,13 @@ export default class SearchStore implements ILocalStore {
     
     this._rootStore.queryParamsStore.mergeQueryParams({
       categories: selected,
-    })
+    });
   }
 
   setInStock(value: boolean): void {
     this._rootStore.queryParamsStore.mergeQueryParams({
       inStock: value,
-    })
+    });
   }
 
   setActiveSort(option: Option ): void {
@@ -208,7 +207,7 @@ export default class SearchStore implements ILocalStore {
    
     this._rootStore.queryParamsStore.mergeQueryParams({
       sort: key,
-    })
+    });
   }
  
   private _initFromQueryParamsStore(): void {
@@ -216,7 +215,7 @@ export default class SearchStore implements ILocalStore {
   }
 
   private _cleanupSelectedCategories(categories: ProductCategoryType[]): void {
-    const selectedCategories = this._rootStore.queryParamsStore.categories ?? []
+    const selectedCategories = this._rootStore.queryParamsStore.categories ?? [];
     const cleanCategories = categories
       .filter((item) => selectedCategories.includes(item.id))
       .map(item => item.id);
@@ -224,13 +223,13 @@ export default class SearchStore implements ILocalStore {
     if(selectedCategories.length !== cleanCategories.length) {
       this._rootStore.queryParamsStore.mergeQueryParams({
         categories: cleanCategories
-      })
+      });
     } 
   }
 
   clearReactions(): void {
     this.reactions.map(item => item());
-    this.reactions = []
+    this.reactions = [];
   }
 
   destroy(): void {

@@ -2,7 +2,7 @@ import React, { memo, useCallback, useEffect } from "react";
 import { schema, Schema } from "../../AuthModal.schema";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import style from './AuthForm.module.scss'
+import style from './AuthForm.module.scss';
 import clsx from "clsx";
 import Text from "@components/Text";
 import Input from "@components/Input";
@@ -40,11 +40,11 @@ const AuthForm: React.FC<AuthFormProps> = ({
     } = useForm<Schema>({
         resolver: zodResolver(schema),
         mode: 'onChange'
-    })
+    });
 
     const handleFocus = useCallback((field: keyof Schema) => {
-        clearErrors(field)
-    }, [clearErrors])
+        clearErrors(field);
+    }, [clearErrors]);
 
     useEffect(() => {
         if (mode === AUTH_MODES.LOGIN) {
@@ -59,9 +59,9 @@ const AuthForm: React.FC<AuthFormProps> = ({
                 email: '',
                 password: '',
                 saveMe: true,
-            })
+            });
         }
-    }, [needReset])
+    }, [needReset, reset]);
 
     return(
         <form onSubmit={handleSubmit(onSubmit)} className={clsx(style['form'])}>
@@ -143,7 +143,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
                 </div>
             </Button>
         </form>
-    )
-}
+    );
+};
 
 export default memo(AuthForm);

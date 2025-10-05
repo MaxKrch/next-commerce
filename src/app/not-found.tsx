@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import style from './app.module.scss'
+import style from './app.module.scss';
 import Text from "@components/Text";
 import Image from "next/image";
 import Button from "@components/Button";
@@ -37,6 +37,6 @@ export default function NotFoundPage () {
                 </Link> 
             </footer>            
         </article>
-    )
+    );
 }
 

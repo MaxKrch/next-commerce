@@ -17,7 +17,7 @@ const useLocalStore = <T extends ILocalStore & { _destroyed?: boolean }>(creator
 
   useEffect(() => {
     if (container.current?._destroyed) {
-      container.current.initReactions()
+      container.current.initReactions();
     }
  
     return () => {

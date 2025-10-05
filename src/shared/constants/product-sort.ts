@@ -39,9 +39,9 @@ export const SORT_VARIABLES = {
       order: 'desc',
     },
   },
- } as const
+ } as const;
 
 export type SortVariables = typeof SORT_VARIABLES[keyof typeof SORT_VARIABLES] 
 export type SortKeys = SortVariables['key']
-export const DEFAULT_SORT = SORT_VARIABLES.newest.key
+export const DEFAULT_SORT = SORT_VARIABLES.newest.key;
 

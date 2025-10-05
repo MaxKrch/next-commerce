@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { clsx } from 'clsx';
 import { observer } from 'mobx-react-lite';
@@ -29,21 +29,21 @@ const ProductSearch = () => {
 
   const handleSearchClick = useCallback(() => {
     const params = queryParamsStore.queryObject;
-    productsStore.fetchProducts(params)
+    productsStore.fetchProducts(params);
   }, [queryParamsStore.queryObject, productsStore]);
 
   const handleInputKeyDown = useCallback((event: KeyboardEvent<HTMLInputElement>) => {
     if(event.key === "Enter") {
       const params = queryParamsStore.queryObject;
-      productsStore.fetchProducts(params)      
+      productsStore.fetchProducts(params);      
     }
-  }, [queryParamsStore.queryObject, productsStore])
+  }, [queryParamsStore.queryObject, productsStore]);
 
   useEffect(() => {
     if(categoriesStore.status === META_STATUS.IDLE) {
-      categoriesStore.fetchCategories()
+      categoriesStore.fetchCategories();
     }
-  }, [categoriesStore])
+  }, [categoriesStore]);
 
   return (
     <div className={clsx(style['search'])}>
@@ -82,7 +82,7 @@ const ProductSearch = () => {
         <CheckBox
           className={clsx(style['search__stock-icon'])}
           checked={!!searchStore.inStock}
-          onChange={() => {searchStore.setInStock(!searchStore.inStock)}} 
+          onChange={() => {searchStore.setInStock(!searchStore.inStock);}} 
           checkSize="small"
         />
       </label>

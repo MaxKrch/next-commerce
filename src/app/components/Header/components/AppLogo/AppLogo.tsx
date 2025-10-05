@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Link from 'next/link';
 import style from './AppLogo.module.scss';
@@ -10,10 +10,10 @@ import AppNameIcon from '@components/icons/AppNameIcon';
 import { usePathname } from 'next/navigation';
 
 const AppLogo: React.FC = () => {
-  const path = usePathname()
+  const path = usePathname();
   const Component: React.FC<PropsWithChildren> = path === appRoutes.main.mask
     ? ({children}) => <p className={clsx(style['logo'])}>{children}</p>
-    : ({children}) => <Link href={appRoutes.main.create()} className={clsx(style['logo'])}>{children}</Link>
+    : ({children}) => <Link href={appRoutes.main.create()} className={clsx(style['logo'])}>{children}</Link>;
 
   return (
     <Component>

@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
 import OnlyClient from "@components/OnlyClient";
 import clsx from "clsx";
-import style from './ModalPortal.module.scss'
+import style from './ModalPortal.module.scss';
 import React, { PropsWithChildren, useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import CrossIcon from "@components/icons/CrossIcon";
@@ -32,14 +32,14 @@ const ModalPortal: React.FC<ModalPortalProps> = ({ children, size = 'modal', onC
         }
 
         const isModalContainer = event.target.closest('[data-id="modal-container"]')
-            && !event.target.closest('[data-id="modal-close"]')
+            && !event.target.closest('[data-id="modal-close"]');
 
         if(isModalContainer) {
             return;
         }
       
         modalStore.close();
-        document.removeEventListener('pointerdown', handleClick)
+        document.removeEventListener('pointerdown', handleClick);
         if(onClose) {
             onClose();
         }
@@ -54,12 +54,12 @@ const ModalPortal: React.FC<ModalPortalProps> = ({ children, size = 'modal', onC
         window.removeEventListener('keydown', handleKeyDown);
 
         if(onClose) {
-            onClose()
+            onClose();
         }
-    }, [])
+    }, [modalStore, onClose]);
 
     useEffect(() => { 
-        setPortal(document.getElementById('modal-portal'))
+        setPortal(document.getElementById('modal-portal'));
     }, []);
 
     useEffect(() => {
@@ -67,7 +67,7 @@ const ModalPortal: React.FC<ModalPortalProps> = ({ children, size = 'modal', onC
             return;
         }
         document.addEventListener('pointerdown', handleClick);
-        return () => removeEventListener('pointerdown', handleClick)
+        return () => removeEventListener('pointerdown', handleClick);
     }, [handleClick, modalStore.isOpen]);
 
     useEffect(() => {
@@ -75,8 +75,8 @@ const ModalPortal: React.FC<ModalPortalProps> = ({ children, size = 'modal', onC
             return;
         }
         window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown)
-    }, [handleClick, modalStore.isOpen])
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [handleClick, modalStore.isOpen, handleKeyDown]);
 
     if(!portal) {
         return null;
@@ -96,7 +96,7 @@ const ModalPortal: React.FC<ModalPortalProps> = ({ children, size = 'modal', onC
             </aside>
         </OnlyClient>,
         portal
-    )
-}
+    );
+};
 
 export default ModalPortal;

@@ -1,13 +1,13 @@
-import React, { KeyboardEvent, memo } from 'react'
-import style from './SearchQuery.module.scss'
-import clsx from 'clsx'
-import { InputValueAdapter } from '@components/Input'
-import OnlyClient from '@components/OnlyClient'
-import CrossIcon from '@components/icons/CrossIcon'
-import Button from '@components/Button'
-import { META_STATUS, MetaStatus } from '@constants/meta-status'
-import Loader from '@components/Loader'
-import SearchIcon from '@components/icons/SearchIcon'
+import React, { KeyboardEvent, memo } from 'react';
+import style from './SearchQuery.module.scss';
+import clsx from 'clsx';
+import { InputValueAdapter } from '@components/Input';
+import OnlyClient from '@components/OnlyClient';
+import CrossIcon from '@components/icons/CrossIcon';
+import Button from '@components/Button';
+import { META_STATUS, MetaStatus } from '@constants/meta-status';
+import Loader from '@components/Loader';
+import SearchIcon from '@components/icons/SearchIcon';
 
 export type SearchStoreProps = {
     inputValue: string,
@@ -63,7 +63,7 @@ const SearchQuery: React.FC<SearchStoreProps> = ({
                 {<div className={clsx(style['search-query-submit__text'])}>Найти</div>}
             </Button>
         </div>
-    )
-}
+    );
+};
 
-export default memo(SearchQuery)
+export default memo(SearchQuery);

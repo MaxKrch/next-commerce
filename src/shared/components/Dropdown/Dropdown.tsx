@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { ChangeEvent, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import style from './Dropdown.module.scss';
 import { InputValueAdapter } from '@components/Input';
 import ArrowDownIcon from '@components/icons/ArrowDownIcon';
@@ -52,17 +52,17 @@ const Dropdown: React.FC<DropdownProps> = ({
     const currentOptions = options.find(item => item.key === id);
 
     if(currentOptions) {
-      onSelect(currentOptions)
+      onSelect(currentOptions);
     }
 
     if(mode === 'single') {
-      setIsShowDropdown(false)
+      setIsShowDropdown(false);
     }
-  },  [options, onSelect]);
+  },  [options, onSelect, mode]);
 
   const handleInputBlur = useCallback(() => {
-    setInputValue('')
-  }, [inputValue])
+    setInputValue('');
+  }, []);
 
   const handleClickOutside = useCallback((event: MouseEvent) => {  
     const target = event.target;

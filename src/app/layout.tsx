@@ -4,7 +4,7 @@ import "@style/main.scss";
 import Providers from "./providers";
 import Header from "./components/Header";
 import clsx from "clsx";
-import style from './app.module.scss'
+import style from './app.module.scss';
 
 const roboto = Roboto({
   subsets: ['latin'],

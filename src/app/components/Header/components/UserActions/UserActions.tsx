@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import clsx from 'clsx';
 import React, { PropsWithChildren, useCallback } from 'react';
@@ -15,7 +15,7 @@ import { MODES } from '@constants/modal';
 import OnlyClient from '@components/OnlyClient';
 
 const UserActions = () => {
-  const path = usePathname()
+  const path = usePathname();
   const { 
     cartStore,
     userStore,
@@ -24,12 +24,12 @@ const UserActions = () => {
 
   const CartComponent: React.FC<PropsWithChildren> = path === appRoutes.cart.mask
     ? ({ children }) => <p>{children}</p>
-    : ({ children }) => <Link href={appRoutes.cart.create()}>{children}</Link>
+    : ({ children }) => <Link href={appRoutes.cart.create()}>{children}</Link>;
 
   const handleUserIconClick = useCallback(() => {
      const mode = userStore.isAuthorized ? MODES.PROFILE : MODES.AUTH;
-    modalStore.open(mode)
-  }, [userStore.isAuthorized]);  
+    modalStore.open(mode);
+  }, [userStore.isAuthorized, modalStore]);  
 
   return (
     <div className={clsx(style['actions'])}>

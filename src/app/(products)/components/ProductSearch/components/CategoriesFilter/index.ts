@@ -1,1 +1,1 @@
-export { default } from './CategoriesFilter'
+export { default } from './CategoriesFilter';

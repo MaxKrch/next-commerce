@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import useLocalStore from "@store/hooks/useLocalStore";
 import ProductsStore, { ProductsInitData } from "@store/local/ProductsStore/ProductsStore";
@@ -12,7 +12,7 @@ export type ProductsProviderProps = PropsWithChildren<{
 
 const ProductsContext = createContext<ProductsStore | null>(null);
 const ProductsStoreInnerProvider: React.FC<ProductsProviderProps> = ({ children, initData }) => {
-    const rootStore = useRootStore()
+    const rootStore = useRootStore();
     const store = useLocalStore(() => new ProductsStore({
         rootStore,
         initData
@@ -22,16 +22,16 @@ const ProductsStoreInnerProvider: React.FC<ProductsProviderProps> = ({ children,
         <ProductsContext.Provider value={store}>
             {children}
         </ProductsContext.Provider>
-    ) 
-}
+    ); 
+};
 
 export const ProductsStoreProvider: React.FC<ProductsProviderProps> = ({ children , initData }) => {
     return(
         <ProductsStoreInnerProvider initData={initData}>
             {children}
         </ProductsStoreInnerProvider>
-    ) 
-}
+    ); 
+};
 
 export const useProductsStore = () => useStrictContext({
     context: ProductsContext,
