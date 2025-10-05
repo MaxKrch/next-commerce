@@ -21,8 +21,12 @@
     object-fit: cover;
 }
 
+.offline__description {
+    font-size: 1.1em;
+}
+
 .offline__action {
-    width: 300px;
+    width: 150px;
     height: 42px;
     display: flex;
     justify-content: center;
@@ -31,6 +35,8 @@
     background-color: #518581;
     cursor: pointer;
     color: white;
+    font-size: 1.1em;
+    border: none;
 }
 
 .offline__action:hover {
