@@ -51,7 +51,12 @@ self.addEventListener('fetch', (event) => {
 
     if (request.mode === 'navigate') {
         event.respondWith(
-            fetch(request).catch(() => caches.match('/offline.html'))
+            fetch(request).catch(error => {
+                if (error instanceof TypeError && !navigator.onLine) {
+                    return caches.match('/offline.html');
+                }
+                throw error;
+            })
         );
         return;
     }
