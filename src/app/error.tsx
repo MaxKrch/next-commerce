@@ -28,7 +28,7 @@ export default function ErrorPage ({ reset }: { reset: () => void }) {
                     />
                 </div>
                 <Text className={clsx(style['error__description'])}>
-                    Совсем скоро все исправим! 
+                    Мы уже спешим все исправить! 
                 </Text>
                 <Text className={clsx(style['error__description'])}>
                     Хотите обновить страницу или перейти на главную?

@@ -1,0 +1,6 @@
+@use '@style/variables' as *;
+@use '@style/mixins' as *;
+
+.offline {
+    @include content-container()
+}

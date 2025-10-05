@@ -14,7 +14,7 @@ const roboto = Roboto({
 
 export const metadata: Metadata = {
   title: "Lalasia",
-  description: "Тысячи уникальных товаров c доставкой сегодня",
+  description: "Тысячи уникальных товаров c доставкой от часа",
 };
 
 export default function RootLayout({
@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={roboto.variable}>
       <head>
-        <link rel="icon" href="/favicon.svg" />
+        <link rel="icon" href="/favicon.ico" />
       </head>
       <body>
         <div className={clsx(style['app'])}>

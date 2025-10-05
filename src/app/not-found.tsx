@@ -26,7 +26,10 @@ export default function NotFoundPage () {
                     />
                 </div>
                 <Text className={clsx(style['error__description'])}>
-                    Хотите перейти в каталог, и выбрать что-то для себя?
+                    Мы уже ищем виновника!
+                </Text>
+                <Text className={clsx(style['error__description'])}>
+                    Хотите что-нибудь выбрать для себя?
                 </Text>
             </main>
             <footer className={clsx(style['error__footer'])}>

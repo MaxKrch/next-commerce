@@ -9,14 +9,14 @@ import CategoriesList from "./components/CategoriesList";
 export const sectionText = {
   title: "Категории",
   description: [
-    'Все категории товаров нашего сайта',
-    'Выберите, что вам инетресно - и наслажадйтесьь покупками!' 
+    'Все категории нашего сайта',
+    'Выберите, что вам интересно - и наслаждайтесь покупками!' 
   ]
 };   
 
 export const metadata: Metadata = {
   title: "Категории товаров",
-  description: "Тысячи товаров каждое категории, от ярких новином до горячих хитов",
+  description: "Тысячи товаров в каждой категории, от ярких новинок до горячих хитов",
 };
 
 export default async function CategoriesPage () {
