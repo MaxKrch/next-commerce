@@ -1,11 +1,11 @@
-import { SortKeys } from "@constants/product-sort";
-import { ProductType } from "@model/products";
+import { DEFAULT_SORT, SortKeys } from "@constants/product-sort";
+import { ProductApiType } from "@model/products";
 
-const sortProducts = (products: ProductType[], sort: SortKeys) => {
+const sortProducts = (products: ProductApiType[], sort: SortKeys = DEFAULT_SORT) => {
     const cloned = [...products];
     switch(sort) {
         case 'newest':
-            return cloned.sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime());
+            return cloned.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
         case 'discount':
             return cloned.sort((a, b) => b.discountPercent - a.discountPercent);

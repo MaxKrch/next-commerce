@@ -22,7 +22,7 @@ export const sectionText = {
 
 export const metadata: Metadata = {
   title: "Каталок товаров",
-  description: "Самые горячие новинки сезона - тысячи товаров специально для вас",
+  description: "Горячие новинки сезона и хиты продаж - тысячи товаров специально для вас",
 };
 
 type ProductsPageProps = {

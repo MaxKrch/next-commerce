@@ -171,13 +171,19 @@ export default class CartStore {
     const isToCart = this._products.order.includes(product.id);
     if (isToCart) {
       this._products.entities[product.id].quantity += quantity;
-      return;
     }
 
-    this._products = {
-      order: [...this._products.order, product.id],
-      entities: { ...this._products.entities, [product.id]: { quantity, product } },
-    };
+    if(!isToCart) {
+      this._products = {
+        order: [...this._products.order, product.id],
+        entities: { ...this._products.entities, [product.id]: { quantity, product } },
+      };      
+    }
+        
+    const targetAwaitingProduct = this._awaitingList.get(product.id);
+    if(!targetAwaitingProduct?.debounce) {
+      this._synchWithServer(product);
+    }    
   }
 
   private _removeFromCartItem(product: ProductType, quantity: number = 1): void {
@@ -191,14 +197,19 @@ export default class CartStore {
 
     if (item.quantity > quantity) {
       item.quantity -= quantity;
-      return;
-    }
 
-    this._products.order = this._products.order.filter((item) => item !== product.id);
-    this._products.entities = {
-      ...this._products.entities,
-    };
-    remove(this._products.entities, `${product.id}`);
+    } else {
+      this._products.order = this._products.order.filter((item) => item !== product.id);
+      this._products.entities = {
+        ...this._products.entities,
+      };
+      remove(this._products.entities, `${product.id}`);      
+    }
+        
+    const targetAwaitingProduct = this._awaitingList.get(product.id);
+    if(!targetAwaitingProduct?.debounce) {
+      this._synchWithServer(product);
+    }    
   }
 
   private _synchWithServer = async (product: ProductType): Promise<void> => {

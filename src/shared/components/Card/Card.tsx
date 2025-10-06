@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { memo } from 'react';
+import React, { memo, PropsWithChildren } from 'react';
 import style from './Card.module.scss';
 import ImageGallery from '@components/ImageGallery';
 import { ProductType } from '@model/products';
@@ -30,6 +30,10 @@ const Card: React.FC<CardProps> = ({
   const href = appRoutes.product.create(product.documentId);
   const imageSizes = getCardImageSizes(display);
 
+  const BodyComponent = display === 'full'
+    ? ({children}: PropsWithChildren) => <div>{children}</div>
+    : ({children}: PropsWithChildren) => <Link href={href}>{children}</Link>; 
+
   return (
     <article className={clsx(style['card'], style[display], className)}>
       <div className={clsx(style['card__image-wrapper'], style[`${display}__image-wrapper`])}>      
@@ -56,7 +60,7 @@ const Card: React.FC<CardProps> = ({
           </div>
         )}
         
-        <Link href={href}>
+        <BodyComponent>
           <Text
             maxLines={2}
             tag="h3"
@@ -77,7 +81,7 @@ const Card: React.FC<CardProps> = ({
               {description}
             </Text>
           )}
-        </Link>
+        </BodyComponent>
       </main>
 
       <footer className={clsx(style[`${display}__footer`])}>

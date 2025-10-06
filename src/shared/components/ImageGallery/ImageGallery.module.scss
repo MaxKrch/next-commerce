@@ -1,7 +1,7 @@
 @use '@style/variables' as *;
 @use '@style/mixins' as *;
 
-$icon-size: 45px;
+$icon-size: 40px;
 $icon-bg-color: rgb(25 25 25 / 0.5);
 $icon-bg-color-hover: $brand;
 $icon-color: #fff;
@@ -57,7 +57,6 @@ $icon-margin: $space-xxs;
             z-index: 3;
 
             &:hover {
-                opacity: 0.9;
                 background-color: $icon-bg-color-hover;
                 color: $icon-color-hover;
                 transition: color 0.5s, background-color 0.5s;
@@ -109,6 +108,7 @@ $icon-margin: $space-xxs;
     &__image {
         opacity: 0;
         transition: opacity 1s;
+        user-select: none;
         
         &-container {
             position: absolute;

@@ -1,12 +1,11 @@
 "use client";
 
 import useServiceWorker from "@hooks/useServiceWorker";
-import { PropsWithChildren } from "react";
 
-const ServiceWorkerProvider: React.FC<PropsWithChildren> = ({ children }) => {
+const ServiceWorkerProvider: React.FC = () => {
     useServiceWorker();
 
-    return children;
+    return null;
 };
 
 export default ServiceWorkerProvider;

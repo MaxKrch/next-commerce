@@ -13,7 +13,7 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "Lalasia",
+  title: "Lalasia - онлайн-магазин",
   description: "Тысячи уникальных товаров c доставкой от часа",
 };
 

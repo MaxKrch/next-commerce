@@ -1,8 +1,7 @@
-const VERSION = 'v1';
+const VERSION = 'v2';
 const CACHE_NAME = `Lalasia-${VERSION}`;
 
 const STATIC_FILES = [
-    '/',
     '/offline.html',
     '/offline.css',    
     '/favicon.ico',
@@ -29,22 +28,25 @@ self.addEventListener('activate', (event) => {
     self.clients.claim();
 });
 
-async function cacheFirstAndUpdate(request) {
+async function cacheFirstAndUpdate(request) { 
     const cache = await caches.open(CACHE_NAME);
     const cached = await cache.match(request);
-    if (cached) return cached;
+  
+    const networkPromise = fetch(request)
+        .then(response => {
+            if (response.ok) {
+                cache.put(request, response.clone());
+            }
+            return response;
+        })
+        .catch(() => caches.match('/offline.html'));
 
-    try {
-        const response = await fetch(request);
-        
-        if (response.ok) {
-            cache.put(request, response.clone());
-        }
-        return response;
-    
-    } catch {
-        return caches.match('/offline.html');
+    if (cached) {
+        return cached;
     }
+
+    const networkResponse = await networkPromise;
+    return networkResponse;
 }
 
 self.addEventListener('fetch', (event) => {
@@ -59,11 +61,6 @@ self.addEventListener('fetch', (event) => {
                 throw error;
             })
         );
-        return;
-    }
-
-    if (request.url.match(/\.(js|css|woff2?|svg|png|jpg|jpeg|ico)$/)) {
-        event.respondWith(cacheFirstAndUpdate(request));
         return;
     }
 

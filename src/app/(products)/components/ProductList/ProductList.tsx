@@ -2,7 +2,7 @@
 import { clsx } from 'clsx';
 import CardList from '@components/CardList';
 import { observer } from 'mobx-react-lite';
-import React, { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { ReactNode, useCallback, useEffect, useRef } from 'react';
 import style from './ProductList.module.scss';
 import { useProductsStore } from '@providers/ProductsStoreProvider';
 import { META_STATUS } from '@constants/meta-status';
@@ -16,8 +16,6 @@ import DefaultCardCaptionSlot from '@components/Card/slots/DefaultCardCaptionSlo
 import DefaultCardPriceSlot from '@components/Card/slots/DefaultCardPriceSlot';
 import DefaultCardActionSlot from '@components/Card/slots/DefaultCardActionSlot';
 import { useRootStore } from '@providers/RootStoreContext';
-import sortProducts from '../../utils/sort-products';
-import { DEFAULT_SORT, SORT_VARIABLES } from '@constants/product-sort';
 
 const ProductList: React.FC = () => {
   const isFirstRender = useRef(true);
@@ -25,20 +23,10 @@ const ProductList: React.FC = () => {
   const requestId = useRef<string | null>(null);
   const productsStore = useProductsStore();
   const { queryParamsStore } = useRootStore();
-  const [products, setProducts] = useState(productsStore.products);
   
   const refetch = useCallback(() => {
     productsStore.fetchProducts(queryParamsStore.queryObject);
   }, [productsStore, queryParamsStore]);
-
-  const sort = useMemo(
-    () => queryParamsStore.sort ?? SORT_VARIABLES[DEFAULT_SORT].key, 
-    [queryParamsStore.sort]
-  );
-
-  useEffect(() => {
-    setProducts(sortProducts(productsStore.products, sort));
-  }, [sort, productsStore.products]);
 
   useEffect(() => {
     if(isFirstRender.current) {
@@ -107,7 +95,7 @@ const ProductList: React.FC = () => {
           </div>
           <CardList
             display="preview"
-            products={products}
+            products={productsStore.products}
             CaptionSlot={DefaultCardCaptionSlot}
             PriceSlot={DefaultCardPriceSlot}
             ActionSlot={DefaultCardActionSlot}
@@ -119,7 +107,12 @@ const ProductList: React.FC = () => {
 
     default: {
       content = (
-        <CardListSkeleton skeletonCount={6} display="preview" />
+        <>
+          <Text color="primary" weight="bold" className={clsx(style['product-list-title__name'])}>
+            Найдено товаров
+          </Text>
+          <CardListSkeleton skeletonCount={6} display="preview" />
+        </>
       );
     }
   }

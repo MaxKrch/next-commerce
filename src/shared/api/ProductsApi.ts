@@ -4,6 +4,7 @@ import { isStrapiSuccessResponseProducts, StrapiResponseProducts } from "@model/
 import { IClient, RequestOptions } from "./types";
 import { buildQueryString } from "./utils/build-query-string";
 import formateError from "./utils/formate-error";
+import sortProducts from "./utils/sort-products";
 
 export default class ProductsApi {
     private client: IClient;
@@ -38,6 +39,7 @@ export default class ProductsApi {
             if (!isStrapiSuccessResponseProducts(response)) {
                 throw new Error(response.error.message);
             }
+            response.data = sortProducts(response.data, params.sort);
             return response;
         } catch (err) {
             throw formateError(err);

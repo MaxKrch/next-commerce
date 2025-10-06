@@ -14,6 +14,7 @@ import NetworkError from '@components/NetworkError';
 import DefaultNetworkErrorContentSlot from '@components/NetworkError/slots/DefaultNetworkErrorContentSlot';
 import DefaultNetworkErrorActionSlot from '@components/NetworkError/slots/DefaultNetworkErrorActionSlot';
 import PrivateRoute from '@components/PrivateRoute';
+import OnlyClient from '@components/OnlyClient';
 
 const CartPage: React.FC = () => {
   const { cartStore, userStore } = useRootStore();
@@ -28,25 +29,27 @@ const CartPage: React.FC = () => {
 
 
   return (
-    <PrivateRoute>
-      <div className={clsx(style['cart'])}>
-        {(cartStore.status === META_STATUS.PENDING || cartStore.status === META_STATUS.IDLE) && (
-          <Skeleton />
-        )}
-        {cartStore.status === META_STATUS.ERROR && (
-          <NetworkError
-            ContentSlot={DefaultNetworkErrorContentSlot}
-            ActionSlot={() => <DefaultNetworkErrorActionSlot action={cartStore.fetchCart} />}
-          />
-        )}
-        {cartStore.status === META_STATUS.SUCCESS && (
-          <>
-            <CartProducts className={clsx(style['cart-products'])} />
-            <CartSummary className={clsx(style['cart-summary'])}/> 
-          </>
-        )}
-      </div>
-    </PrivateRoute>
+    <OnlyClient>
+      <PrivateRoute>
+        <div className={clsx(style['cart'])}>
+          {(cartStore.status === META_STATUS.PENDING || cartStore.status === META_STATUS.IDLE) && (
+            <Skeleton />
+          )}
+          {cartStore.status === META_STATUS.ERROR && (
+            <NetworkError
+              ContentSlot={DefaultNetworkErrorContentSlot}
+              ActionSlot={() => <DefaultNetworkErrorActionSlot action={cartStore.fetchCart} />}
+            />
+          )}
+          {cartStore.status === META_STATUS.SUCCESS && (
+            <>
+              <CartProducts className={clsx(style['cart-products'])} />
+              <CartSummary className={clsx(style['cart-summary'])}/> 
+            </>
+          )}
+        </div>
+      </PrivateRoute>
+    </OnlyClient>
   );
 };
 
