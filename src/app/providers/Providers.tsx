@@ -15,7 +15,8 @@ const Providers: React.FC<PropsWithChildren> = ({children}) => {
                 <div className={clsx(style['loading'])}>
                     <Loader className={clsx(style['loading__icon'])}/>
                 </div>
-            }>            
+            }>
+            
                 <RootStoreProvider>
                     <QueryParamsStoreProvider>
                         <ModalsProvider>
