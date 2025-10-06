@@ -68,4 +68,9 @@ self.addEventListener('fetch', (event) => {
         event.respondWith(cacheFirstAndUpdate(request));
         return;
     }
+
+    if (STATIC_FILES.some(file => request.url.endsWith(file))) {
+        event.respondWith(cacheFirstAndUpdate(request));
+        return;
+    }
 });
