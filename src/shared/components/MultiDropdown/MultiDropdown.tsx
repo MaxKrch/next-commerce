@@ -20,7 +20,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
   className,
 }) => {
   const handleSelect = useCallback((option: Option) => {
-    const isSelected = selectedOptions.includes(option);
+    const isSelected = selectedOptions.find(item => item.key === option.key);
 
     if (isSelected) {
       onSelect(selectedOptions.filter(item => item.key !== option.key));
