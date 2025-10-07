@@ -22,14 +22,14 @@ const Counter: React.FC<CounterProps> = ({
 }) => {
     return(
         <div className={clsx(style['counter'], className)}>
-            <div className={clsx(style['counter__button'], style[`counter__button_${priority}`])}>
-                <MinusIcon className={clsx(style['counter__icon'])} onClick={onDec}/>
+            <div onClick={onDec} className={clsx(style['counter__button'], style[`counter__button_${priority}`])}>
+                <MinusIcon className={clsx(style['counter__icon'])}/>
             </div>
             <Text weight='bold' className={clsx(style['counter__count'])}>
                 {count}
             </Text>
-            <div className={clsx(style['counter__button'], style[`counter__button_${priority}`])}>
-                <PlusIcon className={clsx(style['counter__icon'])} onClick={onInc}/>
+            <div onClick={onInc} className={clsx(style['counter__button'], style[`counter__button_${priority}`])}>
+                <PlusIcon className={clsx(style['counter__icon'])}/>
             </div>
         </div>
     );
