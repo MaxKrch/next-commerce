@@ -9,6 +9,10 @@
     align-items: center;
 }
 
+.offline__title {
+    font-size: 2.5em;
+}
+
 .offline__image-wrapper {
     max-width: 600px;
     width: 100%;
@@ -22,7 +26,7 @@
 }
 
 .offline__description {
-    font-size: 1.1em;
+    font-size: 1.25em;
 }
 
 .offline__action {
