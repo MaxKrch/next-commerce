@@ -249,12 +249,14 @@ export default class CartStore {
 
       const response = await targetMethod({ product: product.id, quantity: Math.abs(change)});
       targetAwaitingProduct.lastSynchQuantity = response.quantity ?? 0;
-      targetAwaitingProduct.abortCtrl = null;
 
     } catch (err) {
       this._error = err instanceof Error ? err.message : "UnknownError";
       this._updateProductInCartFromServer(product, targetAwaitingProduct.lastSynchQuantity);
-    }   
+    
+    } finally{
+      targetAwaitingProduct.abortCtrl = null;      
+    }  
   };
 
   private _updateProductInCartFromServer(product: ProductType, quantity: number) {
