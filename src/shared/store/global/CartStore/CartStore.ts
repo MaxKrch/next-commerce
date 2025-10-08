@@ -230,7 +230,14 @@ export default class CartStore {
     }
 
     if(targetAwaitingProduct.abortCtrl) {
-      targetAwaitingProduct.abortCtrl.abort();
+      if(targetAwaitingProduct.debounce) {
+        clearTimeout(targetAwaitingProduct.debounce);    
+      }
+
+      targetAwaitingProduct.debounce = setTimeout(() => {
+        this._synchWithServer(product);
+      }, 1000);
+      return;
     }
 
     targetAwaitingProduct.abortCtrl = new AbortController();
