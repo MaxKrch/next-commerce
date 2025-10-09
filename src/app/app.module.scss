@@ -15,10 +15,10 @@
     flex-direction: column;
     align-items: center;
     gap: $space-l;
-    padding: $space-l;
+    padding: $space-xxxl;
     
     &__header {
-        font-size: 1.5em;
+        font-size: 1.2em;
     }
 
     &__body {
@@ -44,6 +44,10 @@
         display: flex;
         padding: $space-l;
         gap: $space-s;
+    }
+
+    &__button {
+        min-width: $button-min-width;
     }
 }
 

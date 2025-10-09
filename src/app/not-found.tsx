@@ -1,15 +1,10 @@
 import clsx from "clsx";
-import style from './app.module.scss'
+import style from './app.module.scss';
 import Text from "@components/Text";
 import Image from "next/image";
 import Button from "@components/Button";
-import { Metadata } from "next";
 import Link from "next/link";
 import { appRoutes } from "@constants/app-routes";
-
-export const metadata: Metadata = {
-  title: "Страница 404",
-}
 
 export default function NotFoundPage () {
     return(
@@ -31,20 +26,20 @@ export default function NotFoundPage () {
                     />
                 </div>
                 <Text className={clsx(style['error__description'])}>
-                    Либо вам отправили сломанную сслыку  
+                    Мы уже ищем виновника!
                 </Text>
                 <Text className={clsx(style['error__description'])}>
-                    Хотите продолжить выбор товаров для себя?
+                    Хотите что-нибудь выбрать для себя?
                 </Text>
             </main>
             <footer className={clsx(style['error__footer'])}>
-                <Link href={appRoutes.products.list.create()}>
+                <Link href={appRoutes.main.create()}>
                     <Button className={clsx(style['error__button'])}>
                         Да, хочу! 
                     </Button>  
                 </Link> 
             </footer>            
         </article>
-    )
+    );
 }
 

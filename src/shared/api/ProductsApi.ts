@@ -4,10 +4,11 @@ import { isStrapiSuccessResponseProducts, StrapiResponseProducts } from "@model/
 import { IClient, RequestOptions } from "./types";
 import { buildQueryString } from "./utils/build-query-string";
 import formateError from "./utils/formate-error";
+import sortProducts from "./utils/sort-products";
 
 export default class ProductsApi {
     private client: IClient;
-    private populate = ['images', 'productCategory']
+    private populate = ['images', 'productCategory'];
      
     constructor(client: IClient) {
         this.client = client;
@@ -20,13 +21,13 @@ export default class ProductsApi {
       });
 
       return `/products?${queryString}`;
-    }
+    };
 
     private createGetProductDetailsURL = (id: string ): string => {
       const queryString = buildQueryString({ populate: this.populate });
 
       return `/products/${id}?${queryString}`;
-    }
+    };
     
     getProductList = async (params: QueryParams, { signal, next }: RequestOptions) => {
         try {
@@ -38,11 +39,12 @@ export default class ProductsApi {
             if (!isStrapiSuccessResponseProducts(response)) {
                 throw new Error(response.error.message);
             }
+            response.data = sortProducts(response.data, params.sort);
             return response;
         } catch (err) {
             throw formateError(err);
         }
-    }
+    };
 
     getProductDetails = async (id: ProductType['documentId'], { signal, next }: RequestOptions) => {
         try {
@@ -59,5 +61,5 @@ export default class ProductsApi {
         } catch (err) {
             throw formateError(err);
         }
-    }
+    };
 }

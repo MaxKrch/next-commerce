@@ -21,13 +21,15 @@ $base-line-height: 150%;
         width: 100%;
         display: block;
         position: relative;
-            
+        transition: transform 1s, filter 1s;
+
         &-wrapper {
             aspect-ratio: 1 / 1;
             background: $preview-card-image-bg;
             width: 100%;
             cursor: pointer;
             position: relative;
+            overflow: hidden;
         }
 
         &-link {
@@ -57,9 +59,17 @@ $base-line-height: 150%;
     background: $preview-card-bg;
     border-radius: $border-radius-primary;
     overflow: hidden;
+    transition: box-shadow 0.5s;
 
     &:hover {
         box-shadow: $shadow-normal;
+        transition: box-shadow 0.5s;
+
+        .card__image {
+            transition: transform 1s, filter 1s;
+            transform: scale(1.1);
+            filter: blur(1px);
+        }
     }
     
     &__main {
@@ -101,13 +111,14 @@ $base-line-height: 150%;
         "image"
         "main"
         "footer";
+    gap: $base-gap;
 
     @include tablet-up() {
         grid-template-areas:
             "image main"
             "image footer";
         grid-template-rows: auto 1fr;
-        gap: ($base-gap * 2);
+        gap: ($base-gap * 3);
     }
 
     &__image-wrapper {
@@ -134,6 +145,7 @@ $base-line-height: 150%;
     }
 
     &__description {
+        margin-top: 1em;;
         font-size: 0.8em;
         line-height: $base-line-height;
     }
@@ -201,6 +213,14 @@ $base-line-height: 150%;
     &__action-slot {
         grid-area: action;
 
+    }
+}
+
+.caption-slot__link {
+    border-bottom: 2px solid transparent;
+    &:hover {
+        color: $brand;
+        border-color: $brand;
     }
 }
 

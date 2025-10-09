@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
 import Text from "@components/Text";
 import { ProductType } from "@model/products";
 import clsx from "clsx";
 import React, { memo } from "react";
-import style from '../Card.module.scss'
+import style from '../Card.module.scss';
 import getPriceWithDiscount from "../utils/get-price-with-discount";
 
 const DefaultCardPriceSlot: React.FC<{ product: ProductType, className?: string }> = ({ product, className }) => {

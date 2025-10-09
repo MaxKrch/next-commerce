@@ -1,13 +1,13 @@
 import Text from "@components/Text";
-import style from './about.module.scss'
+import style from './about.module.scss';
 import clsx from "clsx";
 import { Metadata } from "next";
 import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "О нас",
-  description: "Онлайн-магазин бесполезных товаров",
-}
+  description: "Lalasia - онлайн-магазин бесполезных товаров",
+};
 
 export default function AboutPage () {
     return(
@@ -31,12 +31,12 @@ export default function AboutPage () {
                 В нём вы найдёте всё — от «того, чего нет», до «того, что пока только в коде».
             </Text> 
             <Text className={clsx(style['about__description'])}>
-                Возможно, однажды тут даже появится настоящий товар (нет...)
+                Возможно, когда-нибудь тут появится настоящий товар (нет...)
             </Text>
             <Text className={clsx(style['about__description'])}>
                 Удачных покупок!
             </Text>
         </article>
-    )
+    );
 }
 

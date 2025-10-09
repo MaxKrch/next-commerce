@@ -100,11 +100,11 @@ export default class CategoriesStore implements ICategoriesStore {
 
     this._status = META_STATUS.SUCCESS;
     this._meta = init.meta;
-    this._setCategories(init.categories)
+    this._setCategories(init.categories);
   }
 
   setCategories(categories: ProductCategoryApiType[]): void {
-    this._setCategories(categories)
+    this._setCategories(categories);
   }
 
   getCategoryById(id: ProductCategoryType['id']): ProductCategoryType | undefined {
@@ -137,12 +137,12 @@ export default class CategoriesStore implements ICategoriesStore {
         this._status = META_STATUS.SUCCESS; 
       });
 
-    } catch (err) {
-      runInAction(() => {
-        if (err instanceof Error && err.name === 'AbortError') {
+    } catch (err) {      
+      if (err instanceof Error && err.name === 'AbortError') {
           return;
         }
-
+  
+      runInAction(() => {
         this._list = getInitialCollection();
         this._status = META_STATUS.ERROR;
       });

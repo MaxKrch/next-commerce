@@ -1,5 +1,6 @@
+import { DEFAULT_SORT } from "@constants/product-sort";
 import { QueryParams } from "@model/query-params";
-import { action, computed, makeObservable, observable } from "mobx";
+import { action, computed, makeObservable, observable, runInAction } from "mobx";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import qs from "qs";
 
@@ -10,7 +11,6 @@ type PrivateFields =
     | '_sort'
     | '_count'
     | '_page'
-    | '_setQueryParams'
 
 export default class QueryParamsStore {
     private _page: QueryParams['page'] = undefined;
@@ -20,7 +20,7 @@ export default class QueryParamsStore {
     private _sort: QueryParams['sort'] = undefined;
     private _inStock: QueryParams['inStock'] = undefined;
 
-    constructor() {
+    constructor(params: URLSearchParams | ReadonlyURLSearchParams) {
         makeObservable<QueryParamsStore, PrivateFields>(this, {
             _categories: observable,
             _query: observable,
@@ -39,9 +39,10 @@ export default class QueryParamsStore {
             queryObject: computed,
             queryString: computed,
 
-            _setQueryParams: action.bound,
-            resetQueryParams: action.bound
-        })
+            mergeQueryParams: action.bound,
+            setFromSearchParams: action.bound,            
+        });
+        this.setFromSearchParams(params);
     }
 
     get categories(): QueryParams['categories'] {
@@ -102,72 +103,91 @@ export default class QueryParamsStore {
         const paramsObj = this.queryObject;
 
         if(paramsObj.page && paramsObj.page === 1) {
-            delete paramsObj.page
-        }
-        return qs.stringify(paramsObj, { arrayFormat: "repeat" });
-    }
-    
-    private _setQueryParams(params: QueryParams): void {
-        if(params.categories) {
-            if(Array.isArray(params.categories)) {
-                this._categories = params.categories.length > 0
-                    ? params.categories.map(Number)
-                    : undefined
-
-            } else {
-                const categoryNumber = Number(params.categories)
-                this._categories = !Number.isNaN(categoryNumber)
-                    ? [categoryNumber]
-                    : undefined;   
-            }
+            delete paramsObj.page;
         }
 
-        if(params.query !== undefined && params.query !== null) {
-            this._query = params.query.length > 0
-                ? params.query
-                : undefined;
-        }
-
-        if(params.sort) {
-            this._sort = params.sort;
-        }
-
-        if(params.inStock) {
-            this._inStock = params.inStock ?? undefined;
-        }
-
-        if(params.count) {
-            this._count = params.count;
+        if(paramsObj.sort && paramsObj.sort === DEFAULT_SORT) {
+            delete paramsObj.sort;
         }
         
-        if (params.page) {
-            this._page = params.page;
-        }
+        return qs.stringify(paramsObj, { arrayFormat: "repeat" });
     }
-    
-    setFromSearchParams(searchParams: ReadonlyURLSearchParams | string) {
-        this.resetQueryParams();
+        
+    setFromSearchParams(searchParams: URLSearchParams | ReadonlyURLSearchParams | string) {
         const queryString = typeof searchParams === "string"
             ? searchParams
             : searchParams.toString();
 
         const params: QueryParams = qs.parse(queryString, { ignoreQueryPrefix: true });
+        
+        runInAction(() => {
+            if(params.categories) {
+                if(Array.isArray(params.categories)) {
+                    this._categories = params.categories.length > 0
+                        ? params.categories.map(Number)
+                        : undefined;
 
-        this.mergeQueryParams(params);
+                } else {
+                    const categoryNumber = Number(params.categories);
+                    this._categories = !Number.isNaN(categoryNumber)
+                        ? [categoryNumber]
+                        : undefined;   
+                }
+            } else {
+                this._categories = undefined;
+            }
+
+            if(params.query !== undefined && params.query !== null) {
+                this._query = params.query.length > 0
+                    ? params.query
+                    : undefined;
+            } else {
+                this._query = undefined;
+            }
+
+            
+            this._sort = params.sort  ?? undefined;
+            this._inStock = params.inStock ?? undefined;
+            this._count = params.count ?? undefined;
+            this._page = params.page ?? undefined;            
+        });
     }
 
-    mergeQueryParams(newParams: QueryParams): void {
-        const mergedParams = {...this.queryObject, ...newParams}
+    mergeQueryParams(params: QueryParams): void {
+        runInAction(() => {
+            if(params.categories) {
+                if(Array.isArray(params.categories)) {
+                    this._categories = params.categories.length > 0
+                        ? params.categories.map(Number)
+                        : undefined;
 
-        this._setQueryParams(mergedParams)
+                } else {
+                    const categoryNumber = Number(params.categories);
+                    this._categories = !Number.isNaN(categoryNumber)
+                        ? [categoryNumber]
+                        : undefined;   
+                }
+            }
+
+            if(params.query !== undefined && params.query !== null) {
+                this._query = params.query.length > 0
+                    ? params.query
+                    : undefined;
+            }
+
+            if(params.sort) {
+                this._sort = params.sort;
+            }
+
+            this._inStock = params.inStock ?? undefined;
+
+            if(params.count) {
+                this._count = params.count;
+            }
+            
+            if (params.page) {
+                this._page = params.page;
+            }
+        });
     }
-
-    resetQueryParams(): void {
-        this._page = undefined;
-        this._count = undefined;
-        this._categories = undefined;
-        this._query = undefined;
-        this._sort = undefined;
-        this._inStock = undefined;
-    }   
 }

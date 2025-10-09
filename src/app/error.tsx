@@ -1,17 +1,12 @@
-"use client"
+"use client";
 
 import clsx from "clsx";
-import style from './app.module.scss'
+import style from './app.module.scss';
 import Text from "@components/Text";
 import Image from "next/image";
 import Button from "@components/Button";
-import { Metadata } from "next";
 import Link from "next/link";
 import { appRoutes } from "@constants/app-routes";
-
-export const metadata: Metadata = {
-  title: "Страница ошибки",
-}
 
 export default function ErrorPage ({ reset }: { reset: () => void }) {
     return(
@@ -33,10 +28,10 @@ export default function ErrorPage ({ reset }: { reset: () => void }) {
                     />
                 </div>
                 <Text className={clsx(style['error__description'])}>
-                    Совесм скоро найдем виновнкиа и все исправим! 
+                    Мы уже спешим все исправить! 
                 </Text>
                 <Text className={clsx(style['error__description'])}>
-                    Хотите попробовать снова или перейди на главную страницу?
+                    Хотите обновить страницу или перейти на главную?
                 </Text>
             </main>
             <footer className={clsx(style['error__footer'])}>
@@ -44,7 +39,7 @@ export default function ErrorPage ({ reset }: { reset: () => void }) {
                     onClick={reset} 
                     className={clsx(style['error__button'])}
                 >
-                    Попробовать снова   
+                    Обновить  
                 </Button>
                 <Button 
                     priority="secondary" 
@@ -56,5 +51,5 @@ export default function ErrorPage ({ reset }: { reset: () => void }) {
                 </Button>
             </footer>            
         </article>
-    )
+    );
 }

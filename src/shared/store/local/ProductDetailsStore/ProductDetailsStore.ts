@@ -57,7 +57,7 @@ export default class ProductDetailsStore implements ILocalStore {
 
     this._rootStore = rootStore;
     this.initReactions();
-    this._setInitData(initData)
+    this._setInitData(initData);
   }
 
   initReactions(): void {
@@ -95,10 +95,10 @@ export default class ProductDetailsStore implements ILocalStore {
 
     this._setProduct(init.product);
     this._status = META_STATUS.SUCCESS;
-  }
+  };
 
   _setProduct(product: ProductApiType): void {
-    this._product = normalizeProductItem(product)
+    this._product = normalizeProductItem(product);
   }
 
   resetProduct(): void {

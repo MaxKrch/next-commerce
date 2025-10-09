@@ -1,3 +1,4 @@
+import { UserApi } from './auth';
 import type { ProductInCartApi } from './cart';
 
 export type StrapiPagination = {
@@ -37,5 +38,16 @@ export type StrapiResponseCart<T extends ProductInCartApi | ProductInCartApi[]> 
 export function isStrapiSuccessResponseCart<T extends ProductInCartApi | ProductInCartApi[]>(
   response: StrapiResponseCart<T>
 ): response is T {
+  return !('error' in response);
+}
+
+export type StrapiSuccessResponseAuth = {
+    jwt: string,
+    user: UserApi, 
+}
+
+export type StrapiResponseAuth = StrapiSuccessResponseAuth | StrapiResponseError
+
+export function isStrapiSuccessResponseAuth (response: StrapiResponseAuth): response is StrapiSuccessResponseAuth {
   return !('error' in response);
 }

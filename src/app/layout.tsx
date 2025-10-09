@@ -4,7 +4,7 @@ import "@style/main.scss";
 import Providers from "./providers";
 import Header from "./components/Header";
 import clsx from "clsx";
-import style from './app.module.scss'
+import style from './app.module.scss';
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -13,8 +13,8 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "Lalasia",
-  description: "Тысячи уникальных товаров c доставкой сегодня",
+  title: "Lalasia - онлайн-магазин",
+  description: "Тысячи уникальных товаров c доставкой от часа",
 };
 
 export default function RootLayout({
@@ -22,15 +22,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
   return (
     <html lang="en" className={roboto.variable}>
       <head>
-        <link rel="icon" href="/favicon.svg" />
+        <link rel="icon" href="/favicon.ico" />
       </head>
       <body>
         <div className={clsx(style['app'])}>
           <Providers>
             <Header />
+            <div id="modal-portal" />
             {children}
           </Providers>
         </div>

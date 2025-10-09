@@ -9,7 +9,7 @@ import Category from './components/Category';
 const CategoriesList: React.FC<{ initData: CategoriesInitData }> = async ({ initData }) => {
     const categories = initData.success
         ? normalizeCategoriesList(initData.categories)
-        : []
+        : [];
     return(
         <div className={clsx(style['categories-list__wrapper'])}>
             <InitCategoriesStore initData={initData} />
@@ -23,7 +23,7 @@ const CategoriesList: React.FC<{ initData: CategoriesInitData }> = async ({ init
                 </ul>
             }
         </div>     
-    )
-}
+    );
+};
 
-export default CategoriesList
+export default CategoriesList;

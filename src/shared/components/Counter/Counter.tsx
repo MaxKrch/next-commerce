@@ -1,9 +1,9 @@
-import MinusIcon from '@components/icons/MinusIcon'
-import style from './Counter.module.scss'
-import PlusIcon from '@components/icons/PlusIcon'
-import Text from '@components/Text'
-import { memo } from 'react'
-import clsx from 'clsx'
+import MinusIcon from '@components/icons/MinusIcon';
+import style from './Counter.module.scss';
+import PlusIcon from '@components/icons/PlusIcon';
+import Text from '@components/Text';
+import { memo } from 'react';
+import clsx from 'clsx';
 
 export type CounterProps = {
     count: number,
@@ -22,18 +22,18 @@ const Counter: React.FC<CounterProps> = ({
 }) => {
     return(
         <div className={clsx(style['counter'], className)}>
-            <div className={clsx(style['counter__button'], style[`counter__button_${priority}`])}>
-                <MinusIcon className={clsx(style['counter__icon'])} onClick={onDec}/>
+            <div onClick={onDec} className={clsx(style['counter__button'], style[`counter__button_${priority}`])}>
+                <MinusIcon className={clsx(style['counter__icon'])}/>
             </div>
             <Text weight='bold' className={clsx(style['counter__count'])}>
                 {count}
             </Text>
-            <div className={clsx(style['counter__button'], style[`counter__button_${priority}`])}>
-                <PlusIcon className={clsx(style['counter__icon'])} onClick={onInc}/>
+            <div onClick={onInc} className={clsx(style['counter__button'], style[`counter__button_${priority}`])}>
+                <PlusIcon className={clsx(style['counter__icon'])}/>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default memo(Counter)
+export default memo(Counter);
 

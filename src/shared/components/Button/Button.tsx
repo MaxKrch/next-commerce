@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import clsx from 'clsx';
 import React, { memo } from 'react';
@@ -22,8 +22,8 @@ const Button: React.FC<ButtonProps> = ({
   const classes = clsx(
     style['button'],
     style[`button-${priority}`],
-    loading && style[`button-${priority}-loading`],
-    disabled && style[`button-${priority}-disabled`],
+    loading && style[`button-${priority}_loading`],
+    disabled && style[`button-${priority}_disabled`],
     className
   );
 

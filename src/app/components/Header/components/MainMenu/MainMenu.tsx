@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import clsx from 'clsx';
 import { memo } from 'react';
@@ -9,7 +9,7 @@ import Link from 'next/link';
 import Text from '@components/Text';
 
 const MainMenu = () => {
-  const path = usePathname()
+  const path = usePathname();
 
   return (
     <nav className={clsx(style['menu'])}>

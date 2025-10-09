@@ -5,15 +5,9 @@ export const appRoutes = {
     mask: '/',
     create: () => '/',
   },
-  products: {
-    list: {
-      mask: '/products',
-      create: () => '/products',
-    },
-    details: {
-      mask: '/products/:id',
-      create: (id: ProductType['documentId']) => `/products/${id}`,
-    },
+  product: {
+    mask: '/:id',
+    create: (id: ProductType['documentId']) => `/${id}`,    
   },
   categories: {
     mask: '/categories',

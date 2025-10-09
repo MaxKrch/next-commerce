@@ -15,7 +15,7 @@ export default class CartApi {
         list: '/cart',
         add: '/cart/add',
         remove: '/cart/remove',
-    }
+    };
 
     constructor(client: IClient) {
         this.client = client;
@@ -26,7 +26,7 @@ export default class CartApi {
             const response = await this.client.get<StrapiResponseCart<ProductInCartApi[]>>(
                 this.path.list,
                 { signal, requiredAuth: true, }
-            )
+            );
         
             if (!isStrapiSuccessResponseCart<ProductInCartApi[]>(response)) {
                 throw new Error(response.error.message);
@@ -35,7 +35,7 @@ export default class CartApi {
         } catch (err) {
             throw formateError(err);
         }
-    }
+    };
 
     addProduct = async ({ product, quantity = 1 }: ProductChangeParams, signal?: AbortSignal) => {
         try {
@@ -43,7 +43,7 @@ export default class CartApi {
                 this.path.add,
                 { product, quantity },
                 { signal, requiredAuth: true },
-            )
+            );
 
             if (!isStrapiSuccessResponseCart<ProductInCartApi>(response)) {
                 throw new Error(response.error.message);
@@ -53,7 +53,7 @@ export default class CartApi {
         } catch (err) {
             throw formateError(err);
         }
-    }
+    };
     
     removeProduct = async ({ product, quantity = 1 }: ProductChangeParams, signal?: AbortSignal) => {
         try {
@@ -61,7 +61,7 @@ export default class CartApi {
                 this.path.remove,
                 { product, quantity },
                 { signal, requiredAuth: true }
-            )
+            );
 
             if (!isStrapiSuccessResponseCart<ProductInCartApi>(response)) {
                 throw new Error(response.error.message);
@@ -71,7 +71,7 @@ export default class CartApi {
         } catch (err) {
             throw formateError(err);
         }
-    }
+    };
 }
 
 

@@ -15,10 +15,10 @@ export default class CategoriesApi {
     private _createGetCategoriesURL = (): string => {
         const queryString = buildQueryString({
             populate: this.populate,
-          });
+          }, 'categories');
     
           return `/product-categories?${queryString}`;
-        }
+        };
 
     getCategories = async ({ signal, next }: RequestOptions) => {
         try {
@@ -36,5 +36,5 @@ export default class CategoriesApi {
         } catch (err) {
             throw formateError(err);
         }
-    }
+    };
 }

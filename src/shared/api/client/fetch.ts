@@ -20,31 +20,31 @@ export default class FetchClient implements IClient {
             return Promise.reject(err);
         }
         
-        return Promise.reject(new Error("UnknownError"))
+        return Promise.reject(new Error("UnknownError"));
     }
 
     private createFullUrl = (url: string): string => {
-        return `${this.baseURL}${url}`
-    }
+        return `${this.baseURL}${url}`;
+    };
 
     get = async <T = unknown>(url: string, options: RequestOptions): Promise<T> => {
         try {
-            const { headers, signal, next } = options
+            const { headers, signal, next } = options;
             const response = await fetch(this.createFullUrl(url), {
                 headers: {...this.headers, ...headers},
                 signal,
                 next,
-            })
+            });
 
             if(!response.ok) {
-                throw new Error(response.statusText)
+                throw new Error(response.statusText);
             }
             const data = response.json() as T;
             return data ;
         } catch(err) {
-            return this.rejectError(err)
+            return this.rejectError(err);
         }
-    }
+    };
 
     post = async <T = unknown, P  extends object = object>(url: string, body: P, options: RequestOptions): Promise<T> => {
         try {
@@ -54,15 +54,15 @@ export default class FetchClient implements IClient {
                 body: JSON.stringify(body),
                 signal,
                 next,
-            })
+            });
 
             if(!response.ok) {
-                throw new Error(response.statusText)
+                throw new Error(response.statusText);
             }
             const data = await response.json() as T;
             return data;
         } catch(err) {
-            return this.rejectError(err)
+            return this.rejectError(err);
         }
-    }
+    };
 } 

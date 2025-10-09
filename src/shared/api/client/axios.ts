@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, isCancel, type AxiosResponse } from 'axios';
 import { AuthRequestConfig, RequestOptions } from '../types';
+import UserStorage from 'src/shared/services/UserStorage';
 
 export default class AxiosClient {
   private instance: AxiosInstance;
@@ -14,7 +15,7 @@ export default class AxiosClient {
   
     this.instance.interceptors.request.use((config: AuthRequestConfig) => {
       if (config.requiredAuth) {
-        const token = process.env.NEXT_PUBLIC_API_TOKEN;
+        const token = UserStorage.getToken();
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
@@ -32,7 +33,7 @@ export default class AxiosClient {
         }
 
         if (error?.response) {
-          return Promise.reject(new Error(error.response.data?.message ?? 'ServerError'));
+          return Promise.reject(new Error(error.response.data.error.message ?? 'ServerError'));
         }
 
         if (error.request) {
@@ -46,12 +47,12 @@ export default class AxiosClient {
 
   get = async <T = unknown>(url: string, options?: RequestOptions): Promise<T> => {
     const { next: _next, ...clearedOptions } = options ?? {};
-    void _next
+    void _next;
     return this.instance.get(url, clearedOptions);
   };
   post = async <T = unknown>(url: string, data?: unknown, options?: RequestOptions): Promise<T> => {
     const { next: _next, ...clearedOptions } = options ?? {};
-    void _next
+    void _next;
     return this.instance.post(url, data, clearedOptions);
   };
 };

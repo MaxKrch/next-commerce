@@ -37,7 +37,7 @@ export default class CartStore {
       inStockProducts: computed,
       outOfStockProducts: computed,
       totalPrice: computed,
-      totalDiscountedrPrice: computed,
+      totalDiscountedPrice: computed,
       totalItemsToOrder: computed,
       status: computed,
       error: computed,
@@ -48,6 +48,7 @@ export default class CartStore {
       addToCart: action.bound,
       removeFromCart: action.bound,
       fetchCart: action.bound,
+      resetCart: action.bound,
     });
 
     this._api = api;
@@ -77,13 +78,13 @@ export default class CartStore {
     }, 0);
   }
  
-  get totalDiscountedrPrice(): number {
+  get totalDiscountedPrice(): number {
     const totalPrice = this.inStockProducts.reduce((total, item) => {
-      const discountedPrice = item.product.price * (100 - item.product.discountPercent) / 100
+      const discountedPrice = item.product.price * (100 - item.product.discountPercent) / 100;
       return total + (item.quantity * discountedPrice);
     }, 0);
 
-    return Math.ceil(totalPrice)
+    return Math.ceil(totalPrice);
   }
 
   get status(): MetaStatus {
@@ -91,7 +92,7 @@ export default class CartStore {
   }
 
   get error(): string | null {
-    return this._error
+    return this._error;
   }
 
   private _createDebounceTimer(product: ProductType): void {
@@ -102,19 +103,19 @@ export default class CartStore {
         lastSynchQuantity: 0,
         debounce: null,
         abortCtrl: null,
-      })
+      });
     }
 
     const targetAwaitingProduct = this._awaitingList.get(id);
     if (!targetAwaitingProduct) return;
 
     if(targetAwaitingProduct.debounce) {
-      clearTimeout(targetAwaitingProduct.debounce)
+      clearTimeout(targetAwaitingProduct.debounce);
     }
 
     targetAwaitingProduct.debounce = setTimeout(() => {
-      this._synchWithServer(product)
-    }, 1000)
+      this._synchWithServer(product);
+    }, 1000);
   }
 
 
@@ -155,17 +156,34 @@ export default class CartStore {
     this._createDebounceTimer(product);
   }
 
+  resetCart(): void {
+    if(this._abortCtrl) {
+      this._abortCtrl.abort();
+      this._abortCtrl = null;
+    }
+    this._error = null;
+    this._setProducts([]);
+    this._awaitingList.clear();
+    this._status = META_STATUS.IDLE;
+  }
+
   private _addToCartItem(product: ProductType, quantity: number = 1): void {
     const isToCart = this._products.order.includes(product.id);
     if (isToCart) {
       this._products.entities[product.id].quantity += quantity;
-      return;
     }
 
-    this._products = {
-      order: [...this._products.order, product.id],
-      entities: { ...this._products.entities, [product.id]: { quantity, product } },
-    };
+    if(!isToCart) {
+      this._products = {
+        order: [...this._products.order, product.id],
+        entities: { ...this._products.entities, [product.id]: { quantity, product } },
+      };      
+    }
+        
+    const targetAwaitingProduct = this._awaitingList.get(product.id);
+    if(!targetAwaitingProduct?.debounce) {
+      this._synchWithServer(product);
+    }    
   }
 
   private _removeFromCartItem(product: ProductType, quantity: number = 1): void {
@@ -179,14 +197,19 @@ export default class CartStore {
 
     if (item.quantity > quantity) {
       item.quantity -= quantity;
-      return;
-    }
 
-    this._products.order = this._products.order.filter((item) => item !== product.id);
-    this._products.entities = {
-      ...this._products.entities,
-    };
-    remove(this._products.entities, `${product.id}`);
+    } else {
+      this._products.order = this._products.order.filter((item) => item !== product.id);
+      this._products.entities = {
+        ...this._products.entities,
+      };
+      remove(this._products.entities, `${product.id}`);      
+    }
+        
+    const targetAwaitingProduct = this._awaitingList.get(product.id);
+    if(!targetAwaitingProduct?.debounce) {
+      this._synchWithServer(product);
+    }    
   }
 
   private _synchWithServer = async (product: ProductType): Promise<void> => {
@@ -200,14 +223,21 @@ export default class CartStore {
 
     const change = targetProductInCart 
       ? targetProductInCart.quantity - targetAwaitingProduct.lastSynchQuantity 
-      : -targetAwaitingProduct.lastSynchQuantity
+      : -targetAwaitingProduct.lastSynchQuantity;
     
     if(change === 0) {
       return;
     }
 
     if(targetAwaitingProduct.abortCtrl) {
-      targetAwaitingProduct.abortCtrl.abort()
+      if(targetAwaitingProduct.debounce) {
+        clearTimeout(targetAwaitingProduct.debounce);    
+      }
+
+      targetAwaitingProduct.debounce = setTimeout(() => {
+        this._synchWithServer(product);
+      }, 1000);
+      return;
     }
 
     targetAwaitingProduct.abortCtrl = new AbortController();
@@ -215,27 +245,29 @@ export default class CartStore {
     try {
       const targetMethod = change > 0
         ? this._api.addProduct
-        : this._api.removeProduct
+        : this._api.removeProduct;
 
       const response = await targetMethod({ product: product.id, quantity: Math.abs(change)});
       targetAwaitingProduct.lastSynchQuantity = response.quantity ?? 0;
-      targetAwaitingProduct.abortCtrl = null;
 
     } catch (err) {
-      this._error = err instanceof Error ? err.message : "UnknownError"
-      this._updateProductInCartFromServer(product, targetAwaitingProduct.lastSynchQuantity)
-    }   
-  }
+      this._error = err instanceof Error ? err.message : "UnknownError";
+      this._updateProductInCartFromServer(product, targetAwaitingProduct.lastSynchQuantity);
+    
+    } finally{
+      targetAwaitingProduct.abortCtrl = null;      
+    }  
+  };
 
   private _updateProductInCartFromServer(product: ProductType, quantity: number) {
-    const { id } = product
+    const { id } = product;
     if(this._products.entities[id]) {
       this._products.entities[id].quantity = quantity;
       return;
     }
 
     this._products.order.push(id);
-    this._products.entities = {...this._products.entities, [id]: { quantity, product }}
+    this._products.entities = {...this._products.entities, [id]: { quantity, product }};
   }
 
   private _setProducts(productsObj: ProductInCartApi[]): void {
@@ -268,8 +300,8 @@ export default class CartStore {
     });
 
     try {
-      const response = await this._api.getCart(this._abortCtrl.signal);
 
+      const response = await this._api.getCart(this._abortCtrl.signal);
       runInAction(() => {
         this._abortCtrl = null;
         this._error = null;
@@ -277,13 +309,14 @@ export default class CartStore {
         this._status = META_STATUS.SUCCESS;
       });
     } catch (err) {
+
       if (err instanceof Error && err.name === 'AbortError') {
         return;
       }
 
       runInAction(() => {
         this._abortCtrl = null;
-        this._error = err instanceof Error ? err.message : "UnknownError" 
+        this._error = err instanceof Error ? err.message : "UnknownError"; 
         this._products = getInitialCollection();
         this._status = META_STATUS.ERROR;
       });

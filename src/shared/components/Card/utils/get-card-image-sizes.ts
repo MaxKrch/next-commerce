@@ -1,7 +1,7 @@
 const getCardImageSizes = (display: "preview" | "full" | "cart") => {
   switch (display) {
     case "preview":
-      return "(max-width: 768px) 100vw, 600px"
+      return "(max-width: 768px) 100vw, 600px";
 
     case "full":
       return "(max-width: 768px) 100vw, (max-width: 1024px) 350px, 600px";

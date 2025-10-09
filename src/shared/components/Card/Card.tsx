@@ -1,7 +1,7 @@
 import clsx from 'clsx';
-import React, { memo } from 'react';
+import React, { memo, PropsWithChildren } from 'react';
 import style from './Card.module.scss';
-import ImageGalery from './components/ImageGalery';
+import ImageGallery from '@components/ImageGallery';
 import { ProductType } from '@model/products';
 import Link from 'next/link';
 import { appRoutes } from '@constants/app-routes';
@@ -27,14 +27,18 @@ const Card: React.FC<CardProps> = ({
   className,
 }) => {
   const { images, description, title } = product;
-  const href = appRoutes.products.details.create(product.documentId);
+  const href = appRoutes.product.create(product.documentId);
   const imageSizes = getCardImageSizes(display);
+
+  const BodyComponent = display === 'full'
+    ? ({children}: PropsWithChildren) => <div>{children}</div>
+    : ({children}: PropsWithChildren) => <Link href={href}>{children}</Link>; 
 
   return (
     <article className={clsx(style['card'], style[display], className)}>
       <div className={clsx(style['card__image-wrapper'], style[`${display}__image-wrapper`])}>      
         {display === 'full' ? (
-          <ImageGalery images={images} sizes={imageSizes} />
+          <ImageGallery images={images} previewSizes={imageSizes} />
         ) : (
           <Link href={href} className={clsx(style['card__image-link'])}>
             <Image
@@ -42,6 +46,7 @@ const Card: React.FC<CardProps> = ({
               src={images[0].url}
               alt={title ? title.toString() : 'Card image'}
               sizes={imageSizes}
+              priority
               fill
             />
           </Link>
@@ -55,7 +60,7 @@ const Card: React.FC<CardProps> = ({
           </div>
         )}
         
-        <Link href={href}>
+        <BodyComponent>
           <Text
             maxLines={2}
             tag="h3"
@@ -76,7 +81,7 @@ const Card: React.FC<CardProps> = ({
               {description}
             </Text>
           )}
-        </Link>
+        </BodyComponent>
       </main>
 
       <footer className={clsx(style[`${display}__footer`])}>

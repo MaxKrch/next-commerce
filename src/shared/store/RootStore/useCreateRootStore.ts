@@ -2,7 +2,7 @@ import RootStore, { RootStoreInitData } from "./RootStore";
 import { enableStaticRendering } from 'mobx-react-lite';
 
 const isServer = typeof window === "undefined";
-enableStaticRendering(isServer)
+enableStaticRendering(isServer);
 
 let clientStore: RootStore;
 
