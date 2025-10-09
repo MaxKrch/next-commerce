@@ -179,7 +179,9 @@ export default class QueryParamsStore {
                 this._sort = params.sort;
             }
 
-            this._inStock = params.inStock ?? undefined;
+            if(params.inStock !== undefined) {
+                this._inStock = params.inStock ?? undefined
+            }
 
             if(params.count) {
                 this._count = params.count;
