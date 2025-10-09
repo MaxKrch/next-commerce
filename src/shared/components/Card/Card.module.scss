@@ -216,6 +216,14 @@ $base-line-height: 150%;
     }
 }
 
+.caption-slot__link {
+    border-bottom: 2px solid transparent;
+    &:hover {
+        color: $brand;
+        border-color: $brand;
+    }
+}
+
 .action-slot {    
     display: flex;
     gap: $space-s;

@@ -7,6 +7,7 @@ import { useRootStore } from "@providers/RootStoreContext";
 import clsx from "clsx";
 import { usePathname, useRouter } from "next/navigation";
 import React, { memo, useCallback } from "react";
+import style from '../Card.module.scss';
 
 const DefaultCardCaptionSlot: React.FC<{ product: ProductType, className?: string }> = ({ product, className }) => {
   const router = useRouter();
@@ -25,7 +26,7 @@ const DefaultCardCaptionSlot: React.FC<{ product: ProductType, className?: strin
 
   return (
     <div onClick={handleClick}>
-      <Text color="secondary" weight="bold" className={clsx(className)}>
+      <Text color="secondary" weight="bold" className={clsx(style['caption-slot__link'], className)}>
         {product.productCategory.title}
       </Text>
     </div>
