@@ -10,13 +10,16 @@ import UserStore from '@store/global/UserStore/UserStore';
 import ModalStore from '@store/global/ModalStore';
 import { reaction } from 'mobx';
 import { ReadonlyURLSearchParams } from 'next/navigation';
+import PathStore from '@store/global/PathStore/PathStore';
 
 export type RootStoreInitData = {
   client: IClient;
-  params: URLSearchParams | ReadonlyURLSearchParams
+  path: string;
+  queryParams: URLSearchParams | ReadonlyURLSearchParams
 }
 
 export interface IRootStore {
+  readonly pathStore: PathStore;
   readonly queryParamsStore: QueryParamsStore;
   readonly categoriesStore: CategoriesStore;
   readonly userStore: UserStore;
@@ -30,6 +33,7 @@ export interface IRootStore {
   }
 };
 export default class RootStore implements IRootStore {
+  readonly pathStore: PathStore;
   readonly queryParamsStore: QueryParamsStore;
   readonly categoriesStore: CategoriesStore;
   readonly userStore: UserStore;
@@ -44,7 +48,8 @@ export default class RootStore implements IRootStore {
 
   constructor({
     client,
-    params
+    path,
+    queryParams
   }: RootStoreInitData) {
     
     this.api = {
@@ -53,7 +58,8 @@ export default class RootStore implements IRootStore {
       auth: new AuthApi(client),
       cart: new CartApi(client),
     };
-    this.queryParamsStore = new QueryParamsStore(params);
+    this.pathStore = new PathStore(path);
+    this.queryParamsStore = new QueryParamsStore(queryParams);
     this.categoriesStore = new CategoriesStore(this.api.categories);
     this.userStore = new UserStore(this.api.auth);
     this.cartStore = new CartStore(this.api.cart);
