@@ -1,4 +1,4 @@
-import { action, computed, makeObservable, observable } from "mobx"
+import { action, computed, makeObservable, observable } from "mobx";
 import { useRouter } from "next/navigation";
 
 type RouterType = ReturnType<typeof useRouter>
@@ -17,9 +17,9 @@ export default class PathStore {
             pathString: computed,
 
             synchWithPath: action.bound,
-        })
+        });
 
-        this.synchWithPath(path)
+        this.synchWithPath(path);
     }
 
     get segments(): string[] {
@@ -33,9 +33,9 @@ export default class PathStore {
     updateURL = (router: RouterType, path: string[]): void => {
         const newPath = `/${path.join('/')}`;
         router.push(newPath);
-    }
+    };
 
     synchWithPath(path: string): void {
-        this._segments = path.split('/').filter(Boolean)
+        this._segments = path.split('/').filter(Boolean);
     }
 }

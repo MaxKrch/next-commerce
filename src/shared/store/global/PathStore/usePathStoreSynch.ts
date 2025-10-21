@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import PathStore from "./PathStore";
 
@@ -9,9 +9,9 @@ const usePathSynch = (store: PathStore) => {
     
     useEffect(() => {
         if(store.pathString !== path) {
-            store.synchWithPath(path)
+            store.synchWithPath(path);
         }
     }, [store, path]);
-}
+};
 
 export default usePathSynch;
