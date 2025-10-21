@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import style from '../app.module.scss';
 import ModalsProvider from './ModalsProvider';
 import ServiceWorkerProvider from './ServiceWorkerProvider';
+import PathStoreProvider from './PathStoreProvider';
 
 const Providers: React.FC<PropsWithChildren> = ({children}) => {
     return(
@@ -18,11 +19,13 @@ const Providers: React.FC<PropsWithChildren> = ({children}) => {
             }>
             
                 <RootStoreProvider>
-                    <QueryParamsStoreProvider>
-                        <ModalsProvider>
-                            {children}
-                        </ModalsProvider>
-                    </QueryParamsStoreProvider>
+                    <PathStoreProvider>
+                        <QueryParamsStoreProvider>
+                            <ModalsProvider>
+                                {children}
+                            </ModalsProvider>
+                        </QueryParamsStoreProvider>
+                    </PathStoreProvider>
                 </RootStoreProvider>
             </Suspense>
         </>

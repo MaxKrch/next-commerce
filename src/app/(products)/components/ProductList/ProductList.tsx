@@ -51,7 +51,7 @@ const ProductList: React.FC = () => {
   }
 
   const isFailedRequest = productsStore.status === META_STATUS.ERROR ||
-    (productsStore.status === META_STATUS.SUCCESS && !!requestId.current && productsStore.requestId !== requestId.current);
+    (productsStore.status === META_STATUS.SUCCESS && !!productsStore.requestId && !!requestId.current && productsStore.requestId !== requestId.current);
 
   const notFoundProducts = productsStore.status === META_STATUS.SUCCESS && productsStore.products.length === 0;
   const showProducts = productsStore.status === META_STATUS.SUCCESS;
