@@ -37,7 +37,7 @@ export default class AxiosClient {
         }
 
         if (error.request) {
-          return Promise.reject(new Error('NetworkError'));
+          return Promise.reject(new TypeError('NetworkError'));
         }
 
         return Promise.reject(new Error('UnknownError'));
